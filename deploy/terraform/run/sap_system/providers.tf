@@ -8,7 +8,7 @@
     <    less than version number
     <=   less than or equal to version number
     ~>   pessimistic constraint operator, constraining both the oldest and newest version allowed.
-           For example, ~> 0.9   is equivalent to >= 0.9,   < 1.0 
+           For example, ~> 0.9   is equivalent to >= 0.9,   < 1.0
                         ~> 0.8.4 is equivalent to >= 0.8.4, < 0.9
 */
 
@@ -32,6 +32,13 @@ provider "azurerm" {
   subscription_id = length(local.deployer_subscription_id) > 0 ? local.deployer_subscription_id : null
 }
 
+provider "azurerm" {
+  features {}
+  alias                      = "dnsmanagement"
+  subscription_id            = coalesce(var.management_dns_subscription_id, length(local.deployer_subscription_id) > 0 ? local.deployer_subscription_id : "")
+  skip_provider_registration = true
+}
+
 provider "azuread" {
   client_id     = local.spn.client_id
   client_secret = local.spn.client_secret
@@ -39,7 +46,7 @@ provider "azuread" {
 }
 
 terraform {
-  required_version = ">= 0.14"
+  required_version = ">= 1.0"
   required_providers {
     external = {
       source = "hashicorp/external"
@@ -58,9 +65,11 @@ terraform {
     }
     azuread = {
       source = "hashicorp/azuread"
+      version = "~> 2.2"
     }
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
+      version = "~> 3.2"
     }
   }
 }

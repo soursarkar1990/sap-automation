@@ -2,6 +2,9 @@
 
 # API Input template with defaults
 
+
+become_user_name:             "root"
+
 # OS Config Settings variables
 chrony_pool:                  ""
 chrony_servers:               []
@@ -12,6 +15,9 @@ sapbits_bom_files:            "sapfiles"                                        
 target_media_location:        "/usr/sap/install"                                        # Default
 download_directory:           "/mnt/downloads"
 check_storage_account:        true
+bom_processing_become:        true                                                      # BOM processing as root user
+
+always_upload_jinja_templates: true
 
 always_upload_jinja_templates: true
 
@@ -35,7 +41,15 @@ sap_fqdn:                     ""                                                
 sapadm_uid:                   2100
 sapinst_gid:                  2001
 sapsys_gid:                   2000
-sybsid_uid:                   2021
+drop_schema:                  false
+
+use_msi_for_clusters:         false
+
+hana_components:              "all"
+
+tmp_directory:                "/tmp"
+url_internet:                 "http://www.github.com"                                   # URL to use for internet access checks"
+check_outbound:               false
 
 # Oracle specific parameters
 ora_sid:                      "ORA"
@@ -84,16 +98,15 @@ sapbits_sas_token_secret:     "sapbits-sas-token"                               
 NFS_provider:                 "NONE"
 
 sap_swap:
-  - { tier: 'scs',              swap_size_mb: '4096' }
-  - { tier: 'ers',              swap_size_mb: '4096' }
-  - { tier: 'pas',              swap_size_mb: '20480' }
-  - { tier: 'app',              swap_size_mb: '20480' }
-  - { tier: 'web',              swap_size_mb: '4096' }
-  - { tier: 'hana',             swap_size_mb: '2048' }
-  - { tier: 'oracle',           swap_size_mb: '20480' }
-  - { tier: 'oracle-asm',       swap_size_mb: '20480' }
+  - { tier: 'scs',  swap_size_mb: '4096' }
+  - { tier: 'ers',  swap_size_mb: '4096' }
+  - { tier: 'pas',  swap_size_mb: '20480' }
+  - { tier: 'app',  swap_size_mb: '20480' }
+  - { tier: 'web',  swap_size_mb: '4096' }
+  - { tier: 'hana', swap_size_mb: '2048' }
+  - { tier: 'oracle', swap_size_mb: '20480' }
+  - { tier: 'oracle-asm', swap_size_mb: '20480' }
   - { tier: 'oracle-multi-sid', swap_size_mb: '20480' }
-  - { tier: 'sybase',           swap_size_mb: '20480' }
-  - { tier: 'observer',         swap_size_mb: '2048' }
+  - { tier: 'observer', swap_size_mb: '2048' }
 
 ...

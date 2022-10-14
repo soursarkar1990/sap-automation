@@ -44,15 +44,6 @@ packages:
     - { tier: 'os',    package: 'lvm2',                                         node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'numad',                                        node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'cifs-utils',                                   node_tier: 'all',     state: 'present' }
-    - { tier: 'os',    package: 'unrar',                                        node_tier: 'all',     state: 'present' }
-    # --------------------------- Begin - Packages required for DB2 -----------------------------------------8
-    # https://www.ibm.com/docs/en/db2/11.5?topic=servers-linux
-    - { tier: 'os',    package: 'libaio',                                       node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'ksh',                                          node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'libstdc++.so.6',                               node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'unzip',                                        node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'libpam.so.0',                                  node_tier: 'db2',     state: 'present' }
-    # --------------------------- End - Packages required for DB2 -------------------------------------------8
     - { tier: 'sapos', package: 'autofs',                                       node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'nfs4-acl-tools',                               node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'tuned-profiles-sap*',                          node_tier: 'all',     state: 'present' }
@@ -67,6 +58,7 @@ packages:
     - { tier: 'ha',    package: 'resource-agents-sap-hana',                     node_tier: 'hana',    state: 'present' }
     - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'scs',     state: 'present' }
     - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'ers',     state: 'present' }
+    - { tier: 'ha',    package: 'acl',                                          node_tier: 'hana',    state: 'present' }
     # ------------------------- End - Packages required for Clustering -----------------------------------------8
   redhat7.4:
     # Install Right Version of Azure Fence Agent
@@ -118,14 +110,6 @@ packages:
     - { tier: 'os',    package: 'lvm2',                                         node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'numad',                                        node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'cifs-utils',                                   node_tier: 'all',     state: 'present' }
-    # --------------------------- Begin - Packages required for DB2 -----------------------------------------8
-    # https://www.ibm.com/docs/en/db2/11.5?topic=servers-linux
-    - { tier: 'os',    package: 'libaio',                                       node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'ksh',                                          node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'libstdc++.so.6',                               node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'unzip',                                        node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'libpam.so.0',                                  node_tier: 'db2',     state: 'present' }
-    # --------------------------- End - Packages required for DB2 -------------------------------------------8
     - { tier: 'sapos', package: 'autofs',                                       node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'nfs4-acl-tools',                               node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'tuned-profiles-sap*',                          node_tier: 'all',     state: 'present' }
@@ -134,25 +118,26 @@ packages:
     - { tier: 'sapos', package: 'uuidd',                                        node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'csh',                                          node_tier: 'all',     state: 'present' }
     # ------------------------- Begin - Packages required for Clustering ---------------------------------------8
-    - { tier: 'ha',    package: 'pcs',                                                      state: 'present' }
-    - { tier: 'ha',    package: 'pacemaker',                                                state: 'present' }
-    - { tier: 'ha',    package: 'nmap-ncat',                                                state: 'present' }
-    - { tier: 'ha',    package: 'fence-agents-azure-arm',                                   state: 'present' }
-    - { tier: 'ha',    package: 'resource-agents-sap-hana',           node_tier: 'hana',    state: 'present' }
-    - { tier: 'ha',    package: 'resource-agents-sap',                node_tier: 'scs',     state: 'present' }
-    - { tier: 'ha',    package: 'resource-agents-sap',                node_tier: 'ers',     state: 'present' }
-
+    - { tier: 'ha',    package: 'pcs',                                          node_tier: 'all',     state: 'present' }
+    - { tier: 'ha',    package: 'pacemaker',                                    node_tier: 'all',     state: 'present' }
+    - { tier: 'ha',    package: 'nmap-ncat',                                    node_tier: 'all',     state: 'present' }
+    - { tier: 'ha',    package: 'fence-agents-azure-arm',                       node_tier: 'all',     state: 'present' }
+    - { tier: 'ha',    package: 'resource-agents-sap-hana',                     node_tier: 'hana',    state: 'present' }
+    - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'scs',     state: 'present' }
+    - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'ers',     state: 'present' }
   # ------------------------- End - Packages required for Clustering -----------------------------------------8
+  # ------------------------- Begin - Packages required for Start/Stop ------------------------------------8
+    - { tier: 'ha',    package: 'sap-cluster-connector',                        node_tier: 'hana',    state: 'present' }
+    - { tier: 'ha',    package: 'sap-cluster-connector',                        node_tier: 'scs',     state: 'present' }
+    - { tier: 'ha',    package: 'sap-cluster-connector',                        node_tier: 'ers',     state: 'present' }
+
+  # ------------------------- End - Packages required for Start/Stop -----------------------------------------8
   redhat8.1:
     - { tier: 'ha',    package: 'fence-agents-azure-arm',                       node_tier: 'all',     state: 'present' }
   redhat8.2:
-    - { tier: 'ha',    package: 'python3-libselinux',                           node_tier: 'hana',    state: 'present' }
-    - { tier: 'ha',    package: 'libselinux-python3',                           node_tier: 'hana',    state: 'present' }
     - { tier: 'ha',    package: 'fence-agents-azure-arm',                       node_tier: 'all',     state: 'present' }
   redhat8.4:
     - { tier: 'ha',    package: 'fence-agents-azure-arm',                       node_tier: 'all',     state: 'present' }
-    - { tier: 'ha',    package: 'python3-libselinux',                           node_tier: 'hana',    state: 'present' }
-    - { tier: 'ha',    package: 'libselinux-python3',                           node_tier: 'hana',    state: 'present' }
   sles_sap12:
     - { tier: 'os',    package: 'chrony',                                       node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'glibc',                                        node_tier: 'all',     state: 'present' }
@@ -161,14 +146,6 @@ packages:
     - { tier: 'os',    package: 'ntp',                                          node_tier: 'all',     state: 'absent' }
     - { tier: 'os',    package: 'systemd',                                      node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'tuned',                                        node_tier: 'all',     state: 'present' }
-    # --------------------------- Begin - Packages required for DB2 -----------------------------------------8
-    # https://www.ibm.com/docs/en/db2/11.5?topic=servers-linux
-    - { tier: 'os',    package: 'libaio',                                       node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'ksh',                                          node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'libstdc++.so.6',                               node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'unzip',                                        node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'libpam.so.0',                                  node_tier: 'db2',     state: 'present' }
-    # --------------------------- End - Packages required for DB2 -------------------------------------------8
     - { tier: 'sapos', package: 'autofs',                                       node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'nfs-utils',                                    node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'nfs-client',                                   node_tier: 'all',     state: 'present' }
@@ -204,14 +181,6 @@ packages:
     # than /usr/bin/python.
     # Required to enable ansible to use /usr/bin/python on SLE 15 SP2
     - { tier: 'os',    package: 'python2-rpm',                                  node_tier: 'all',     state: 'present' }
-    # --------------------------- Begin - Packages required for DB2 -----------------------------------------8
-    # https://www.ibm.com/docs/en/db2/11.5?topic=servers-linux
-    - { tier: 'os',    package: 'libaio',                                       node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'ksh',                                          node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'libstdc++.so.6',                               node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'unzip',                                        node_tier: 'db2',     state: 'present' }
-    - { tier: 'os',    package: 'libpam.so.0',                                  node_tier: 'db2',     state: 'present' }
-    # --------------------------- End - Packages required for DB2 -------------------------------------------8
     - { tier: 'os',    package: 'cloud-regionsrv-client',                       node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'cloud-regionsrv-client-plugin-azure',          node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'regionServiceClientConfigAzure',               node_tier: 'all',     state: 'present' }
@@ -227,7 +196,7 @@ packages:
     - { tier: 'sapos', package: 'acl',                                          node_tier: 'scs',     state: 'present' }
     - { tier: 'sapos', package: 'acl',                                          node_tier: 'ers',     state: 'present' }
   # ----------------------- Begin - Packages required for Clustering -------------------------------------8
-    - { tier: 'hdb',   package: 'acl',                                          node_tier: 'hana',    state: 'present' }
+    - { tier: 'ha',    package: 'acl',                                          node_tier: 'hana',    state: 'present' }
     - { tier: 'ha',    package: 'socat',                                        node_tier: 'all' ,    state: 'present' }
     - { tier: 'ha',    package: 'corosync',                                     node_tier: 'hana',    state: 'present' }
     - { tier: 'ha',    package: 'resource-agents>=4.3',                         node_tier: 'hana',    state: 'present' }
@@ -254,8 +223,8 @@ packages:
   sles_sap15.2:
   sles_sap15.3:
 #    - { tier: 'os',    package: 'sle-module-public-cloud',                                  state: 'present' }
-    #Adding packages for Oracle linux 8.4 to start with, copied the list from RHEL.
-    #Adding additional Oracle linux packages as per SAP Note 2069760 - Oracle Linux 7.x SAP Installation and Upgrade. Need to add the groupinstall command.
+    # Adding packages for Oracle linux 8.4 to start with, copied the list from RHEL.
+    # Adding additional Oracle linux packages as per SAP Note 2069760 - Oracle Linux 7.x SAP Installation and Upgrade. Need to add the groupinstall command.
   oraclelinux8:
     - { tier: 'os',    package: 'oracle-database-preinstall-19c',               node_tier: 'all',     state: 'present' }
     - { tier: 'os',    package: 'sudo',                                         node_tier: 'all',     state: 'present' }

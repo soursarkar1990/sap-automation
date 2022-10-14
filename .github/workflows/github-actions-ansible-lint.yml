@@ -9,6 +9,10 @@ jobs:
         with:
           packages: |
             ansible==2.10
+<<<<<<< HEAD
+=======
+            jinja2>=3.0.0
+>>>>>>> 18c3cc6f14653c33d28c2e0fee440110ceab9e11
             ansible-lint
       - run: "ansible-lint -v --force-color"
         working-directory: ${{ github.workspace }}
