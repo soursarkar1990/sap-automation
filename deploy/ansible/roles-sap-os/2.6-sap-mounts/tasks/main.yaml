@@ -131,7 +131,7 @@
     - { node_tier: 'scs',  type: 'xfs',   src: '/dev/vg_sap/lv_usrsapinstall',          path: '{{ target_media_location }}' }
   when:
     - item.node_tier in supported_tiers
-    - usr_sap_install_mountpoint is undefined
+    - usr_sap_install_mountpoint is undefined or server_count == 1
 
 # Mount Filesystems
 - name:                                "2.6 SAP Mounts: - Mount local sapmnt on (scs) {{ ansible_hostname }}"
