@@ -21,7 +21,7 @@ data "terraform_remote_state" "deployer" {
 }
 
 data "azurerm_key_vault_secret" "subscription_id" {
-  count        = var.use_spn ? 1 : 0
+  #count        = var.use_spn ? 1 : 0
   provider     = azurerm.deployer
   name         = format("%s-subscription-id", local.environment)
   key_vault_id = local.spn_key_vault_arm_id
