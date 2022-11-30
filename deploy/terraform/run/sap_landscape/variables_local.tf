@@ -20,6 +20,7 @@ locals {
   saplib_resource_group_name   = split("/", var.tfstate_resource_id)[4]
   tfstate_storage_account_name = split("/", var.tfstate_resource_id)[8]
   tfstate_container_name       = module.sap_namegenerator.naming.resource_suffixes.tfstate
+  deployer_tfstate_key = length(var.deployer_tfstate_key) > 0 ? (var.deployer_tfstate_key) : (format("%s%s", local.deployer_rg_name, ".terraform.tfstate"))
 
   // Retrieve the arm_id of deployer's Key Vault from deployer's terraform.tfstate
   spn_key_vault_arm_id = try(local.key_vault.kv_spn_id,
