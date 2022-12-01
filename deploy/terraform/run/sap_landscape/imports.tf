@@ -11,7 +11,6 @@ data "azurerm_client_config" "current" {
 data "terraform_remote_state" "deployer" {
   backend = "azurerm"
   count   = length(try(var.deployer_tfstate_key, "")) > 0 ? 1 : 0
-  #count   = length(var.deployer_tfstate_key) > 0 ? 1 : 0
   config = {
     resource_group_name  = local.saplib_resource_group_name
     storage_account_name = local.tfstate_storage_account_name
@@ -22,7 +21,6 @@ data "terraform_remote_state" "deployer" {
 }
 
 data "azurerm_key_vault_secret" "subscription_id" {
-  #count        = var.use_spn ? 1 : 0
   provider     = azurerm.deployer
   name         = format("%s-subscription-id", local.environment)
   key_vault_id = local.spn_key_vault_arm_id
