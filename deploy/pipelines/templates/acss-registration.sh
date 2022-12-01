@@ -9,10 +9,10 @@ set -eu
 #                                                                              |
 #--------------------------------------+---------------------------------------8
 green="\e[1;32m" ; reset="\e[0m" ; boldred="\e[1;31m"
-__basedir=`pwd`
+__basedir="${ROOT_FOLDER}"
 acss_environment=${ACSS_ENVIRONMENT}
 acss_sap_product=${ACSS_SAP_PRODUCT}
-acss_workloads_extension_url="https://github.com/Azure/Azure-Center-for-SAP-solutions-preview/raw/main/CLI_Documents/ACSS_CLI_Extension/workloads-0.1.0-py3-none-any.whl"
+acss_workloads_extension_url="a"
 #--------------------------------------+---------------------------------------8
 
 #--------------------------------------+---------------------------------------8
@@ -49,21 +49,28 @@ az login --service-principal --username $ARM_CLIENT_ID --password=$ARM_CLIENT_SE
 # TODO: Should test if Terraform is available or needs to be installed
 #
 echo -e "$green--- Initializing Terraform for: $SAP_SYSTEM_CONFIGURATION_NAME ---$reset"
-__configDir=${__basedir}/WORKSPACES/SYSTEM/${SAP_SYSTEM_FOLDER}
-__moduleDir=${__basedir}/deploy/terraform/run/sap_system/
+__configDir=${__basedir}
+__moduleDir=${CODE_FOLDER}/deploy/terraform/run/sap_system/
 TF_DATA_DIR=${__configDir}
 
 cd ${__configDir}
+
+az account set --subscription ${ARM_SUBSCRIPTION_ID}
+
+tfstate_resource_id=$(az resource list --name "${TERRAFORM_REMOTE_STORAGE_ACCOUNT_NAME}" --subscription ${TERRAFORM_REMOTE_STORAGE_SUBSCRIPTION} --resource-type Microsoft.Storage/storageAccounts --query "[].id | [0]" -o tsv)
+
+TERRAFORM_REMOTE_STORAGE_RESOURCE_GROUP_NAME=$(az resource show --id "${tfstate_resource_id}" --query resourceGroup -o tsv)
+
 
 # Init Terraform
 __output=$( \
 terraform -chdir="${__moduleDir}"                                                       \
 init -upgrade=true                                                                      \
---backend-config "subscription_id=${ARM_SUBSCRIPTION_ID}"                               \
+--backend-config "subscription_id=${TERRAFORM_REMOTE_STORAGE_SUBSCRIPTION}"             \
 --backend-config "resource_group_name=${TERRAFORM_REMOTE_STORAGE_RESOURCE_GROUP_NAME}"  \
 --backend-config "storage_account_name=${TERRAFORM_REMOTE_STORAGE_ACCOUNT_NAME}"        \
 --backend-config "container_name=tfstate"                                               \
---backend-config "key=${SAP_SYSTEM_FOLDER}.terraform.tfstate"                           \
+--backend-config "key=${SAP_SYSTEM_CONFIGURATION_NAME}.terraform.tfstate"                           \
 )
 [ $? -ne 0 ] && echo "$__output" && exit 1
 echo -e "$green--- Successfully configured the backend "azurerm"! Terraform will automatically use this backend unless the backend configuration changes. ---$reset"
