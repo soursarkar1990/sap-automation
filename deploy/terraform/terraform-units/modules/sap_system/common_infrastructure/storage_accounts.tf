@@ -182,7 +182,7 @@ resource "azurerm_storage_share" "sapmnt" {
     ) : (
     ""
   )
-  enabled_protocol = "SMB"
+  enabled_protocol = "NFS"
 
   quota = var.sapmnt_volume_size
 }
