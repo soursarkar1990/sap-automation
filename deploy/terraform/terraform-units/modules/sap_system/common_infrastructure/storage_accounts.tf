@@ -36,6 +36,11 @@ resource "azurerm_storage_account" "sapmnt" {
   min_tls_version                 = "TLS1_2"
   allow_nested_items_to_be_public = false
 
+  routing {
+    publish_microsoft_endpoints = true
+    choice                      = "MicrosoftRouting"
+  }
+
 }
 resource "azurerm_storage_account_network_rules" "sapmnt" {
   provider = azurerm.main
@@ -48,7 +53,9 @@ resource "azurerm_storage_account_network_rules" "sapmnt" {
   )
   storage_account_id = azurerm_storage_account.sapmnt[0].id
   default_action     = "Deny"
-
+  ip_rules = compact([
+    length(local.deployer_public_ip_address) > 0 ? local.deployer_public_ip_address : ""
+  ])
   bypass = ["AzureServices", "Logging", "Metrics"]
   virtual_network_subnet_ids = compact(
     [

@@ -483,6 +483,7 @@ locals {
 
   app_tier_os = upper(try(var.application_tier.app_os.os_type, "LINUX"))
 
+  deployer_public_ip_address = try(var.deployer_tfstate.deployer_public_ip_address, "")
 
 
 }
