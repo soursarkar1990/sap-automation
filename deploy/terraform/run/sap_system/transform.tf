@@ -201,11 +201,11 @@ locals {
 
   scs_os = {
     os_type         = try(coalesce(var.scs_server_image.os_type, var.application_server_image.os_type, "LINUX"), "LINUX")
-    source_image_id = try(coalesce(var.scs_server_image.source_image_id, try(var.application_tier.scs_os.source_image_id, "")), "")
-    publisher       = try(coalesce(var.scs_server_image.publisher, try(var.application_tier.scs_os.publisher, "SUSE")), "SUSE")
-    offer           = try(coalesce(var.scs_server_image.offer, try(var.application_tier.scs_os.offer, "sles-sap-15-sp3")), "sles-sap-15-sp3")
-    sku             = try(coalesce(var.scs_server_image.sku, try(var.application_tier.scs_os.sku, "gen2")), "gen2")
-    version         = try(coalesce(var.scs_server_image.version, try(var.application_tier.scs_os.version, "latest")), "latest")
+    source_image_id = try(coalesce(var.scs_server_image.source_image_id, try(var.application_tier.source_image_id, "")), "")
+    publisher       = try(coalesce(var.scs_server_image.publisher, try(var.application_tier.publisher, "SUSE")), "SUSE")
+    offer           = try(coalesce(var.scs_server_image.offer, try(var.application_tier.offer, "sles-sap-15-sp3")), "sles-sap-15-sp3")
+    sku             = try(coalesce(var.scs_server_image.sku, try(var.application_tier.sku, "gen2")), "gen2")
+    version         = try(coalesce(var.scs_server_image.version, try(var.application_tier.version, "latest")), "latest")
     type            = try(var.database_vm_image.type, "marketplace")
   }
   scs_os_specified = (length(local.scs_os.source_image_id) + length(local.scs_os.publisher)) > 0
