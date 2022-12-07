@@ -51,11 +51,11 @@ resource "azurerm_storage_account_network_rules" "sapmnt" {
   bypass = ["AzureServices", "Logging", "Metrics"]
   virtual_network_subnet_ids = compact(
     [
-        try(var.landscape_tfstate.admin_subnet_arm_id, ""),
-        try(var.landscape_tfstate.app_subnet_arm_id, ""),
-        try(var.landscape_tfstate.db_subnet_arm_id, ""),
-        try(var.landscape_tfstate.web_subnet_arm_id, ""),
-        try(var.landscape_tfstate.subnet_mgmt_arm_id, "")
+        try(var.landscape_tfstate.admin_subnet_id, ""),
+        try(var.landscape_tfstate.app_subnet_id, ""),
+        try(var.landscape_tfstate.db_subnet_id, ""),
+        try(var.landscape_tfstate.web_subnet_id, ""),
+        try(var.landscape_tfstate.subnet_mgmt_id, "")
     ]
   )
 
