@@ -6,6 +6,7 @@
 #########################################################################################
 
 resource "azurerm_storage_account" "sapmnt" {
+  provider = azurerm.main
   count = var.NFS_provider == "AFS" ? (
     length(var.azure_files_sapmnt_id) > 0 ? (
       0) : (
