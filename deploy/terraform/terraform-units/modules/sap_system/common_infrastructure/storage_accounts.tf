@@ -55,8 +55,7 @@ resource "azurerm_storage_account_network_rules" "sapmnt" {
         try(var.landscape_tfstate.app_subnet_arm_id, ""),
         try(var.landscape_tfstate.db_subnet_arm_id, ""),
         try(var.landscape_tfstate.web_subnet_arm_id, ""),
-        # try(var.landscape_tfstate.subnet_mgmt_id, "")
-        try(var.landscape_tfstate.network_arm_id, "")
+        try(var.landscape_tfstate.subnet_mgmt_arm_id, "")
     ]
   )
 
