@@ -52,7 +52,7 @@ resource "azurerm_storage_account_network_rules" "sapmnt" {
     0
   )
   storage_account_id = azurerm_storage_account.sapmnt[0].id
-  default_action     = "Deny"
+  #default_action     = "Deny"
   ip_rules = compact([
     length(local.deployer_public_ip_address) > 0 ? local.deployer_public_ip_address : ""
   ])
