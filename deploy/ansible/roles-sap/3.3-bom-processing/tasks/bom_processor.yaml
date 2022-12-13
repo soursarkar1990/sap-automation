@@ -250,7 +250,6 @@
 #               Call BOM processor, passing dependent BOM names.
 #
 - name:                                "3.3 BoM Processing: - Process dependent BOMs"
-  become:                               true
   ansible.builtin.include_tasks:       "bom_processor.yaml"
   vars:
     bom_name:                          "{{ bom_dependency.name }}"
