@@ -176,6 +176,7 @@
 
 #   05) Extract files - SAPCAR
 - name:                                "3.3 BoM Processing: - Extract File, SAPCAR"
+  become:                               true
   ansible.builtin.command:             "{{ target_media_location }}/downloads/SAPCAR -manifest SIGNATURE.SMF \
                                          -xf {{ target_media_location }}/{% if item.path is undefined %}downloads{% else %}{{ item.path }}{% endif %}/\
                                          {% if item.filename is undefined %}{{ item.archive }}{% else %}{{ item.filename }}{% endif %}"
@@ -193,6 +194,7 @@
 
 #   06) Extract files - UNRAR
 - name:                                "3.3 BoM Processing: - Extract File, UNRAR"
+  become:                               true
   ansible.builtin.command:             unrar x "{{ target_media_location }}/{% if item.path is undefined %}downloads{% else %}{{ item.path }}{% endif %}/\
                                        {% if item.filename is undefined %}{{ item.archive }}{% else %}{{ item.filename }}{% endif %}"
   args:
@@ -211,6 +213,7 @@
 
 #   07) Extract files - UNZIP
 - name:                                "3.3 BoM Processing: - Extract File, UNZIP"
+  become:                               true
   ansible.builtin.unarchive:
     src:                               "{{ target_media_location }}/{% if item.path is undefined %}downloads{% else %}{{ item.path }}{% endif %}/\
                                         {% if item.filename is undefined %}{{ item.archive }}{% else %}{{ item.filename }}{% endif %}"
@@ -247,6 +250,7 @@
 #               Call BOM processor, passing dependent BOM names.
 #
 - name:                                "3.3 BoM Processing: - Process dependent BOMs"
+  become:                               true
   ansible.builtin.include_tasks:       "bom_processor.yaml"
   vars:
     bom_name:                          "{{ bom_dependency.name }}"
