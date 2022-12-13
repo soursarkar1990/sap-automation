@@ -148,7 +148,7 @@
         msg:                           "Starting App Install ({{ sid_to_be_deployed.sid | upper }})"
 
     - name:                            "APP Install: Running sapinst"
-      become:                           true
+      #become:                           true
       ansible.builtin.shell: |
                                        umask {{ custom_umask | default('022') }};
                                        ./sapinst SAPINST_INPUT_PARAMETERS_URL={{ dir_params }}/{{ sap_inifile }} \
