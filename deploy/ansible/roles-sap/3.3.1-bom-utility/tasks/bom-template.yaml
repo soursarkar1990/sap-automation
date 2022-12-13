@@ -101,6 +101,7 @@
     - not always_upload_jinja_templates
 
 - name:                                "3.3.1 BoM Template processing: Create ini files ({{ bom_base_name }})"
+  become:                               true
   block:
 
     - name:                            "3.3.1 BoM Template processing: Create ini file {{ sap_inifile }} from {{ sap_inifile_template }}"
