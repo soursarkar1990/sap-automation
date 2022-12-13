@@ -188,6 +188,7 @@
         verbosity:                     2
 
     - name:                            "SCS Install: flag"
+      become:                           true
       ansible.builtin.file:
         path:                          "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_scs.txt"
         state:                         touch
