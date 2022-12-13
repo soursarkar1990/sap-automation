@@ -159,6 +159,7 @@
     - "'scs' in supported_tiers"
 
 - name:                                "2.6 SAP Mounts: - Create SAP Directories (sapmnt)"
+  become:                               true
   ansible.builtin.file:
     owner:                             '{{ sidadm_uid }}'
     group:                             sapsys
