@@ -140,6 +140,7 @@
         backup:                        true
 
     - name:                            "SCS Install: SAP SCS Install on {{ ansible_hostname }}"
+      become:                           true
       ansible.builtin.shell: |
                                        umask {{ custom_umask | default('022') }};
                                        ./sapinst SAPINST_INPUT_PARAMETERS_URL={{ dir_params }}/{{ sap_inifile }}  \
