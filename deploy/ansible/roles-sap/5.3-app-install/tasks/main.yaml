@@ -168,6 +168,7 @@
         - skip_ansible_lint
 
     - name:                            "APP Install: Installation results"
+      become:                           true
       ansible.builtin.debug:
         var:                           app_installation
       when:                            app_installation.rc > 0
