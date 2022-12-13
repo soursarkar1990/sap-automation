@@ -143,6 +143,7 @@
       when:                            generic_user_creation.rc == 0
 
     - name:                            "User Creation: Cleanup ini file {{ ansible_hostname }}"
+      become:                           true
       ansible.builtin.file:
         path:                          "{{ dir_params }}/{{ sap_inifile }}"
         state:                         absent
