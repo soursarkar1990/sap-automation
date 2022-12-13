@@ -66,6 +66,7 @@
 
 #   02) Create static download directories
 - name:                                "3.3 BoM Processing: - Create SAP download directories"
+  become:                               true
   ansible.builtin.file:
     path:                              "{{ item.path }}"
     state:                             directory
