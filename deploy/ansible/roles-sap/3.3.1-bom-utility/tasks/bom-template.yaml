@@ -62,6 +62,7 @@
 
 #   Ensure the download directory exists on the agent
 - name:                                "3.3.1 BoM Template processing: Ensure download directory exists"
+  become:                               true
   ansible.builtin.file:
     path:                              "{{ download_directory }}/bom"
     state:                             directory
