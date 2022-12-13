@@ -15,6 +15,7 @@
     dir_params:                        "{{ tmp_directory }}/.{{ sid_to_be_deployed.sid | lower }}-params"
 
 - name:                                "User Creation: Create directories"
+  become:                               true
   ansible.builtin.file:
     path:                              "{{ item.path }}"
     state:                             directory
