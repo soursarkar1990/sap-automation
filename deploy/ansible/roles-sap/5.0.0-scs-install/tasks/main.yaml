@@ -160,6 +160,7 @@
         - skip_ansible_lint
 
     - name:                            "SCS Install: Cleanup ini file {{ ansible_hostname }}"
+      become:                           true
       ansible.builtin.file:
         path:                          "{{ dir_params }}/{{ sap_inifile }}"
         state:                         absent
