@@ -101,6 +101,7 @@
     - not always_upload_jinja_templates
 
 - name:                                "3.3.1 BoM Template processing: Remove ini file {{ sap_inifile }}"
+  become:                               true
   ansible.builtin.file:
     path:                              "{{ param_directory }}/{{ sap_inifile }}"
     state:                             absent
