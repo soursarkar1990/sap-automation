@@ -315,13 +315,13 @@
     - NFS_provider == 'ANF'
 
 
-- name:                                "2.6 SAP Permission: - Permission on /hana/shared"
-  become:                               true
-  ansible.builtin.file:
-    owner:                             '{{ sidadm_uid }}'
-    group:                             sapsys
-    mode:                              0755
-    path:                              "/hana/shared/"
-    state:                             directory
-    recurse:                           true
+# - name:                                "2.6 SAP Permission: - Permission on /hana/shared"
+#   become:                               true
+#   ansible.builtin.file:
+#     owner:                             '{{ sidadm_uid }}'
+#     group:                             sapsys
+#     mode:                              0755
+#     path:                              "/hana/shared/"
+#     state:                             directory
+#     recurse:                           true
 ...
