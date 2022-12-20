@@ -81,11 +81,13 @@
   block:
 
     - name:                            "{{ task_prefix }} Register downloaded BOM ({{ bom_name }})"
+      beocme:                          true
       ansible.builtin.include_vars:
         file:                          "{{ download_directory }}/bom/{{ bom_name }}.yaml"
         name:                          bom
 
     - name:                            "{{ task_prefix }} Register downloaded BOM ({{ bom_name }}) file name"
+      become:                          true
       ansible.builtin.set_fact:
         bom_file:                      "{{ download_directory }}/bom/{{ bom_name }}.yaml"
 
