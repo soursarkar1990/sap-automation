@@ -32,7 +32,7 @@ resource "azurerm_storage_account" "sapmnt" {
   account_tier                    = "Premium"
   account_replication_type        = "ZRS"
   account_kind                    = "FileStorage"
-  enable_https_traffic_only       = false
+  enable_https_traffic_only       = true
   min_tls_version                 = "TLS1_2"
   allow_nested_items_to_be_public = false
 
@@ -63,9 +63,9 @@ resource "azurerm_storage_account_network_rules" "sapmnt" {
 }
 
 resource "azurerm_private_dns_a_record" "sapmnt" {
-  depends_on = [
-    azurerm_private_endpoint.sapmnt
-  ]
+  # depends_on = [
+  #   azurerm_private_endpoint.sapmnt
+  # ]
   count               = var.use_private_endpoint && var.use_custom_dns_a_registration ? 1 : 0
   name                = split(".", azurerm_private_endpoint.sapmnt[count.index].custom_dns_configs[count.index].fqdn)[0]
   zone_name           = "privatelink.file.core.windows.net"
