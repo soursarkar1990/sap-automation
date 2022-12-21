@@ -42,7 +42,7 @@ resource "azurerm_storage_account_network_rules" "sapmnt" {
   count = var.NFS_provider == "AFS" ? (
     length(var.azure_files_sapmnt_id) > 0 ? (
       0) : (
-      1
+      0
     )) : (
     0
   )
