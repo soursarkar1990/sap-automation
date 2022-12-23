@@ -282,48 +282,17 @@
 
 # Import this task only if the sap_mnt is defined, i.e. AFS is used
 - name:                                "2.6 SAP Mounts: - Import AFS tasks"
-  ansible.builtin.import_tasks:        "2.6.0-afs-mounts.yaml"
+  ansible.builtin.import_tasks:        2.6.0-afs-mounts.yaml
   when:
     - sap_mnt is defined or sap_trans is defined
-    - NFS_provider == "AFS"
+    - NFS_provider == 'AFS'
 
 # Import this task only if the sap_mnt is defined, i.e. ANF is used
 - name:                                "2.6 SAP Mounts: - Import ANF tasks"
-  ansible.builtin.import_tasks:        "2.6.1-anf-mounts.yaml"
+  ansible.builtin.import_tasks:        2.6.1-anf-mounts.yaml
   when:
     - sap_mnt is defined or sap_trans is defined
-    - NFS_provider == "ANF"
-
-
-- name:                                "2.6 SAP Mounts: - Set permissions on hana folders"
-  become:                               true
-  become_user:                          root
-  when:
-    - node_tier == "hana"
-  block:
-    ansible.builtin.file:
-      owner:                             "{{ db_sid | lower }}adm"
-      group:                             sapsys
-      state:                             directory
-      recurse:                           true
-      path:                              "{{ item.path }}"
-      mode:                              '{{ item.mode }}'
-    loop:
-      - { mode: '0755', path: '/hana/data' }
-      - { mode: '0755', path: '/hana/log' }
-      - { mode: '0755', path: '/hana/shared' }
-  rescue:
-    ansible.builtin.file:
-      owner:                             '{{ hdbadm_uid }}'
-      group:                             sapsys
-      state:                             directory
-      recurse:                           true
-      path:                              "{{ item.path }}"
-      mode:                              '{{ item.mode }}'
-    loop:
-      - { mode: '0755', path: '/hana/data' }
-      - { mode: '0755', path: '/hana/log' }
-      - { mode: '0755', path: '/hana/shared' }
+    - NFS_provider == 'ANF'
 
 
 - name:                                "2.6 SAP Mounts: - Set permissions"
