@@ -91,7 +91,7 @@
 
 # [1] Create a virtual IP resource and health-probe for the ERS instance
 - name:                                "5.6 SCSERS - RHEL - ERS - Cluster Configuration before Install "
-  beocme:                               true
+  become:                               true
   throttle:                            1
   block:
     - name:                            "5.6 SCSERS - RHEL - Put Secondary host on online"
