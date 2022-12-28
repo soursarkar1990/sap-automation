@@ -37,6 +37,7 @@
     - ansible_os_family | upper == "REDHAT"
 
 - name:                                "5.6 SCSERS - ASCS, ERS profile changes"
+  become:                               true
   block:
 
     - name:                            "5.6 SCSERS - ASCS Profile - add service/halib"
@@ -61,6 +62,7 @@
     - inventory_hostname == primary_instance_name
 
 - name:                                "5.6 SCSERS - ASCS, ERS profile changes"
+  become:                               true
   block:
     - name:                            "5.6 SCSERS - ASCS Profile - add service/halib"
       ansible.builtin.blockinfile:
@@ -83,6 +85,7 @@
 
 # Following are the changes in ASCS/ERS profiles based if ENSA1 is applicable
 - name:                                "5.6 SCSERS - ASCS, ERS profile changes"
+  become:                               true
   block:
 
      # execute the following tasks only when using ENSA1
