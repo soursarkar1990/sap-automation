@@ -52,6 +52,7 @@
   when: not hdblcm_found.stat.exists
 
 - name:                                "HANA Install"
+  become:                               true
   block:
 
     - name:                            "SAP HANA: remove install response file if exists"
@@ -143,6 +144,7 @@
     - not hana_installed.stat.exists
 
 - name:                                "HANA Install status"
+  become:                               true
   block:
 
     - name:                            "HANA Install status"
