@@ -7,6 +7,7 @@
 ###############################################################################################
 
 - name:                                "5.6 SCSERS - Add the user '{{ sap_sid | lower }}adm' to haclient group"
+  become:                               true
   ansible.builtin.user:
     name:                              "{{ sap_sid | lower }}adm"
     comment:                           "{{ sap_sid | lower }}adm User account"
