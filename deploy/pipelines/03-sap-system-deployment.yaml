@@ -130,7 +130,8 @@ stages:
                   echo $ARM_CLIENT_ID
                   echo $ARM_CLIENT_SECRET
                   echo $ARM_TENANT_ID
-                  az login --service-principal --username $ARM_CLIENT_ID --password \$ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  --output none
+                  ARM_SECRET="$($ARM_CLIENT_SECRET | sed 's/[)]/\)g')"
+                  az login --service-principal --username $ARM_CLIENT_ID --password $ARM_SECRET --tenant $ARM_TENANT_ID  --output none
                   echo "AZ login succesfull"
                   return_code=$?
                   if [ 0 != $return_code ]; then
