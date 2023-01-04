@@ -126,14 +126,14 @@ stages:
                   unzip -qq terraform_$(tf_version)_linux_amd64.zip ; sudo mv terraform /bin/
                   rm -f terraform_$(tf_version)_linux_amd64.zip
 
-                  echo -e "$green--- az login ---$reset"
-                  echo $ARM_CLIENT_ID
-                  echo $ARM_CLIENT_SECRET
-                  echo $ARM_TENANT_ID
-                  sed -e 's#[)]#\)#g' $ARM_CLIENT_SECRET > ARM_SECRET
-                  echo $ARM_SECRET
-                  az login --service-principal --username $ARM_CLIENT_ID --password $ARM_SECRET --tenant $ARM_TENANT_ID  --output none
-                  echo "AZ login succesfull"
+                  # echo -e "$green--- az login ---$reset"
+                  # echo $ARM_CLIENT_ID
+                  # echo $ARM_CLIENT_SECRET
+                  # echo $ARM_TENANT_ID
+                  # ARM_SECRET=$ARM_CLIENT_SECRET | sed "s#[);]#\\\&#g"
+                  # echo $ARM_SECRET
+                  az login --service-principal --username $ARM_CLIENT_ID --password=$ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID --output none
+                  # echo "AZ login succesfull"
                   return_code=$?
                   if [ 0 != $return_code ]; then
                     echo -e "$boldred--- Login failed ---$reset"
