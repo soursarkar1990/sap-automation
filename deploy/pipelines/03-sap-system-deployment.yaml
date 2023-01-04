@@ -130,7 +130,7 @@ stages:
                   echo $ARM_CLIENT_ID
                   echo $ARM_CLIENT_SECRET
                   echo $ARM_TENANT_ID
-                  ARM_SECRET="$($ARM_CLIENT_SECRET | sed 's/[)]/\)/g')"
+                  sed -e 's#[)]#\)#g') $ARM_CLIENT_SECRET > ARM_SECRET
                   echo $ARM_SECRET
                   az login --service-principal --username $ARM_CLIENT_ID --password $ARM_SECRET --tenant $ARM_TENANT_ID  --output none
                   echo "AZ login succesfull"
