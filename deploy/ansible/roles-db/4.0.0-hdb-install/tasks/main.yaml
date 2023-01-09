@@ -52,7 +52,6 @@
   when: not hdblcm_found.stat.exists
 
 - name:                                "HANA Install"
-  become:                               true
   block:
 
     - name:                            "SAP HANA: remove install response file if exists"
@@ -125,7 +124,7 @@
 
     - name:                            "SAP HANA: Create backup folder"
       ansible.builtin.file:
-        path:                          "{{ hana_backup_path }}"
+        path:                          "/hana/backup"
         state:                         directory
         group:                         sapsys
         owner:                         "{{ db_sid | lower }}adm"
@@ -144,7 +143,6 @@
     - not hana_installed.stat.exists
 
 - name:                                "HANA Install status"
-  become:                               true
   block:
 
     - name:                            "HANA Install status"
@@ -157,7 +155,7 @@
 
     - name:                            "SAP HANA: Create backup folder"
       ansible.builtin.file:
-        path:                          "{{ hana_backup_path }}"
+        path:                          "/hana/backup"
         state:                         directory
         group:                         sapsys
         owner:                         "{{ db_sid | lower }}adm"

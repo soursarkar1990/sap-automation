@@ -42,7 +42,6 @@
 - name:                                "1.5 Disk setup - Load the disk configuration settings"
   ansible.builtin.include_vars:        disks_config.yml
 
-
 - name:                                "1.5 Disk setup - Check if the shared disk exists"
   ansible.builtin.set_fact:
     shareddisk:                        "{{ disks | selectattr('host', 'defined') |
@@ -53,7 +52,7 @@
 
 - name:                                "1.5 Disk setup - Append 'sapmnt' if neeeded"
   ansible.builtin.set_fact:
-    logical_volumes:                   "{{ logical_volumes_sapmnt + logical_volumes }}"
+    logical_volumes:                   "{{ logical_volumes + logical_volumes_sapmnt }}"
   when: sap_mnt is not defined
 
 - name:                                "1.5 Disk setup - Append 'install' if needed"

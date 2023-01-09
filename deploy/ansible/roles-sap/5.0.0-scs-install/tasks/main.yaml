@@ -24,7 +24,6 @@
     dir_params:                        "{{ tmp_directory }}/.{{ sid_to_be_deployed.sid | lower }}-params"
 
 - name:                                "SCS Install: -  Create directories"
-  become:                               true
   ansible.builtin.file:
     path:                              "{{ item.path }}"
     state:                             directory
@@ -132,7 +131,6 @@
         msg:                           "Start SCS Installation"
 
     - name:                            "SCS Install: - comment out required message server prots in /etc/services"
-      become:                           true
       ansible.builtin.replace:
         path:                          /etc/services
         regexp:                        '^([a-z\-]+\s+36{{ scs_instance_number }}/.*)$'
@@ -140,7 +138,6 @@
         backup:                        true
 
     - name:                            "SCS Install: SAP SCS Install on {{ ansible_hostname }}"
-      become:                           true
       ansible.builtin.shell: |
                                        umask {{ custom_umask | default('022') }};
                                        ./sapinst SAPINST_INPUT_PARAMETERS_URL={{ dir_params }}/{{ sap_inifile }}  \
@@ -160,7 +157,6 @@
         - skip_ansible_lint
 
     - name:                            "SCS Install: Cleanup ini file {{ ansible_hostname }}"
-      become:                           true
       ansible.builtin.file:
         path:                          "{{ dir_params }}/{{ sap_inifile }}"
         state:                         absent
@@ -189,7 +185,6 @@
         verbosity:                     2
 
     - name:                            "SCS Install: flag"
-      become:                           true
       ansible.builtin.file:
         path:                          "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_scs.txt"
         state:                         touch

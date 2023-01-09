@@ -14,7 +14,6 @@
     dir_params:                        "{{ tmp_directory }}/.{{ sid_to_be_deployed.sid | upper }}-params"
 
 - name:                                "APP Install: -  Create directories"
-  become:                               true
   ansible.builtin.file:
     path:                              "{{ item.path }}"
     state:                             directory
@@ -25,14 +24,12 @@
     - { mode: '0755', path: '/etc/sap_deployment_automation/{{ sap_sid | upper }}' }
 
 - name:                                "APP Install: reset"
-  become:                               true
   ansible.builtin.file:
     path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_app.txt"
     state:                             absent
   when:                                reinstall
 
 - name:                                "APP Install: check if {{ sid_to_be_deployed.sid | upper }} is installed"
-  become:                               true
   ansible.builtin.stat:
     path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_app.txt"
   register:                            app_installed
@@ -51,7 +48,6 @@
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                "APP Install: Set the SCS Server name"
-  become:                               true
   ansible.builtin.set_fact:
     scs_server:                        "{% if scs_high_availability %}{{ sid_to_be_deployed.sid | lower }}scs{{ scs_instance_number }}cl1{% else %}{{ hostvars[scs_server_temp | first]['virtual_host'] }}{% endif %}"
     db_virtual_host:                   "{{ hostvars[db_server_temp | first]['virtual_host'] }}"
@@ -131,7 +127,6 @@
 # 2230669 - System Provisioning Using a Parameter Input File
 #
     - name:                            "APP Install: HANA HSR - Update Profile"
-      become:                          true
       ansible.builtin.import_tasks:    ../../../roles-db/4.0.1-hdb-hsr/tasks/4.0.1.7-sap-profile-changes.yml
       when:
         - db_high_availability
@@ -148,7 +143,6 @@
         msg:                           "Starting App Install ({{ sid_to_be_deployed.sid | upper }})"
 
     - name:                            "APP Install: Running sapinst"
-      #become:                           true
       ansible.builtin.shell: |
                                        umask {{ custom_umask | default('022') }};
                                        ./sapinst SAPINST_INPUT_PARAMETERS_URL={{ dir_params }}/{{ sap_inifile }} \
@@ -168,7 +162,6 @@
         - skip_ansible_lint
 
     - name:                            "APP Install: Installation results"
-      become:                           true
       ansible.builtin.debug:
         var:                           app_installation
       when:                            app_installation.rc > 0
@@ -179,7 +172,6 @@
       when:                            app_installation.rc == 0
 
     - name:                            "APP Install: Cleanup ini file {{ ansible_hostname }}"
-      become:                           true
       ansible.builtin.file:
         path:                          "{{ dir_params }}/{{ sap_inifile }}"
         state:                         absent
@@ -193,7 +185,6 @@
       register:                        app_installed_according_to_sapinst
 
     - name:                            "APP Install: flag"
-      become:                           true
       ansible.builtin.file:
         path:                          "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_app.txt"
         state:                         touch

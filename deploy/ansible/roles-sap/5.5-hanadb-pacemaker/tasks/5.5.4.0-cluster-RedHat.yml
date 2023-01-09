@@ -13,7 +13,6 @@
 # +------------------------------------4--------------------------------------*/
 
 - name:                                Optimise the Pacemaker cluster for SAP HANA
-  become:                             true
   block:
     - name:                            Enable Maintenance mode for the cluster
       ansible.builtin.command:         pcs property set maintenance-mode=true
