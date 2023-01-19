@@ -88,7 +88,7 @@ SID: Q01
 |                                      |                                   |                 |                 |       |                                                |
 | Virtual Machine (database, primary)  | QA-WEEU-SAP02-Q01_q01dhdb00l###   | q01dhdb00l###   | westeurope      | 1     | E20dsv4, Disks: 4 P10 (data), 3 P6 (log) , P15 (sap), P20 (backup), P20 (shared) |
 | Virtual Machine (database,secondary) | QA-WEEU-SAP02-Q01_q01dhdb01l###   | q01dhdb01l###   | westeurope      | 1     | E20dsv4, Disks: 4 P10 (data), 3 P6 (log) , P15 (sap), P20 (backup), P20 (shared) |
-| Virtual Machine (scs, ASCS)          | QA-WEEU-SAP02-Q01_q01scs00l###    | q01scs00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
+| Virtual Machine (scs, SCS)          | QA-WEEU-SAP02-Q01_q01scs00l###    | q01scs00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (scs, ERS)           | QA-WEEU-SAP02-Q01_q01scs01l###    | q01scs01l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (primary app)        | QA-WEEU-SAP02-Q01_q01app00l###    | q01app00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (app)                | QA-WEEU-SAP02-Q01_q001pp01l###    | q01app01l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
@@ -113,7 +113,7 @@ SID: Q02
 |                                      |                                   |                 |                 |       |                                                |
 | Virtual Machine (database, primary)  | QA-WEEU-SAP02-Q02_q02dhdb00l###   | q02dhdb00l###   | westeurope      | 1     | E20dsv4, Disks: 4 P10 (data), 3 P6 (log) , P15 (sap), P20 (backup), P20 (shared) |
 | Virtual Machine (database,secondary) | QA-WEEU-SAP02-Q02_q02dhdb01l###   | q02dhdb01l###   | westeurope      | 1     | E20dsv4, Disks: 4 P10 (data), 3 P6 (log) , P15 (sap), P20 (backup), P20 (shared) |
-| Virtual Machine (scs, ASCS)          | QA-WEEU-SAP02-Q02_q02scs00l###    | q02scs00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
+| Virtual Machine (scs, SCS)          | QA-WEEU-SAP02-Q02_q02scs00l###    | q02scs00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (scs, ERS)           | QA-WEEU-SAP02-Q02_q02scs01l###    | q02scs01l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (primary app)        | QA-WEEU-SAP02-Q02_q02app00l###    | q02app00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (app)                | QA-WEEU-SAP02-Q01_q001pp01l###    | q02app01l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
@@ -159,7 +159,7 @@ SID: P01
 |                                      |                                   |                 |                 |       |                                                |
 | Virtual Machine (database, primary)  | PRD-WEEU-SAP03-P01_p01dhdb00l###  | p01dhdb00l###   | westeurope      | 1     | E20dsv4, Disks: 4 P10 (data), 3 P6 (log) , P15 (sap), P20 (backup), P20 (shared) |
 | Virtual Machine (database,secondary) | PRD-WEEU-SAP03-P01_p01dhdb01l###  | p01dhdb01l###   | westeurope      | 1     | E20dsv4, Disks: 4 P10 (data), 3 P6 (log) , P15 (sap), P20 (backup), P20 (shared) |
-| Virtual Machine (scs, ASCS)          | PRD-WEEU-SAP03-P01_p01scs00l###   | p01scs00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
+| Virtual Machine (scs, SCS)          | PRD-WEEU-SAP03-P01_p01scs00l###   | p01scs00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (scs, ERS)           | PRD-WEEU-SAP03-P01_p01scs01l###   | p01scs01l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (primary app)        | PRD-WEEU-SAP03-P01_p01app00l###   | p01app00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (app)                | PRD-WEEU-SAP03-P01_p001pp01l###   | p01app01l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
@@ -183,7 +183,7 @@ SID: P02
 |                                      |                                   |                 |                 |       |                                                |
 | Virtual Machine (database, primary)  | PRD-WEEU-SAP03-P02_q02dhdb00l###  | p02dhdb00l###   | westeurope      | 1     | E20dsv4, Disks: 4 P10 (data), 3 P6 (log) , P15 (sap), P20 (backup), P20 (shared) |
 | Virtual Machine (database,secondary) | PRD-WEEU-SAP03-P02_q02dhdb01l###  | p02dhdb01l###   | westeurope      | 1     | E20dsv4, Disks: 4 P10 (data), 3 P6 (log) , P15 (sap), P20 (backup), P20 (shared) |
-| Virtual Machine (scs, ASCS)          | PRD-WEEU-SAP03-P02_q02scs00l###   | p02scs00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
+| Virtual Machine (scs, SCS)          | PRD-WEEU-SAP03-P02_q02scs00l###   | p02scs00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (scs, ERS)           | PRD-WEEU-SAP03-P02_q02scs01l###   | p02scs01l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (primary app)        | PRD-WEEU-SAP03-P02_q02app00l###   | p02app00l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |
 | Virtual Machine (app)                | PRD-WEEU-SAP03-P01_q001pp01l###   | p02app01l###    | westeurope      | 1     | D4sv3, Disks: P10 (sap)             |

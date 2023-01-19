@@ -8,8 +8,8 @@ version: 0002
 
 product_ids:
   dbl:       NW_ABAP_DB:NW750.HDB.ABAP
-  scs:       NW_ABAP_ASCS:NW750.HDB.ABAP
-  scs_ha:    NW_ABAP_ASCS:NW750.HDB.ABAPHA
+  scs:       NW_ABAP_SCS:NW750.HDB.ABAP
+  scs_ha:    NW_ABAP_SCS:NW750.HDB.ABAPHA
   pas:       NW_ABAP_CI:NW750.HDB.ABAP
   pas_ha:    NW_ABAP_CI:NW750.HDB.ABAPHA
   app:       NW_DI:NW750.HDB.PD

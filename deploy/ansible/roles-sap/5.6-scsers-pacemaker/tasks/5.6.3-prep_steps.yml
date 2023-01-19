@@ -1,7 +1,7 @@
 ---
 
 #######################################################################################################################
-# This file details all the preparation steps required before installing ASCS/ERS and                                 #
+# This file details all the preparation steps required before installing SCS/ERS and                                 #
 # the cluster resources.                                                                                              #
 # https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-suse-netapp-files    #8
 #######################################################################################################################
@@ -39,6 +39,6 @@
 
 # TODO - check the actions required for RHEL & add those actions here
 
-# End of all the preparation actions required to Install ASCS / ERS and cluster resources
+# End of all the preparation actions required to Install SCS / ERS and cluster resources
 
 ...

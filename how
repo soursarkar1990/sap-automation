@@ -1773,7 +1773,7 @@ Date:   Wed Sep 14 21:26:07 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     Co-authored-by: Kimmo Forss <kimmo.forss@microsoft.com>
     
@@ -1791,7 +1791,7 @@ Date:   Wed Sep 14 21:26:07 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -2508,7 +2508,7 @@ Date:   Wed Sep 14 21:26:07 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -2693,7 +2693,7 @@ Date:   Wed Sep 14 21:20:26 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     Co-authored-by: Kimmo Forss <kimmo.forss@microsoft.com>
     
@@ -2711,7 +2711,7 @@ Date:   Wed Sep 14 21:20:26 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -3428,7 +3428,7 @@ Date:   Wed Sep 14 21:20:26 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -3637,7 +3637,7 @@ Date:   Tue Sep 13 20:43:59 2022 +0200
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -5292,7 +5292,7 @@ Date:   Mon Jul 18 12:18:53 2022 +0200
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     Co-authored-by: Kimmo Forss <kimmo.forss@microsoft.com>
 
@@ -5374,7 +5374,7 @@ Date:   Wed Jul 20 22:06:39 2022 +0200
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -5404,7 +5404,7 @@ Date:   Mon Jul 18 12:18:53 2022 +0200
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    ASCS compatibility
+    SCS compatibility
     
     Co-authored-by: Kimmo Forss <kimmo.forss@microsoft.com>
 

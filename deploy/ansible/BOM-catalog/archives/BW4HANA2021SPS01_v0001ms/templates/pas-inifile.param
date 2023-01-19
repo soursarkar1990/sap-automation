@@ -46,17 +46,17 @@ HDB_Schema_Check_Dialogs.schemaPassword =
 # Location of the input file for the 'ABAP SecureStore' key. The input file must have two lines: 'key = <key>', 'key-id = <key ID>'. You can generate a key using 'rsecssfx'. Leave empty if you want to use the default key.
 # NW_ABAP_SSFS_CustomKey.ssfsKeyInputFile =
 
-# Standard system only: Add gateway process to ASCS instance
-# NW_CI_Instance.ascsInstallGateway = false
+# Standard system only: Add gateway process to SCS instance
+# NW_CI_Instance.SCSInstallGateway = false
 
-# Standard system only: Add web dispatcher process to ASCS instance
-# NW_CI_Instance.ascsInstallWebDispatcher = false
+# Standard system only: Add web dispatcher process to SCS instance
+# NW_CI_Instance.SCSInstallWebDispatcher = false
 
-# Standard system with AS ABAP only: ASCS instance number. Leave empty for default.
-# NW_CI_Instance.ascsInstanceNumber =
+# Standard system with AS ABAP only: SCS instance number. Leave empty for default.
+# NW_CI_Instance.SCSInstanceNumber =
 
-# Standard system with AS ABAP only: Virtual host name for the ASCS instance. Leave empty for default.
-NW_CI_Instance.ascsVirtualHostname = x01app00l272
+# Standard system with AS ABAP only: Virtual host name for the SCS instance. Leave empty for default.
+NW_CI_Instance.SCSVirtualHostname = x01app00l272
 
 # Instance number of the primary application server instance. Leave empty for default.
 NW_CI_Instance.ciInstanceNumber = 00

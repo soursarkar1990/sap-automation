@@ -6,7 +6,7 @@
 ########################################################################################################################################################################################################
 #                                                                                                                                                                                                       #
 # Installation service  'SAP NetWeaver 7.5 > Oracle > Installation > Application Server ABAP >'                                                                                                         #
-#                       > Distributed System > ASCS Instance', product id 'NW_ABAP_ASCS:NW750.ORA.ABAP'                                                                                                 #
+#                       > Distributed System > SCS Instance', product id 'NW_ABAP_SCS:NW750.ORA.ABAP'                                                                                                 #
 #                       > Distributed System > Database Instance', product id 'NW_ABAP_DB:NW750.ORA.ABAP'                                                                                               #
 #                       > Distributed System > Primary Application Server Instance', product id 'NW_ABAP_CI:NW750.ORA.ABAP'                                                                             #
 #                       > Additional SAP System Instances > Additional Application Server Instance', product id 'NW_DI:NW750.ORA.PD'                                                                    #
@@ -45,7 +45,7 @@ NW_System.installSAPHostAgent                                         = {{ sap_i
 
 NW_DDIC_Password.needDDICPasswords                                   = false
 NW_GetMasterPassword.masterPwd                                       = {{ main_password }}
-NW_checkMsgServer.abapMSPort                                         = 36{{ item.ascs_inst_no }}
+NW_checkMsgServer.abapMSPort                                         = 36{{ item.SCS_inst_no }}
 NW_getDBInfoGeneric.dbhost                                           = {{ sap_db_hostname }}
 NW_getDBInfoGeneric.dbsid                                            = {{ item.sid | upper }}
 NW_getLoadType.loadType                                              = SAP

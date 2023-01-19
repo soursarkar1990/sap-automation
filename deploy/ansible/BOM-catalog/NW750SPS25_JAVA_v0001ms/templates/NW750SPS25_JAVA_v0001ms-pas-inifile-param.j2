@@ -41,16 +41,16 @@ HDB_Schema_Check_Dialogs.schemaPassword                               = {{ main_
 # MessageServer.configureAclInfo                                      = false
 
 # Standard system only: Add gateway process to (A)SCS instance
-# NW_CI_Instance.ascsInstallGateway                                   = false
+# NW_CI_Instance.SCSInstallGateway                                   = false
 
 # Standard system only: Add web dispatcher process to (A)SCS instance
-# NW_CI_Instance.ascsInstallWebDispatcher                             = false
+# NW_CI_Instance.SCSInstallWebDispatcher                             = false
 
-# Standard system with AS ABAP only: ASCS instance number. Leave empty for default.
-# NW_CI_Instance.ascsInstanceNumber                                   = 
+# Standard system with AS ABAP only: SCS instance number. Leave empty for default.
+# NW_CI_Instance.SCSInstanceNumber                                   = 
 
-# Standard system with AS ABAP only: Virtual host name for the ASCS instance. Leave empty for default.
-NW_CI_Instance.ascsVirtualHostname                                    = {{ sap_scs_hostname }}
+# Standard system with AS ABAP only: Virtual host name for the SCS instance. Leave empty for default.
+NW_CI_Instance.SCSVirtualHostname                                    = {{ sap_scs_hostname }}
 
 # Instance number of the primary application server instance. Leave empty for default.
 NW_CI_Instance.ciInstanceNumber                                       =  {{ sap_ciInstanceNumber }}

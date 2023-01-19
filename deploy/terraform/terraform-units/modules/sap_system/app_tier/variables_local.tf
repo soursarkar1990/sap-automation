@@ -307,7 +307,7 @@ locals {
     null
   )
 
-  // Ports used for specific ASCS, ERS and Web dispatcher
+  // Ports used for specific SCS, ERS and Web dispatcher
   lb_ports = {
     "scs" = [
       3200 + tonumber(var.application_tier.scs_instance_number),          // e.g. 3201
@@ -333,7 +333,7 @@ locals {
     ]
   }
 
-  // Ports used for ASCS, ERS and Web dispatcher NSG rules
+  // Ports used for SCS, ERS and Web dispatcher NSG rules
   nsg_ports = {
     "web" = [
       {
