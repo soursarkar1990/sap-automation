@@ -59,7 +59,7 @@
 
 # /*---------------------------------------------------------------------------8
 # |                                                                            |
-# |   Playbook for SAP OS USERS and Groups Creation for SCS/ERS               |
+# |   Playbook for SAP OS USERS and Groups Creation for ASCS/ERS               |
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
@@ -82,7 +82,7 @@
             'sid': '{{ sap_sid | upper }}',
             'dbsid_uid': '{{ hdbadm_uid }}',
             'sidadm_uid': '{{ sidadm_uid }}',
-            'SCS_inst_no': '{{ scs_instance_number }}',
+            'ascs_inst_no': '{{ scs_instance_number }}',
             'pas_inst_no': '{{ pas_instance_number }}',
             'app_inst_no': '{{ app_instance_number }}'
           }
@@ -97,7 +97,7 @@
         tasks_from:                    user_nw.yaml
       vars:
         sap_sid:                      "{{ sid_to_be_deployed.sid }}"
-        scs_instance_number:          "{{ sid_to_be_deployed.SCS_inst_no }}"
+        scs_instance_number:          "{{ sid_to_be_deployed.ascs_inst_no }}"
         sidadm_uid:                   "{{ sid_to_be_deployed.sidadm_uid }}"
         tier:                          generic
         main_password:                 "{{ hostvars.localhost.sap_password }}"
@@ -142,7 +142,7 @@
                 'sid': '{{ sap_sid | upper }}',
                 'dbsid_uid': '{{ hdbadm_uid }}',
                 'sidadm_uid': '{{ sidadm_uid }}',
-                'SCS_inst_no': '{{ scs_instance_number }}',
+                'ascs_inst_no': '{{ scs_instance_number }}',
                 'pas_inst_no': '{{ pas_instance_number }}',
                 'app_inst_no': '{{ app_instance_number }}'
               }
@@ -165,9 +165,7 @@
                 that:
                   - "scs_instance_number != db_instance_number"
                 fail_msg:              "Please ensure that the scs_instance_number is different from the db_instance_number"
-          when:
-            - (ansible_play_hosts_all | length) == 1
-            - platform == "HANA"
+          when:                        (ansible_play_hosts_all | length) == 1
 
         - name:                        "SCS Installation Playbook: - Set 'scs' tier facts"
           ansible.builtin.set_fact:
@@ -191,7 +189,7 @@
               ansible.builtin.include_role:
                 name:                  roles-sap/5.0.0-scs-install
               vars:
-                scs_instance_number:   "{{ sid_to_be_deployed.SCS_inst_no }}"
+                scs_instance_number:   "{{ sid_to_be_deployed.ascs_inst_no }}"
               loop:                    "{{ all_sids }}"
               loop_control:
                 loop_var:              sid_to_be_deployed
@@ -222,7 +220,7 @@
               vars:
                 suffix:                "_SCS"
                 prefix:                "{{ bom.product_ids.scs.replace('.', '/').replace('/ABAP', '').split(':')[1] }}"
-                path:                  'INSTALL/DISTRIBUTED/ABAP/SCS'
+                path:                  'INSTALL/DISTRIBUTED/ABAP/ASCS'
                 tier:                  'scs'
                 this_sid:              "{{ sid_to_be_deployed.sid | upper }}"
               loop:                    "{{ all_sids }}"
@@ -289,44 +287,39 @@
           tags:
             - always
 
-        - name:                        "SCS HA Installation Playbook: - Ensure the repositories are registered"
+        - name:                    "SCS HA Installation Playbook: - Ensure the repositories are registered"
           ansible.builtin.include_role:
-            name:                      roles-os/1.3-repository
+            name:                  roles-os/1.3-repository
           tags:
             - 1.3-repository
 
-        - name:                        "SCS HA Installation Playbook: - Ensure the packages are registered"
+        - name:                    "SCS HA Installation Playbook: - Ensure the packages are registered"
           ansible.builtin.include_role:
-            name:                      roles-os/1.4-packages
+            name:                  roles-os/1.4-packages
           tags:
             - 1.4-packages
 
-        - name:                        "SCS HA Installation Playbook: - Ensure the kernel parameters are set"
+        - name:                    "SCS HA Installation Playbook: - Ensure the kernel parameters are set"
           ansible.builtin.include_role:
-            name:                      roles-os/1.9-kernelparameters
+            name:                  roles-os/1.9-kernelparameters
           tags:
             - 1.9-kernelparameters
 
-        - name:                        "SCS HA Installation Playbook: - Ensure the needed services are started"
+        - name:                    "SCS HA Installation Playbook: - Ensure the needed services are started"
           ansible.builtin.include_role:
-            name:                      roles-os/1.16-services
+            name:                  roles-os/1.16-services
           tags:
             - 1.16-services
 
-        - name:                        "SCS HA Installation Playbook: - Install Pacemaker"
+        - name:                    "SCS HA Installation Playbook: - Install Pacemaker"
           ansible.builtin.include_role:
-            name:                      roles-os/1.17-generic-pacemaker       # Configures the Pacemaker cluster with Azure fence agent
-            apply:
-              tags:
-                - 1.17-generic-pacemaker
-              become:                  true
-              become_user:             root
+            name:                  roles-os/1.17-generic-pacemaker       # Configures the Pacemaker cluster with Azure fence agent
           tags:
             - 1.17-generic-pacemaker
 
-        - name:                        "SCS HA Installation Playbook: - Ensure the file systems are mounted"
+        - name:                    "SCS HA Installation Playbook: - Ensure the file systems are mounted"
           ansible.builtin.include_role:
-            name:                      roles-sap-os/2.6-sap-mounts
+            name:                  roles-sap-os/2.6-sap-mounts
           tags:
             - 2.6-sap-mounts
       when:
@@ -342,7 +335,7 @@
                 'sid': '{{ sap_sid | upper }}',
                 'dbsid_uid': '{{ hdbadm_uid }}',
                 'sidadm_uid': '{{ sidadm_uid }}',
-                'SCS_inst_no': '{{ scs_instance_number }}',
+                'ascs_inst_no': '{{ scs_instance_number }}',
                 'pas_inst_no': '{{ pas_instance_number }}',
                 'app_inst_no': '{{ app_instance_number }}'
               }
@@ -353,12 +346,12 @@
 
         - name:                        Run the SCS HA Installation Playbook
           block:
-            - name:                    "SCS HA Installation Playbook: - Configure Pacemaker and SCS/ERS"
+            - name:                    "SCS HA Installation Playbook: - Configure Pacemaker and ASCS/ERS"
               ansible.builtin.include_role:
                 name:                  roles-sap/5.6-scsers-pacemaker
                 public:                true
               vars:
-                scs_instance_number:   "{{ sid_to_be_deployed.SCS_inst_no }}"
+                scs_instance_number:   "{{ sid_to_be_deployed.ascs_inst_no }}"
               loop:                    "{{ all_sids }}"
               loop_control:
                 loop_var:              sid_to_be_deployed
@@ -391,7 +384,7 @@
               vars:
                 suffix:                "_SCS"
                 prefix:                "{{ scs_bom_id.replace('.', '/').replace('/ABAPHA', '').split(':')[1] }}"
-                path:                  'INSTALL/HA/ABAP/SCS'
+                path:                  'INSTALL/HA/ABAP/ASCS'
                 tier:                  'scs'
                 this_sid:              "{{ sap_sid | upper }}"
               when:

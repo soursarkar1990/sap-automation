@@ -15,7 +15,7 @@ NW_GetSidNoProfiles.sapdrive                                          = {{ sap_d
 # The SAP system ID <SAPSID> of the system to be installed
 NW_GetSidNoProfiles.sid                                               = {{ sap_sid | upper }}
 
-# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for SCS and SCS instance.
+# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for ASCS and SCS instance.
 NW_SCS_Instance.instanceNumber                                        = {{ scs_instance_number }}
 
 # Dual stack only: The SCS instance number. Leave empty for default.
@@ -24,7 +24,7 @@ NW_SCS_Instance.instanceNumber                                        = {{ scs_i
 # The (A)SCS message server port. Leave empty for default.
 # NW_SCS_Instance.scsMSPort =
 
-# You can specify a virtual host name for the SCS instance. Leave empty for default.
+# You can specify a virtual host name for the ASCS instance. Leave empty for default.
 NW_SCS_Instance.scsVirtualHostname                                    = {{ sap_scs_hostname }}
 
 
@@ -76,7 +76,7 @@ NW_GetSidFromCluster.shareDecision                                    = FS
 # The SAP System ID of the system to install
 NW_GetSidFromCluster.sid                                              = {{ sap_sid | upper }}
 
-# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for SCS and SCS instance.
+# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for ASCS and SCS instance.
 NW_SCS_Instance.instanceNumber                                        = {{ scs_instance_number }}
 # Dual stack only: The SCS instance number. Leave empty for default.
 # NW_SCS_Instance.scsInstanceNumber =
@@ -84,7 +84,7 @@ NW_SCS_Instance.instanceNumber                                        = {{ scs_i
 # The (A)SCS message server port. Leave empty for default.
 # NW_SCS_Instance.scsMSPort =
 
-# You can specify a virtual host name for the SCS instance. Leave empty for default.
+# You can specify a virtual host name for the ASCS instance. Leave empty for default.
 NW_SCS_Instance.scsVirtualHostname                                   = {{ sap_scs_hostname }}
 
 # Password of the sidadm user.

@@ -5,7 +5,7 @@ version: 2
 platform: "ORACLE"
 
 product_ids:
-  scs:    NW_ABAP_SCS:NW750.ORA.ABAP
+  scs:    NW_ABAP_ASCS:NW750.ORA.ABAP
   dbl:    NW_ABAP_DB:NW750.ORA.ABAP
   pas:    NW_ABAP_CI:NW750.ORA.ABAP
   app:    NW_DI:NW750.ORA.PD

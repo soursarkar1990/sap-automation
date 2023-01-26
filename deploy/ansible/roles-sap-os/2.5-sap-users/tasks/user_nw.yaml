@@ -113,23 +113,7 @@
       ansible.builtin.debug:
         msg:                           "Start user creation"
 
-<<<<<<< HEAD
     - name:                            "User Creation: SAP OS USERS and Group Creation {{ sid_to_be_deployed }}"
-=======
-    - name:                            "User Creation: SAP OS USERS and Group Creation Ini file {{ sid_to_be_deployed.sid | upper }}"
-      ansible.builtin.shell: |
-                                       cat {{ dir_params }}/{{ sap_inifile }}
-      register:                        generic_user_creation_ini
-
-    - name:                            "User Creation: Progress"
-      ansible.builtin.debug:
-        var:                           generic_user_creation_ini
-        verbosity:                     2
-
-    - name:                            "User Creation: SAP OS USERS and Group Creation {{ sid_to_be_deployed.sid | upper }}"
-      become:                          true
-      become_user:                     root
->>>>>>> 8d6e76658a39c489c7f83a3be27861ef97ff8b00
       ansible.builtin.shell: |
                                        ./sapinst SAPINST_INPUT_PARAMETERS_URL={{ dir_params }}/{{ sap_inifile }} \
                                                  SAPINST_EXECUTE_PRODUCT_ID={{ bom.product_ids.generic }}                             \
