@@ -107,6 +107,10 @@
     group:                             oinstall
     force:                             true
     mode:                              "{{ '0777' | int - (custom_umask | default('022') | int) }}"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d6e76658a39c489c7f83a3be27861ef97ff8b00
 
 
 >>>>>>> 8d6e76658a39c489c7f83a3be27861ef97ff8b00

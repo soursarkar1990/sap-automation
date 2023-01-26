@@ -252,7 +252,17 @@
       tags:
         - always
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+
+    - name:                            "Observer Play"
+      become:                          true
+      block:
+        - name:                        "Observer Playbook: Check if the mounts place"
+          ansible.builtin.include_role:
+            name:                      roles-sap-os/2.6-sap-mounts
+>>>>>>> 8d6e76658a39c489c7f83a3be27861ef97ff8b00
 
     - name:                            "Observer Play"
       become:                          true
