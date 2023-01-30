@@ -12,7 +12,6 @@ function save_config_var() {
     local var_name=$1 var_file=$2
     sed -i -e "" -e /$var_name/d "${var_file}"
     echo "${var_name}=${!var_name}" >>"${var_file}"
-    echo "Printing the value: $var_name"
 }
 
 function save_config_vars() {
@@ -22,11 +21,11 @@ function save_config_vars() {
     fi
     
     shift # shift params 1 place to remove var_file value from front of list
-    
+    echo "Printing var_file: $var_file"
     for var_name; do # iterate over function params
         sed -i -e "" -e /${var_name}/d "${var_file}"
         echo "${var_name}=${!var_name}" >>"${var_file}"
-        
+        echo "Printing again var_file: $var_name" 
     done
 }
 
@@ -125,7 +124,7 @@ function get_and_store_sa_details {
     
     echo "Trying to find the storage account ${REMOTE_STATE_SA}"
     echo "Printing config_file_name: $config_file_name "
-    save_config_vars REMOTE_STATE_SA "${config_file_name}"
+    save_config_vars "${config_file_name}" REMOTE_STATE_SA
     tfstate_resource_id=$(az resource list --name ${REMOTE_STATE_SA} --resource-type Microsoft.Storage/storageAccounts | jq --raw-output '.[0].id')
     echo "Peinting tfstate_resource_id: $tfstate_resource_id"
     fail_if_null tfstate_resource_id
