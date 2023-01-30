@@ -479,15 +479,9 @@ stages:
               echo -e "$green--- Convert config file to UX format ---$reset"
                 dos2unix -q LANDSCAPE/$(workload_zone_folder)/$(workload_zone_configuration_file)
 
-              echo -e "$green--- Printing  tfstate_resource_id---$reset"
-              echo ${tfstate_resource_id}
-
               echo -e "$green--- Run the remover script that destroys the SAP workload zone (landscape) ---$reset"
                 cd $CONFIG_REPO_PATH/LANDSCAPE/$(workload_zone_folder)
 
-              echo -e "$green--- Printing  tfstate_resource_id---$reset"
-              echo ${tfstate_resource_id}
-              
                 $SAP_AUTOMATION_REPO_PATH/deploy/scripts/remover.sh \
                   --parameterfile $(workload_zone_configuration_file) \
                   --type sap_landscape \
@@ -497,8 +491,7 @@ stages:
                   --ado
 
                 return_code=$?
-              echo -e "$green--- Printing  tfstate_resource_id---$reset"
-              echo ${tfstate_resource_id}
+
 
                 #stop the pipeline after you have reset the whitelisting on your resources
                 echo "Return code from remover.sh $return_code."
