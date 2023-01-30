@@ -124,7 +124,7 @@ function get_and_store_sa_details {
     
     echo "Trying to find the storage account ${REMOTE_STATE_SA}"
     echo "Printing config_file_name: $config_file_name "
-    save_config_vars "${config_file_name}" REMOTE_STATE_SA
+    save_config_vars REMOTE_STATE_SA "${config_file_name}"
     tfstate_resource_id=$(az resource list --name ${REMOTE_STATE_SA} --resource-type Microsoft.Storage/storageAccounts | jq --raw-output '.[0].id')
     echo "Peinting tfstate_resource_id: $tfstate_resource_id"
     fail_if_null tfstate_resource_id
