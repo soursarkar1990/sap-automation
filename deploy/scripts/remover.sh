@@ -221,7 +221,6 @@ fi
 echo "Configuration file: $system_config_information"
 echo "Deployment region: $region"
 echo "Deployment region code: $region_code"
-echo "Print tfstate_resource_id: $tfstate_resource_id"
 
 key=$(echo "${parameterfile_name}" | cut -d. -f1)
 
@@ -240,12 +239,12 @@ then
     load_config_vars "${system_config_information}" "tfstate_resource_id"
     load_config_vars "${system_config_information}" "STATE_SUBSCRIPTION"
 else
-    echo "Print tfstate_resource_id: $tfstate_resource_id in else" 
     save_config_vars "${system_config_information}" "REMOTE_STATE_SA"
-    get_and_store_sa_details ${REMOTE_STATE_SA} "${system_config_information}"
+    get_and_store_sa_details "REMOTE_STATE_SA" "${system_config_information}"
     load_config_vars "${system_config_information}" "STATE_SUBSCRIPTION"
     load_config_vars "${system_config_information}" "REMOTE_STATE_RG"
     load_config_vars "${system_config_information}" "tfstate_resource_id"
+    echo "tfstate_resource_id: $tfstate_resource_id"
 fi
 
 load_config_vars "${system_config_information}" "deployer_tfstate_key"
