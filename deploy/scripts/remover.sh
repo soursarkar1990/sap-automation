@@ -239,7 +239,7 @@ then
     load_config_vars "${system_config_information}" "tfstate_resource_id"
     load_config_vars "${system_config_information}" "STATE_SUBSCRIPTION"
 else
-    save_config_vars "${system_config_information}" ${REMOTE_STATE_SA}
+    save_config_vars "${system_config_information}" REMOTE_STATE_SA
     get_and_store_sa_details ${REMOTE_STATE_SA} "${system_config_information}"
     load_config_vars "${system_config_information}" "STATE_SUBSCRIPTION"
     load_config_vars "${system_config_information}" "REMOTE_STATE_RG"
