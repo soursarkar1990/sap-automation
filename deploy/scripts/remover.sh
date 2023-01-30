@@ -207,9 +207,8 @@ system_config_information="${automation_config_directory}"/"${environment}""${re
 if [ "${deployment_system}" == sap_landscape ]; then
     load_config_vars "$parameterfile_name" "network_logical_name"
     network_logical_name=$(echo "${network_logical_name}" | tr "[:lower:]" "[:upper:]")
-    echo "Print network_logical_name: $network_logical_name"
+
     system_config_information="${automation_config_directory}"/"${environment}""${region_code}""${network_logical_name}"
-    echo "Print system_config_information: $system_config_information"
 fi
 
 if [ "${deployment_system}" == sap_system ]; then
@@ -240,13 +239,11 @@ then
     load_config_vars "${system_config_information}" "tfstate_resource_id"
     load_config_vars "${system_config_information}" "STATE_SUBSCRIPTION"
 else
-    echo "Print REMOTE_STATE_SA: $REMOTE_STATE_SA"
     save_config_vars "${system_config_information}" REMOTE_STATE_SA
-    get_and_store_sa_details "REMOTE_STATE_SA" "${system_config_information}"
+    get_and_store_sa_details ${REMOTE_STATE_SA} "${system_config_information}"
     load_config_vars "${system_config_information}" "STATE_SUBSCRIPTION"
     load_config_vars "${system_config_information}" "REMOTE_STATE_RG"
     load_config_vars "${system_config_information}" "tfstate_resource_id"
-    echo "tfstate_resource_id: $tfstate_resource_id"
 fi
 
 load_config_vars "${system_config_information}" "deployer_tfstate_key"
