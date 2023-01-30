@@ -12,6 +12,7 @@ function save_config_var() {
     local var_name=$1 var_file=$2
     sed -i -e "" -e /$var_name/d "${var_file}"
     echo "${var_name}=${!var_name}" >>"${var_file}"
+    echo "Printing the value: $var_name"
 }
 
 function save_config_vars() {
