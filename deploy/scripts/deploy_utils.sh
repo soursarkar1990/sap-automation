@@ -125,7 +125,8 @@ function get_and_store_sa_details {
     echo "Trying to find the storage account ${REMOTE_STATE_SA}"
     
     save_config_vars "${config_file_name}" REMOTE_STATE_SA
-    tfstate_resource_id=$(az resource list --name "${REMOTE_STATE_SA}" --resource-type Microsoft.Storage/storageAccounts | jq --raw-output '.[0].id')
+    #tfstate_resource_id=$(az resource list --name "${REMOTE_STATE_SA}" --resource-type Microsoft.Storage/storageAccounts | jq --raw-output '.[0].id')
+    tfstate_resource_id=$(az resource list --name "${REMOTE_STATE_SA}" --resource-type Microsoft.Storage/storageAccounts --query "[0].[id]" | ConvertFrom-Json)
     fail_if_null tfstate_resource_id
     export STATE_SUBSCRIPTION=$(echo $tfstate_resource_id | cut -d/ -f3 | tr -d \" | xargs)
     export REMOTE_STATE_RG=$(echo $tfstate_resource_id | cut -d/ -f5 | tr -d \" | xargs)
