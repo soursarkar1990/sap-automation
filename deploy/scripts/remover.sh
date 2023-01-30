@@ -207,8 +207,9 @@ system_config_information="${automation_config_directory}"/"${environment}""${re
 if [ "${deployment_system}" == sap_landscape ]; then
     load_config_vars "$parameterfile_name" "network_logical_name"
     network_logical_name=$(echo "${network_logical_name}" | tr "[:lower:]" "[:upper:]")
-
+    echo "Print network_logical_name: $network_logical_name"
     system_config_information="${automation_config_directory}"/"${environment}""${region_code}""${network_logical_name}"
+    echo "Print system_config_information: $system_config_information"
 fi
 
 if [ "${deployment_system}" == sap_system ]; then

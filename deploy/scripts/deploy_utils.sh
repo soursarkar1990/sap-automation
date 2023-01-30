@@ -55,6 +55,7 @@ function load_config_vars() {
         typeset -g "${var_name}" # declare the specified variable as global
         
         eval "${var_name}='${var_value}'" # set the variable in global context
+        echo "Printing var_name: $var_name"
     done
 }
 
