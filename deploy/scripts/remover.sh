@@ -241,6 +241,8 @@ then
 else
     save_config_vars "${system_config_information}" REMOTE_STATE_SA
     get_and_store_sa_details ${REMOTE_STATE_SA} "${system_config_information}"
+    echo "printing in else REMOTE_STATE_SA: $REMOTE_STATE_SA"
+    echo "printing in else system_config_information: $system_config_information"
     load_config_vars "${system_config_information}" "STATE_SUBSCRIPTION"
     load_config_vars "${system_config_information}" "REMOTE_STATE_RG"
     load_config_vars "${system_config_information}" "tfstate_resource_id"
