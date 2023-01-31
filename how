@@ -1102,7 +1102,7 @@ Date:   Fri Sep 16 12:27:34 2022 +0300
 Author: Harm Jan Stam <harmjan+git@harmjan.com>
 Date:   Thu Sep 15 12:06:00 2022 +0200
 
-    Declare the idle_timeout_scs_ers variable and pass it to the app_tier module (#282)
+    Declare the idle_timeout_ASCS_ers variable and pass it to the app_tier module (#282)
     
     (cherry picked from commit 3cac3954b83fadc1e225e910e5318b3a5785671b)
 
@@ -1171,7 +1171,7 @@ Date:   Thu Sep 15 18:04:01 2022 +0300
 Author: Harm Jan Stam <harmjan+git@harmjan.com>
 Date:   Thu Sep 15 12:06:00 2022 +0200
 
-    Declare the idle_timeout_scs_ers variable and pass it to the app_tier module (#282)
+    Declare the idle_timeout_ASCS_ers variable and pass it to the app_tier module (#282)
 
 [33mcommit 81caec272e1842501504085d569d4fb876e42e9c[m
 Merge: 38326437 952714cf
@@ -1253,7 +1253,7 @@ Date:   Thu Sep 15 11:30:12 2022 +0530
     
     * Release v3.4 cleanup
     
-    * command to shell change in scs install
+    * command to shell change in ASCS install
     
     * run sapinst with shell
     
@@ -1773,7 +1773,7 @@ Date:   Wed Sep 14 21:26:07 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     Co-authored-by: Kimmo Forss <kimmo.forss@microsoft.com>
     
@@ -1791,7 +1791,7 @@ Date:   Wed Sep 14 21:26:07 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -2454,7 +2454,7 @@ Date:   Wed Sep 14 21:26:07 2022 +0300
     
     * Library code simplification
     
-    * Add support for configuring Managed identities for the scs and DB servers
+    * Add support for configuring Managed identities for the ASCS and DB servers
     
     * Make the outputs more resilient
     
@@ -2508,7 +2508,7 @@ Date:   Wed Sep 14 21:26:07 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -2693,7 +2693,7 @@ Date:   Wed Sep 14 21:20:26 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     Co-authored-by: Kimmo Forss <kimmo.forss@microsoft.com>
     
@@ -2711,7 +2711,7 @@ Date:   Wed Sep 14 21:20:26 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -3374,7 +3374,7 @@ Date:   Wed Sep 14 21:20:26 2022 +0300
     
     * Library code simplification
     
-    * Add support for configuring Managed identities for the scs and DB servers
+    * Add support for configuring Managed identities for the ASCS and DB servers
     
     * Make the outputs more resilient
     
@@ -3428,7 +3428,7 @@ Date:   Wed Sep 14 21:20:26 2022 +0300
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -3637,7 +3637,7 @@ Date:   Tue Sep 13 20:43:59 2022 +0200
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -3801,7 +3801,7 @@ Date:   Mon Sep 12 02:10:36 2022 +0300
 Author: Kimmo Forss <kimforss@microsoft.com>
 Date:   Mon Sep 12 02:08:56 2022 +0300
 
-    Add support for configuring Managed identities for the scs and DB servers
+    Add support for configuring Managed identities for the ASCS and DB servers
 
 [33mcommit 788720b672a31c3196494aefcc2a71958061fde4[m
 Author: Kimmo Forss <kimforss@microsoft.com>
@@ -5292,7 +5292,7 @@ Date:   Mon Jul 18 12:18:53 2022 +0200
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     Co-authored-by: Kimmo Forss <kimmo.forss@microsoft.com>
 
@@ -5374,7 +5374,7 @@ Date:   Wed Jul 20 22:06:39 2022 +0200
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     * Update HANA_2_00_063_v0001ms.yaml
     
@@ -5404,7 +5404,7 @@ Date:   Mon Jul 18 12:18:53 2022 +0200
     
     * Update deploy/ansible/BOM-catalog/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml
     
-    SCS compatibility
+    ASCS compatibility
     
     Co-authored-by: Kimmo Forss <kimmo.forss@microsoft.com>
 
@@ -5612,7 +5612,7 @@ Date:   Thu Jun 30 19:28:23 2022 +0300
 Author: Kimmo Forss <kimforss@microsoft.com>
 Date:   Thu Jun 30 19:19:58 2022 +0300
 
-    scs admin NIC bug
+    ASCS admin NIC bug
 
 [33mcommit 0677292d41b8b543929e9bbe2990bda6c94dd004[m
 Author: Kimmo Forss <kimmo.forss@microsoft.com>
@@ -6096,9 +6096,9 @@ Date:   Mon Jun 20 15:07:52 2022 +0300
     
     * Use the correct virtual host for the app install
     
-    * Fix to do post SCS HA install check from ansible controller
+    * Fix to do post ASCS HA install check from ansible controller
     
-    * Make SCS and ERS filesystem resource device variable
+    * Make ASCS and ERS filesystem resource device variable
     
     * Landscape keyvault without deployer or private endpoint
     
@@ -6144,7 +6144,7 @@ Date:   Mon Jun 20 15:07:52 2022 +0300
     
     * ToDo
     
-    * set default scs_server_count for json to 0
+    * set default ASCS_server_count for json to 0
     
     * Template Updates (variable renames)
     
@@ -6216,7 +6216,7 @@ Date:   Mon Jun 20 13:28:10 2022 +0300
 Author: Kimmo Forss <kimforss@microsoft.com>
 Date:   Mon Jun 20 12:58:58 2022 +0300
 
-    set default scs_server_count for json to 0
+    set default ASCS_server_count for json to 0
 
 [33mcommit 3d173a5a134741466284afd391c1e48740ab0670[m
 Author: Kimmo Forss <kimforss@microsoft.com>
@@ -6388,9 +6388,9 @@ Date:   Thu Jun 16 15:04:37 2022 +0200
     
     * Use the correct virtual host for the app install
     
-    * Fix to do post SCS HA install check from ansible controller
+    * Fix to do post ASCS HA install check from ansible controller
     
-    * Make SCS and ERS filesystem resource device variable
+    * Make ASCS and ERS filesystem resource device variable
     
     * Landscape keyvault without deployer or private endpoint
     
@@ -6792,7 +6792,7 @@ Date:   Wed Jun 1 10:10:16 2022 +0300
     
     * make the same changes as sles to rhel
     
-    * find the scs and ers installation status
+    * find the ASCS and ers installation status
     
     * set db virtual host name
     
@@ -6806,7 +6806,7 @@ Date:   Wed Jun 1 10:10:16 2022 +0300
     
     * Support deployment without BOM catalog
     
-    * changes to blocks in the SUSE play and additional validation for the SCS installs
+    * changes to blocks in the SUSE play and additional validation for the ASCS installs
     
     * Look in storage account first
     
@@ -8551,9 +8551,9 @@ Date:   Tue Apr 19 09:55:53 2022 +0300
     
     * Rename S41909SPS03_v0009ms-pas-inifile-param.j2 to S41909SPS03_v0010ms-pas-inifile-param.j2
     
-    * Rename S41909SPS03_v0009ms-scs-inifile-param.j2 to S41909SPS03_v0010ms-scs-inifile-param.j2
+    * Rename S41909SPS03_v0009ms-ASCS-inifile-param.j2 to S41909SPS03_v0010ms-ASCS-inifile-param.j2
     
-    * Rename S41909SPS03_v0009ms-scsha-inifile-param.j2 to S41909SPS03_v0010ms-scsha-inifile-param.j2
+    * Rename S41909SPS03_v0009ms-ASCSha-inifile-param.j2 to S41909SPS03_v0010ms-ASCSha-inifile-param.j2
     
     * Rename S41909SPS03_v0009ms-web-inifile-param.j2 to S41909SPS03_v0010ms-web-inifile-param.j2
     
@@ -8615,7 +8615,7 @@ Date:   Tue Apr 19 09:55:53 2022 +0300
     
     * Update HANA_2_00_055_v0006ms.yaml
     
-    * scs lb logic
+    * ASCS lb logic
     
     * Artemis
     
@@ -9079,7 +9079,7 @@ Date:   Tue Apr 19 09:55:53 2022 +0300
     
     * make the same changes as sles to rhel
     
-    * find the scs and ers installation status
+    * find the ASCS and ers installation status
     
     * set db virtual host name
     
@@ -9093,7 +9093,7 @@ Date:   Tue Apr 19 09:55:53 2022 +0300
     
     * Support deployment without BOM catalog
     
-    * changes to blocks in the SUSE play and additional validation for the SCS installs
+    * changes to blocks in the SUSE play and additional validation for the ASCS installs
     
     * Look in storage account first
     
@@ -10064,7 +10064,7 @@ Date:   Tue Mar 29 14:13:17 2022 +0300
     
     * make the same changes as sles to rhel
     
-    * find the scs and ers installation status
+    * find the ASCS and ers installation status
     
     * set db virtual host name
     
@@ -10074,7 +10074,7 @@ Date:   Tue Mar 29 14:13:17 2022 +0300
     
     * Support deployment without BOM catalog
     
-    * changes to blocks in the SUSE play and additional validation for the SCS installs
+    * changes to blocks in the SUSE play and additional validation for the ASCS installs
     
     * Look in storage account first
     
@@ -10279,7 +10279,7 @@ Date:   Sun Mar 6 17:07:50 2022 +0530
 Author: hdamecharla <hdamecharla@microsoft.com>
 Date:   Sun Mar 6 09:45:26 2022 +0530
 
-    Add redhat related changes for SCS install to #c113420
+    Add redhat related changes for ASCS install to #c113420
 
 [33mcommit c113420e1005fe046254048feaad3db52bb877e3[m
 Author: hdamecharla <hdamecharla@microsoft.com>
@@ -10297,7 +10297,7 @@ Date:   Fri Mar 4 01:07:55 2022 +0530
 Author: hdamecharla <hdamecharla@microsoft.com>
 Date:   Fri Mar 4 00:52:34 2022 +0530
 
-    Fixes when profile update to happen only after both SCS and ERS are installed and few linting changes
+    Fixes when profile update to happen only after both ASCS and ERS are installed and few linting changes
 
 [33mcommit e47a6e17284dfdee2ebf69cdffb97991e1f494fd[m
 Author: hdamecharla <hdamecharla@microsoft.com>
@@ -11213,7 +11213,7 @@ Date:   Tue Feb 15 09:32:43 2022 +0000
 Author: Kimmo Forss <kimmo.forss@microsoft.com>
 Date:   Tue Feb 15 11:30:59 2022 +0200
 
-    Update playbook_05_00_00_sap_scs_install.yaml
+    Update playbook_05_00_00_sap_ASCS_install.yaml
 
 [33mcommit dc3011bd6faf016820387bb6df33ef8a6d46fe9d[m
 Author: Kimmo Forss <kimmo.forss@microsoft.com>
@@ -11237,7 +11237,7 @@ Date:   Tue Feb 15 11:27:57 2022 +0200
 Author: Kimmo Forss <kimmo.forss@microsoft.com>
 Date:   Tue Feb 15 11:27:41 2022 +0200
 
-    Delete playbook_05_00_00_sap_sa_scs_install.yaml
+    Delete playbook_05_00_00_sap_sa_ASCS_install.yaml
 
 [33mcommit 8cfd6dff599d17ee0518dd3f3ea91facbf15827f[m
 Author: Kimmo Forss <kimmo.forss@microsoft.com>
@@ -11255,9 +11255,9 @@ Date:   Tue Feb 15 09:21:50 2022 +0000
 Author: Kimmo Forss <kimmo.forss@microsoft.com>
 Date:   Tue Feb 15 11:12:39 2022 +0200
 
-    Update playbook_05_00_00_sap_sa_scs_install.yaml (#87)
+    Update playbook_05_00_00_sap_sa_ASCS_install.yaml (#87)
     
-    * Update playbook_05_00_00_sap_sa_scs_install.yaml
+    * Update playbook_05_00_00_sap_sa_ASCS_install.yaml
     
     * Update playbook_05_02_sap_pas_install.yaml
     

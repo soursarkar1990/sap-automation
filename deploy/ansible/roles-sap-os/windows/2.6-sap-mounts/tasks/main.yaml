@@ -18,6 +18,6 @@
   vars:
     ansible_become_password:           "{{ domain_user_password }}"
   loop:
-    - { node_tier: 'all', path: '\\{{ scs_server }}\SAP' }
+    - { node_tier: 'all', path: '\\{{ ASCS_server }}\SAP' }
 
 # ...

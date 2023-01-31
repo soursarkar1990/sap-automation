@@ -27,7 +27,7 @@ cmd_dir="$(dirname "$(readlink -e "${BASH_SOURCE[0]}")")"
 #           playbook_02_os_sap_specific_config.yaml                                       \
 #           playbook_03_bom_processing.yaml                                               \
 #           playbook_04_00_00_hana_db_install.yaml                                        \
-#           playbook_05_00_00_sap_scs_install.yaml                                        \
+#           playbook_05_00_00_sap_ASCS_install.yaml                                        \
 #           playbook_05_01_sap_dbload.yaml                                                \
 #           playbook_05_02_sap_pas_install.yaml                                           \
 #           playbook_05_03_sap_app_install.yaml                                           \
@@ -102,7 +102,7 @@ options=(
         "SAP specific Operating System configuration"
         "BOM Processing"
         "Database Instance installation"
-        "SCS Install"
+        "ASCS Install"
         "Database High Availability Setup"
         "Database Load"
         "Primary Application Server installation"
@@ -127,7 +127,7 @@ all_playbooks=(
         ${cmd_dir}/playbook_02_os_sap_specific_config.yaml
         ${cmd_dir}/playbook_03_bom_processing.yaml
         ${cmd_dir}/playbook_04_00_00_db_install.yaml
-        ${cmd_dir}/playbook_05_00_00_sap_scs_install.yaml
+        ${cmd_dir}/playbook_05_00_00_sap_ASCS_install.yaml
         ${cmd_dir}/playbook_04_00_01_db_ha.yaml
         ${cmd_dir}/playbook_05_01_sap_dbload.yaml
         ${cmd_dir}/playbook_05_02_sap_pas_install.yaml

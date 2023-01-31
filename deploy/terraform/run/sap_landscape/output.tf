@@ -132,20 +132,20 @@ output "sid_password_secret_name" {
 
 ###############################################################################
 #                                                                             #
-#                            iSCSI                                            #
+#                            iASCSI                                            #
 #                                                                             #
 ###############################################################################
 
-output "iscsi_authentication_type" {
-  value = try(module.sap_landscape.iscsi_authentication_type, "")
+output "iASCSi_authentication_type" {
+  value = try(module.sap_landscape.iASCSi_authentication_type, "")
 }
 
-output "iscsi_authentication_username" {
-  value = try(module.sap_landscape.iscsi_authentication_username, "")
+output "iASCSi_authentication_username" {
+  value = try(module.sap_landscape.iASCSi_authentication_username, "")
 }
 
-output "iscsi_private_ip" {
-  value = try(module.sap_landscape.nics_iscsi[*].private_ip_address, [])
+output "iASCSi_private_ip" {
+  value = try(module.sap_landscape.nics_iASCSi[*].private_ip_address, [])
 }
 
 ###############################################################################
@@ -153,7 +153,7 @@ output "iscsi_private_ip" {
 #                            DNS                                 #
 #                                                                             #
 ###############################################################################
-output "dns_info_iscsi" {
+output "dns_info_iASCSi" {
   description = "value"
   value = module.sap_landscape.dns_info_vms
 }

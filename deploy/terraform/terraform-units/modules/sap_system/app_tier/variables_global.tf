@@ -86,8 +86,8 @@ variable "use_loadbalancers_for_standalone_deployments" {
   default     = true
 }
 
-variable "idle_timeout_scs_ers" {
-  description = "Sets the idle timeout setting for the SCS and ERS loadbalancer"
+variable "idle_timeout_ASCS_ers" {
+  description = "Sets the idle timeout setting for the ASCS and ERS loadbalancer"
   default     = 4
 }
 

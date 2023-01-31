@@ -7,7 +7,7 @@ target:  'Solution Manager 7.2 FPS 12'
 version: 0001ms
 
 product_ids:
-  scs:
+  ASCS:
   dbl:
   pas:
   app:

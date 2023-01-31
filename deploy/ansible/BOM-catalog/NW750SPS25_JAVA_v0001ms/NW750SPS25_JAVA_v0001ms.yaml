@@ -10,8 +10,8 @@ defaults:
 
 product_ids:
   dbl:                                NW_Java_DB:NW750.HDB.PD
-  scs:                                NW_Java_SCS:NW750.HDB.PD
-  scs_ha:                             NW_Java_SCS:NW750.HDB.HA
+  ASCS:                                NW_Java_ASCS:NW750.HDB.PD
+  ASCS_ha:                             NW_Java_ASCS:NW750.HDB.HA
   pas:                                NW_Java_CI:NW750.HDB.PD
   pas_ha:                             NW_Java_CI:NW750.HDB.HA
   app:                                NW_DI:NW750.HDB.PD

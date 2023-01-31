@@ -76,23 +76,23 @@ locals {
     length(try(var.infrastructure.vnets.sap.subnet_web.nsg.arm_id, ""))
   ) > 0
 
-  subnet_iscsi_defined = (
-    length(var.iscsi_subnet_address_prefix) +
-    length(try(var.infrastructure.vnets.sap.subnet_iscsi.prefix, "")) +
-    length(var.iscsi_subnet_arm_id) +
-    length(try(var.infrastructure.vnets.sap.subnet_iscsi.arm_id, ""))
+  subnet_iASCSi_defined = (
+    length(var.iASCSi_subnet_address_prefix) +
+    length(try(var.infrastructure.vnets.sap.subnet_iASCSi.prefix, "")) +
+    length(var.iASCSi_subnet_arm_id) +
+    length(try(var.infrastructure.vnets.sap.subnet_iASCSi.arm_id, ""))
   ) > 0
 
-  subnet_iscsi_arm_id_defined = (
-    length(var.iscsi_subnet_arm_id) +
-    length(try(var.infrastructure.vnets.sap.subnet_iscsi.arm_id, ""))
+  subnet_iASCSi_arm_id_defined = (
+    length(var.iASCSi_subnet_arm_id) +
+    length(try(var.infrastructure.vnets.sap.subnet_iASCSi.arm_id, ""))
   ) > 0
 
-  subnet_iscsi_nsg_defined = (
-    length(var.iscsi_subnet_nsg_name) +
-    length(try(var.infrastructure.vnets.sap.subnet_iscsi.nsg.name, "")) +
-    length(var.iscsi_subnet_nsg_arm_id) +
-    length(try(var.infrastructure.vnets.sap.subnet_iscsi.nsg.arm_id, ""))
+  subnet_iASCSi_nsg_defined = (
+    length(var.iASCSi_subnet_nsg_name) +
+    length(try(var.infrastructure.vnets.sap.subnet_iASCSi.nsg.name, "")) +
+    length(var.iASCSi_subnet_nsg_arm_id) +
+    length(try(var.infrastructure.vnets.sap.subnet_iASCSi.nsg.arm_id, ""))
   ) > 0
 
   subnet_anf_defined = (
@@ -331,28 +331,28 @@ locals {
   )
 
 
-  subnet_iscsi = merge(
+  subnet_iASCSi = merge(
     (
       {
-        "name" = try(var.infrastructure.vnets.sap.subnet_iscsi.name, var.iscsi_subnet_name)
+        "name" = try(var.infrastructure.vnets.sap.subnet_iASCSi.name, var.iASCSi_subnet_name)
       }
       ), (
-      local.subnet_iscsi_arm_id_defined ? (
+      local.subnet_iASCSi_arm_id_defined ? (
         {
-          "arm_id" = try(var.infrastructure.vnets.sap.subnet_iscsi.arm_id, var.iscsi_subnet_arm_id)
+          "arm_id" = try(var.infrastructure.vnets.sap.subnet_iASCSi.arm_id, var.iASCSi_subnet_arm_id)
         }
         ) : (
         null
       )), (
       {
-        "prefix" = try(var.infrastructure.vnets.sap.subnet_iscsi.prefix, var.iscsi_subnet_address_prefix)
+        "prefix" = try(var.infrastructure.vnets.sap.subnet_iASCSi.prefix, var.iASCSi_subnet_address_prefix)
       }
       ), (
       local.subnet_web_nsg_defined ? (
         {
           "nsg" = {
-            "name"   = try(var.infrastructure.vnets.sap.subnet_iscsi.nsg.name, var.iscsi_subnet_nsg_name)
-            "arm_id" = try(var.infrastructure.vnets.sap.subnet_iscsi.nsg.arm_id, var.iscsi_subnet_nsg_arm_id)
+            "name"   = try(var.infrastructure.vnets.sap.subnet_iASCSi.nsg.name, var.iASCSi_subnet_nsg_name)
+            "arm_id" = try(var.infrastructure.vnets.sap.subnet_iASCSi.nsg.arm_id, var.iASCSi_subnet_nsg_arm_id)
           }
         }
         ) : (
@@ -397,9 +397,9 @@ locals {
       ) : (
       null
     )), (
-    local.subnet_iscsi_defined ? (
+    local.subnet_iASCSi_defined ? (
       {
-        "subnet_iscsi" = local.subnet_iscsi
+        "subnet_iASCSi" = local.subnet_iASCSi
       }
       ) : (
       null
@@ -410,21 +410,21 @@ locals {
   temp_vnet = merge(local.vnets, { "sap" = local.all_subnets })
 
 
-  iscsi = {
-    iscsi_count = max(var.iscsi_count, try(var.infrastructure.iscsi.iscsi_count, 0))
-    use_DHCP    = try(coalesce(var.iscsi_useDHCP, try(var.infrastructure.iscsi.use_DHCP, false)), "")
-    size        = try(coalesce(var.iscsi_size, try(var.infrastructure.iscsi.size, "Standard_D2s_v3")), "Standard_D2s_v3")
+  iASCSi = {
+    iASCSi_count = max(var.iASCSi_count, try(var.infrastructure.iASCSi.iASCSi_count, 0))
+    use_DHCP    = try(coalesce(var.iASCSi_useDHCP, try(var.infrastructure.iASCSi.use_DHCP, false)), "")
+    size        = try(coalesce(var.iASCSi_size, try(var.infrastructure.iASCSi.size, "Standard_D2s_v3")), "Standard_D2s_v3")
     os = {
-      source_image_id = try(coalesce(var.iscsi_image.source_image_id, try(var.infrastructure.iscsi.os.source_image_id, "")), "")
-      publisher       = try(coalesce(var.iscsi_image.publisher, try(var.infrastructure.iscsi.os.publisher, "")), "")
-      offer           = try(coalesce(var.iscsi_image.offer, try(var.infrastructure.iscsi.os.offer, "")), "")
-      sku             = try(coalesce(var.iscsi_image.sku, try(var.infrastructure.iscsi.os.sku, "")), "")
-      version         = try(coalesce(var.iscsi_image.version, try(var.infrastructure.iscsi.sku, "")), "")
+      source_image_id = try(coalesce(var.iASCSi_image.source_image_id, try(var.infrastructure.iASCSi.os.source_image_id, "")), "")
+      publisher       = try(coalesce(var.iASCSi_image.publisher, try(var.infrastructure.iASCSi.os.publisher, "")), "")
+      offer           = try(coalesce(var.iASCSi_image.offer, try(var.infrastructure.iASCSi.os.offer, "")), "")
+      sku             = try(coalesce(var.iASCSi_image.sku, try(var.infrastructure.iASCSi.os.sku, "")), "")
+      version         = try(coalesce(var.iASCSi_image.version, try(var.infrastructure.iASCSi.sku, "")), "")
     }
 
     authentication = {
-      type     = try(coalesce(var.iscsi_authentication_type, try(var.infrastructure.iscsi.authentication.type, "key")), "key")
-      username = try(coalesce(var.iscsi_authentication_username, try(var.authentication.username, "azureadm")), "azureadm")
+      type     = try(coalesce(var.iASCSi_authentication_type, try(var.infrastructure.iASCSi.authentication.type, "key")), "key")
+      username = try(coalesce(var.iASCSi_authentication_username, try(var.authentication.username, "azureadm")), "azureadm")
     }
   }
 
@@ -441,9 +441,9 @@ locals {
       "vnets" = local.temp_vnet
     }
     ), (
-    local.iscsi.iscsi_count > 0 ? (
+    local.iASCSi.iASCSi_count > 0 ? (
       {
-        "iscsi" = local.iscsi
+        "iASCSi" = local.iASCSi
       }
     ) : null)
   )

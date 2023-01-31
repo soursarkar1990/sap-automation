@@ -14,7 +14,7 @@ locals {
   landscape_keyvault_names                        = var.naming.keyvault_names.WORKLOAD_ZONE
   sid_keyvault_names                              = var.naming.keyvault_names.SDU
   resource_suffixes                               = var.naming.resource_suffixes
-  virtualmachine_names                            = var.naming.virtualmachine_names.ISCSI_COMPUTERNAME
+  virtualmachine_names                            = var.naming.virtualmachine_names.IASCSI_COMPUTERNAME
 
   // Region and metadata
   region = var.infrastructure.region
@@ -463,131 +463,131 @@ locals {
 
   #########################################################################################
   #                                                                                       #
-  #  iSCSI definitioms                                                                    #
+  #  iASCSI definitioms                                                                    #
   #                                                                                       #
   #########################################################################################
-  iscsi_count  = try(var.infrastructure.iscsi.iscsi_count, 0)
-  enable_iscsi = local.iscsi_count > 0
-  iscsi_size   = try(var.infrastructure.iscsi.size, "Standard_D2s_v3")
+  iASCSi_count  = try(var.infrastructure.iASCSi.iASCSi_count, 0)
+  enable_iASCSi = local.iASCSi_count > 0
+  iASCSi_size   = try(var.infrastructure.iASCSi.size, "Standard_D2s_v3")
 
-  use_DHCP = try(var.infrastructure.iscsi.use_DHCP, false)
+  use_DHCP = try(var.infrastructure.iASCSi.use_DHCP, false)
 
-  iscsi_os = try(var.infrastructure.iscsi.os,
+  iASCSi_os = try(var.infrastructure.iASCSi.os,
     {
-      "publisher" = try(var.infrastructure.iscsi.os.publisher, "SUSE")
-      "offer"     = try(var.infrastructure.iscsi.os.offer, "sles-sap-15-sp3")
-      "sku"       = try(var.infrastructure.iscsi.os.sku, "gen2")
-      "version"   = try(var.infrastructure.iscsi.os.version, "latest")
+      "publisher" = try(var.infrastructure.iASCSi.os.publisher, "SUSE")
+      "offer"     = try(var.infrastructure.iASCSi.os.offer, "sles-sap-15-sp3")
+      "sku"       = try(var.infrastructure.iASCSi.os.sku, "gen2")
+      "version"   = try(var.infrastructure.iASCSi.os.version, "latest")
   })
 
-  iscsi_auth_type = local.enable_iscsi ? (
-    try(var.infrastructure.iscsi.authentication.type, "key")) : (
+  iASCSi_auth_type = local.enable_iASCSi ? (
+    try(var.infrastructure.iASCSi.authentication.type, "key")) : (
     ""
   )
-  iscsi_auth_username = local.enable_iscsi ? (
-    local.iscsi_username_exist ? (
-      data.azurerm_key_vault_secret.iscsi_username[0].value) : (
+  iASCSi_auth_username = local.enable_iASCSi ? (
+    local.iASCSi_username_exist ? (
+      data.azurerm_key_vault_secret.iASCSi_username[0].value) : (
       try(var.authentication.username, "azureadm")
     )) : (
     ""
   )
-  iscsi_nic_ips = local.sub_iscsi_exists ? try(var.infrastructure.iscsi.iscsi_nic_ips, []) : []
+  iASCSi_nic_ips = local.sub_iASCSi_exists ? try(var.infrastructure.iASCSi.iASCSi_nic_ips, []) : []
 
-  // By default, ssh key for iSCSI uses generated public key.
+  // By default, ssh key for iASCSI uses generated public key.
   // Provide sshkey.path_to_public_key and path_to_private_key overides it
-  enable_iscsi_auth_key = local.enable_iscsi && local.iscsi_auth_type == "key"
-  iscsi_public_key = local.enable_iscsi_auth_key ? (
-    local.iscsi_key_exist ? (
-      data.azurerm_key_vault_secret.iscsi_pk[0].value) : (
-      try(file(var.authentication.path_to_public_key), tls_private_key.iscsi[0].public_key_openssh)
+  enable_iASCSi_auth_key = local.enable_iASCSi && local.iASCSi_auth_type == "key"
+  iASCSi_public_key = local.enable_iASCSi_auth_key ? (
+    local.iASCSi_key_exist ? (
+      data.azurerm_key_vault_secret.iASCSi_pk[0].value) : (
+      try(file(var.authentication.path_to_public_key), tls_private_key.iASCSi[0].public_key_openssh)
     )) : (
     null
   )
-  iscsi_private_key = local.enable_iscsi_auth_key ? (
-    local.iscsi_key_exist ? (
-      data.azurerm_key_vault_secret.iscsi_ppk[0].value) : (
-      try(file(var.authentication.path_to_private_key), tls_private_key.iscsi[0].private_key_pem)
-    )) : (
-    null
-  )
-
-  // By default, authentication type of iSCSI target is ssh key pair but using username/password is a potential usecase.
-  enable_iscsi_auth_password = local.enable_iscsi && local.iscsi_auth_type == "password"
-  iscsi_auth_password = local.enable_iscsi_auth_password ? (
-    local.iscsi_pwd_exist ? (
-      data.azurerm_key_vault_secret.iscsi_password[0].value) : (
-      try(var.infrastructure.iscsi.authentication.password, random_password.iscsi_password[0].result)
+  iASCSi_private_key = local.enable_iASCSi_auth_key ? (
+    local.iASCSi_key_exist ? (
+      data.azurerm_key_vault_secret.iASCSi_ppk[0].value) : (
+      try(file(var.authentication.path_to_private_key), tls_private_key.iASCSi[0].private_key_pem)
     )) : (
     null
   )
 
-  iscsi = local.enable_iscsi ? merge(var.infrastructure.iscsi, {
-    iscsi_count = local.iscsi_count,
-    size        = local.iscsi_size,
-    os          = local.iscsi_os,
+  // By default, authentication type of iASCSI target is ssh key pair but using username/password is a potential usecase.
+  enable_iASCSi_auth_password = local.enable_iASCSi && local.iASCSi_auth_type == "password"
+  iASCSi_auth_password = local.enable_iASCSi_auth_password ? (
+    local.iASCSi_pwd_exist ? (
+      data.azurerm_key_vault_secret.iASCSi_password[0].value) : (
+      try(var.infrastructure.iASCSi.authentication.password, random_password.iASCSi_password[0].result)
+    )) : (
+    null
+  )
+
+  iASCSi = local.enable_iASCSi ? merge(var.infrastructure.iASCSi, {
+    iASCSi_count = local.iASCSi_count,
+    size        = local.iASCSi_size,
+    os          = local.iASCSi_os,
     authentication = {
-      type     = local.iscsi_auth_type,
-      username = local.iscsi_auth_username
+      type     = local.iASCSi_auth_type,
+      username = local.iASCSi_auth_username
     },
-    iscsi_nic_ips = local.iscsi_nic_ips
+    iASCSi_nic_ips = local.iASCSi_nic_ips
   }) : null
 
-  // iSCSI subnet
-  enable_sub_iscsi = (
-    length(try(var.infrastructure.vnets.sap.subnet_iscsi.arm_id, "")) +
-    length(try(var.infrastructure.vnets.sap.subnet_iscsi.prefix, ""))
+  // iASCSI subnet
+  enable_sub_iASCSi = (
+    length(try(var.infrastructure.vnets.sap.subnet_iASCSi.arm_id, "")) +
+    length(try(var.infrastructure.vnets.sap.subnet_iASCSi.prefix, ""))
   ) > 0
-  sub_iscsi_arm_id = try(var.infrastructure.vnets.sap.subnet_iscsi.arm_id, "")
-  sub_iscsi_exists = length(local.sub_iscsi_arm_id) > 0
-  sub_iscsi_name = local.sub_iscsi_exists ? (
-    try(split("/", local.sub_iscsi_arm_id)[10], "")) : (
-    length(try(var.infrastructure.vnets.sap.subnet_iscsi.name, "")) > 0 ? (
-      var.infrastructure.vnets.sap.subnet_iscsi.name) : (
+  sub_iASCSi_arm_id = try(var.infrastructure.vnets.sap.subnet_iASCSi.arm_id, "")
+  sub_iASCSi_exists = length(local.sub_iASCSi_arm_id) > 0
+  sub_iASCSi_name = local.sub_iASCSi_exists ? (
+    try(split("/", local.sub_iASCSi_arm_id)[10], "")) : (
+    length(try(var.infrastructure.vnets.sap.subnet_iASCSi.name, "")) > 0 ? (
+      var.infrastructure.vnets.sap.subnet_iASCSi.name) : (
       format("%s%s%s%s",
-        var.naming.resource_prefixes.iscsi_subnet,
+        var.naming.resource_prefixes.iASCSi_subnet,
         length(local.prefix) > 0 ? (
           local.prefix) : (
           var.infrastructure.environment
         ),
         var.naming.separator,
-        local.resource_suffixes.iscsi_subnet
+        local.resource_suffixes.iASCSi_subnet
       )
     )
   )
-  sub_iscsi_prefix = local.sub_iscsi_exists ? "" : try(var.infrastructure.vnets.sap.subnet_iscsi.prefix, "")
+  sub_iASCSi_prefix = local.sub_iASCSi_exists ? "" : try(var.infrastructure.vnets.sap.subnet_iASCSi.prefix, "")
 
-  // iSCSI NSG
-  var_sub_iscsi_nsg    = try(var.infrastructure.vnets.sap.subnet_iscsi.nsg, {})
-  sub_iscsi_nsg_arm_id = try(var.infrastructure.vnets.sap.subnet_iscsi_nsg.arm_id, "")
-  sub_iscsi_nsg_exists = length(local.sub_iscsi_nsg_arm_id) > 0
-  sub_iscsi_nsg_name = local.sub_iscsi_nsg_exists ? (
-    try(split("/", local.sub_iscsi_nsg_arm_id)[8], "")) : (
-    try(var.infrastructure.vnets.sap.subnet_iscsi_nsg.name,
+  // iASCSI NSG
+  var_sub_iASCSi_nsg    = try(var.infrastructure.vnets.sap.subnet_iASCSi.nsg, {})
+  sub_iASCSi_nsg_arm_id = try(var.infrastructure.vnets.sap.subnet_iASCSi_nsg.arm_id, "")
+  sub_iASCSi_nsg_exists = length(local.sub_iASCSi_nsg_arm_id) > 0
+  sub_iASCSi_nsg_name = local.sub_iASCSi_nsg_exists ? (
+    try(split("/", local.sub_iASCSi_nsg_arm_id)[8], "")) : (
+    try(var.infrastructure.vnets.sap.subnet_iASCSi_nsg.name,
       format("%s%s%s%s",
-        var.naming.resource_prefixes.iscsi_subnet_nsg,
+        var.naming.resource_prefixes.iASCSi_subnet_nsg,
         length(local.prefix) > 0 ? (
           local.prefix) : (
           var.infrastructure.environment
         ),
         var.naming.separator,
-      local.resource_suffixes.iscsi_subnet_nsg)
+      local.resource_suffixes.iASCSi_subnet_nsg)
     )
 
   )
 
 
-  input_iscsi_public_key_secret_name  = try(var.key_vault.kv_iscsi_sshkey_pub, "")
-  input_iscsi_private_key_secret_name = try(var.key_vault.kv_iscsi_sshkey_prvt, "")
-  input_iscsi_password_secret_name    = try(var.key_vault.kv_iscsi_pwd, "")
-  input_iscsi_username_secret_name    = try(var.key_vault.kv_iscsi_username, "")
-  iscsi_key_exist                     = try(length(local.input_iscsi_public_key_secret_name) > 0, false)
-  iscsi_pwd_exist                     = try(length(local.input_iscsi_password_secret_name) > 0, false)
-  iscsi_username_exist                = try(length(local.input_iscsi_username_secret_name) > 0, false)
+  input_iASCSi_public_key_secret_name  = try(var.key_vault.kv_iASCSi_sshkey_pub, "")
+  input_iASCSi_private_key_secret_name = try(var.key_vault.kv_iASCSi_sshkey_prvt, "")
+  input_iASCSi_password_secret_name    = try(var.key_vault.kv_iASCSi_pwd, "")
+  input_iASCSi_username_secret_name    = try(var.key_vault.kv_iASCSi_username, "")
+  iASCSi_key_exist                     = try(length(local.input_iASCSi_public_key_secret_name) > 0, false)
+  iASCSi_pwd_exist                     = try(length(local.input_iASCSi_password_secret_name) > 0, false)
+  iASCSi_username_exist                = try(length(local.input_iASCSi_username_secret_name) > 0, false)
 
-  iscsi_pk_name = local.iscsi_key_exist ? (
-    local.input_iscsi_public_key_secret_name) : (
+  iASCSi_pk_name = local.iASCSi_key_exist ? (
+    local.input_iASCSi_public_key_secret_name) : (
     trimprefix(
-      format("%s-iscsi-sshkey-pub",
+      format("%s-iASCSi-sshkey-pub",
         length(local.prefix) > 0 ? (
           local.prefix) : (
           var.infrastructure.environment
@@ -597,10 +597,10 @@ locals {
     )
   )
 
-  iscsi_ppk_name = local.iscsi_key_exist ? (
-    local.input_iscsi_private_key_secret_name) : (
+  iASCSi_ppk_name = local.iASCSi_key_exist ? (
+    local.input_iASCSi_private_key_secret_name) : (
     trimprefix(
-      format("%s-iscsi-sshkey",
+      format("%s-iASCSi-sshkey",
         length(local.prefix) > 0 ? (
           local.prefix) : (
           var.infrastructure.environment
@@ -611,10 +611,10 @@ locals {
   )
 
 
-  iscsi_pwd_name = local.iscsi_pwd_exist ? (
-    local.input_iscsi_password_secret_name) : (
+  iASCSi_pwd_name = local.iASCSi_pwd_exist ? (
+    local.input_iASCSi_password_secret_name) : (
     trimprefix(
-      format("%s-iscsi-password",
+      format("%s-iASCSi-password",
         length(local.prefix) > 0 ? (
           local.prefix) : (
           var.infrastructure.environment
@@ -624,10 +624,10 @@ locals {
     )
   )
 
-  iscsi_username_name = local.iscsi_username_exist ? (
-    local.input_iscsi_username_secret_name) : (
+  iASCSi_username_name = local.iASCSi_username_exist ? (
+    local.input_iASCSi_username_secret_name) : (
     trimprefix(
-      format("%s-iscsi-username",
+      format("%s-iASCSi-username",
         length(local.prefix) > 0 ? (
           local.prefix) : (
           var.infrastructure.environment
@@ -637,7 +637,7 @@ locals {
     )
   )
 
-  full_iscsiserver_names = flatten([for vm in local.virtualmachine_names :
+  full_iASCSiserver_names = flatten([for vm in local.virtualmachine_names :
     format("%s%s%s%s%s",
       var.naming.resource_prefixes.vm,
       local.prefix,

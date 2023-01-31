@@ -1,6 +1,6 @@
 ########################################################################################################################################################################################################
 #                                                                                                                                                                                                      #
-# Installation service 'SAP S/4HANA Server 2021 > SAP HANA Database > Installation > Application Server ABAP > Distributed System > ASCS Instance', product id 'NW_ABAP_ASCS:S4HANA2021.CORE.HDB.ABAP' #
+# Installation service 'SAP S/4HANA Server 2021 > SAP HANA Database > Installation > Application Server ABAP > Distributed System > AASCS Instance', product id 'NW_ABAP_AASCS:S4HANA2021.CORE.HDB.ABAP' #
 #                                                                                                                                                                                                      #
 ########################################################################################################################################################################################################
 
@@ -14,9 +14,9 @@ nwUsers.sidadmPassword =
 NW_GetMasterPassword.masterPwd = 
 NW_GetSidNoProfiles.sid = X00
 
-NW_SCS_Instance.ascsInstallGateway = true
-NW_SCS_Instance.instanceNumber = 00
-NW_SCS_Instance.scsVirtualHostname = x00scs00l014
+NW_ASCS_Instance.aASCSInstallGateway = true
+NW_ASCS_Instance.instanceNumber = 00
+NW_ASCS_Instance.ASCSVirtualHostname = x00ASCS00l014
 
 NW_Unpack.sapExeSar = /usr/sap/install/download_basket/SAPEXE_100-80005374.SAR
 NW_SAPCrypto.SAPCryptoFile = /usr/sap/install/download_basket/SAPEXE_100-80005374.SAR

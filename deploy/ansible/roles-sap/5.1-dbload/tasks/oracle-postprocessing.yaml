@@ -34,7 +34,7 @@
   when:
     - ansible_memory_mb.real.total > 4194304
     - supported_tiers != "pas"
-    - supported_tiers == "scs"
+    - supported_tiers == "ASCS"
 
 
 - name:                                "Oracle SGA & PGA: create updatesga.sql"

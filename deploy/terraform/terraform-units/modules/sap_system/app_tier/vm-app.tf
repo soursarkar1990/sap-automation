@@ -105,7 +105,7 @@ resource "azurerm_network_interface" "app_admin" {
 # Create the Linux Application VM(s)
 resource "azurerm_linux_virtual_machine" "app" {
   provider   = azurerm.main
-  depends_on = [azurerm_linux_virtual_machine.scs,azurerm_windows_virtual_machine.scs]
+  depends_on = [azurerm_linux_virtual_machine.ASCS,azurerm_windows_virtual_machine.ASCS]
   count = local.enable_deployment && upper(var.application_tier.app_os.os_type) == "LINUX" ? (
     local.application_server_count) : (
     0

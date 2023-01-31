@@ -3,7 +3,7 @@
 
 #############################################################################################################################################################################
 #                                                                                                                                                                           #
-# Installation service 'SAP NetWeaver 7.5 > Oracle > Installation > Application Server ABAP > Distributed System > SCS Instance', product id 'NW_ABAP_SCS:NW750.ORA.ABAP' #
+# Installation service 'SAP NetWeaver 7.5 > Oracle > Installation > Application Server ABAP > Distributed System > ASCS Instance', product id 'NW_ABAP_ASCS:NW750.ORA.ABAP' #
 #                                                                                                                                                                           #
 #############################################################################################################################################################################
 
@@ -19,10 +19,10 @@ NW_GetMasterPassword.masterPwd                                       = {{ main_p
 NW_GetSidNoProfiles.sid                                              = {{ sap_sid }}
 
 
-NW_SCS_Instance.SCSInstallGateway                                   = true
-NW_SCS_Instance.SCSInstallWebDispatcher                             = false
-NW_SCS_Instance.instanceNumber                                       = {{ scs_instance_number }}
-NW_SCS_Instance.scsVirtualHostname                                   = {{ sap_scs_hostname }}
+NW_ASCS_Instance.ASCSInstallGateway                                   = true
+NW_ASCS_Instance.ASCSInstallWebDispatcher                             = false
+NW_ASCS_Instance.instanceNumber                                       = {{ ASCS_instance_number }}
+NW_ASCS_Instance.ASCSVirtualHostname                                   = {{ sap_ASCS_hostname }}
 
 #NW_adaptProfile.skipSecurityProfileSettings                          = true
 NW_getFQDN.FQDN                                                      = {{ sap_fqdn }}

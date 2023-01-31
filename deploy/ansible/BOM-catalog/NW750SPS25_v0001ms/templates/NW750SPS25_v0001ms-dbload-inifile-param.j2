@@ -49,6 +49,6 @@ NW_HDB_getDBInfo.usingSSL                                             = true
 
 NW_Recovery_Install_HDB.extractLocation                               = /hana/backup/{{ db_sid | upper }}/HDB{{ db_instance_number }}/backup/data/DB_{{ db_sid | upper }}{{ db_instance_number }}
 
-NW_checkMsgServer.abapMSPort                                          = 36{{ scs_instance_number }}
+NW_checkMsgServer.abapMSPort                                          = 36{{ ASCS_instance_number }}
 NW_getLoadType.loadType                                               = SAP
 NW_readProfileDir.profileDir                                          = {{ sap_profile_dir }}

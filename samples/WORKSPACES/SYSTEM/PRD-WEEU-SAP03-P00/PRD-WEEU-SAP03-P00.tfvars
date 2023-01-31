@@ -6,12 +6,12 @@
 #  Define the database tier values and set enable_app_tier_deployment to false           #
 #                                                                                        #
 # Distributed (1+1 or 1+1+N)                                                             #
-#  Define the database tier values and define scs_server_count = 1,                      #
+#  Define the database tier values and define ASCS_server_count = 1,                      #
 #  application_server_count >= 1                                                         #
 #                                                                                        #
 # High Availability                                                                      #
 #  Define the database tier values and database_high_availability = true                 #
-#  scs_server_count = 1 and scs_high_availability = true                                 #
+#  ASCS_server_count = 1 and ASCS_high_availability = true                                 #
 #  application_server_count >= 1                                                         #
 #                                                                                        #
 ##########################################################################################
@@ -242,28 +242,28 @@ sid = "P00"
 #                                                                                       #
 #########################################################################################
 
-# scs_server_count defines how many SCS servers to deploy
-scs_server_count = 1
+# ASCS_server_count defines how many ASCS servers to deploy
+ASCS_server_count = 1
 
-# scs_high_availability is a boolean flag controlling if SCS should be highly available
-scs_high_availability = true
+# ASCS_high_availability is a boolean flag controlling if ASCS should be highly available
+ASCS_high_availability = true
 
-# scs_instance_number
-scs_instance_number = "01"
+# ASCS_instance_number
+ASCS_instance_number = "01"
 
 # ers_instance_number
 ers_instance_number = "02"
 
-# scs_server_zones is an optional list defining the availability zones to which deploy the SCS servers
-scs_server_zones = ["3"]
+# ASCS_server_zones is an optional list defining the availability zones to which deploy the ASCS servers
+ASCS_server_zones = ["3"]
 
-# scs_server_sku, if defined provides the SKU to use for the SCS servers
-#scs_server_sku = ""
+# ASCS_server_sku, if defined provides the SKU to use for the ASCS servers
+#ASCS_server_sku = ""
 
 # The vm_image defines the Virtual machine image to use for the application servers, 
 # if source_image_id is specified the deployment will use the custom image provided, 
 # in this case os_type must also be specified
-scs_server_image = {
+ASCS_server_image = {
   os_type         = "",
   source_image_id = "",
   publisher       = "SUSE",
@@ -273,29 +273,29 @@ scs_server_image = {
   type            = "source_image" # [custom, marketplace, source_image]
 }
 
-# scs_server_no_ppg defines the that the SCS virtual machines will not be placed in a proximity placement group
-#scs_server_no_ppg = false
+# ASCS_server_no_ppg defines the that the ASCS virtual machines will not be placed in a proximity placement group
+#ASCS_server_no_ppg = false
 
-# scs_server_no_avset defines the that the SCS virtual machines will not be placed in an availability set
-#scs_server_no_avset = false
+# ASCS_server_no_avset defines the that the ASCS virtual machines will not be placed in an availability set
+#ASCS_server_no_avset = false
 
-# scs_server_app_nic_ips, if provided provides the static IP addresses 
+# ASCS_server_app_nic_ips, if provided provides the static IP addresses 
 # for the network interface cards connected to the application subnet
-#scs_server_app_nic_ips = []
+#ASCS_server_app_nic_ips = []
 
-# scs_server_nic_secondary_ips, if provided provides the secondary static IP addresses 
+# ASCS_server_nic_secondary_ips, if provided provides the secondary static IP addresses 
 # for the network interface cards connected to the application subnet
-#scs_server_nic_secondary_ips = []
+#ASCS_server_nic_secondary_ips = []
 
-# scs_server_app_admin_nic_ips, if provided provides the static IP addresses 
+# ASCS_server_app_admin_nic_ips, if provided provides the static IP addresses 
 # for the network interface cards connected to the application subnet
-#scs_server_admin_nic_ips = []
+#ASCS_server_admin_nic_ips = []
 
-# scs_server_loadbalancer_ips, if provided provides the static IP addresses for the load balancer
+# ASCS_server_loadbalancer_ips, if provided provides the static IP addresses for the load balancer
 # for the network interface cards connected to the application subnet
 
-# scs_server_tags, if defined provides the tags to be associated to the application servers
-#scs_server_tags = {}
+# ASCS_server_tags, if defined provides the tags to be associated to the application servers
+#ASCS_server_tags = {}
 
 #########################################################################################
 #                                                                                       #

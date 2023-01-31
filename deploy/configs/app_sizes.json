@@ -76,7 +76,7 @@
             ]
         }
     },
-    "scs": {
+    "ASCS": {
         "Default": {
             "compute": {
                 "vm_size"                        : "Standard_D4s_v3",
@@ -153,7 +153,7 @@
             ]
         }
     },
-    "scsha": {
+    "ASCSha": {
         "Default": {
             "compute": {
                 "vm_size"                        : "Standard_D4s_v3",

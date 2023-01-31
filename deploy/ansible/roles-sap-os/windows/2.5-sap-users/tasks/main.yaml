@@ -15,10 +15,10 @@
 - name:                                "2.5-sap-users: Add Memebers to the Local Group"
   ansible.builtin.import_tasks:        add_group_members.yaml
 
-- name:                                "2.5-sap-users: Add Permissions to (A)SCS Nodes"
+- name:                                "2.5-sap-users: Add Permissions to (A)ASCS Nodes"
   ansible.builtin.import_tasks:        add_permissions.yaml
   # when:
-  #   - "'scs' in supported_tiers"
+  #   - "'ASCS' in supported_tiers"
 
 - name:                                "Force all notified handlers to run now"
   ansible.builtin.meta:                flush_handlers

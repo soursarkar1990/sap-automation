@@ -18,14 +18,14 @@
                 "subnet_web": {
                     "prefix"                   : "10.1.3.0/24"
                 },
-                "subnet_iscsi": {
-                    "name"                     : "global-WEEU-SAP01_iscsi-subnet",
+                "subnet_iASCSi": {
+                    "name"                     : "global-WEEU-SAP01_iASCSi-subnet",
                     "prefix"                   : "10.1.10.0/24"
                 }
             }
         },
-        "iscsi": {
-            "iscsi_count"                      : 0
+        "iASCSi": {
+            "iASCSi_count"                      : 0
         }
     },
     "authentication": {

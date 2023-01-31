@@ -48,8 +48,8 @@ parameters:
     type: boolean
     default: true
 
-  - name: scs_installation
-    displayName: SCS Installation
+  - name: ASCS_installation
+    displayName: ASCS Installation
     type: boolean
     default: true
 
@@ -117,7 +117,7 @@ extends:
           sap_os_configuration: ${{ parameters.sap_os_configuration }}
           bom_processing: ${{ parameters.bom_processing }}
           database_install: ${{ parameters.database_install }}
-          scs_installation: ${{ parameters.scs_installation }}
+          ASCS_installation: ${{ parameters.ASCS_installation }}
           db_load: ${{ parameters.db_load }}
           high_availability_configuration: ${{ parameters.high_availability_configuration }}
           pas_installation: ${{ parameters.pas_installation }}

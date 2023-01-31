@@ -16,11 +16,11 @@ locals {
     [format("%s", "app-avset")]
   )
 
-  scs_avset_names = local.zonal_deployment ? (
+  ASCS_avset_names = local.zonal_deployment ? (
     [for idx in range(length(local.zones)) :
-      format("z%s_%s", local.zones[idx], "scs-avset")
+      format("z%s_%s", local.zones[idx], "ASCS-avset")
     ]) : (
-    [format("%s", "scs-avset")]
+    [format("%s", "ASCS-avset")]
   )
 
   web_avset_names = local.zonal_deployment ? (

@@ -37,7 +37,7 @@ namespace AutomationForm.Models
         public bool? sap_os_configuration { get; set; }
         public bool? bom_processing { get; set; }
         public bool? database_install { get; set; }
-        public bool? scs_installation { get; set; }
+        public bool? ASCS_installation { get; set; }
         public bool? db_load { get; set; }
         public bool? high_availability_configuration { get; set; }
         public bool? pas_installation { get; set; }

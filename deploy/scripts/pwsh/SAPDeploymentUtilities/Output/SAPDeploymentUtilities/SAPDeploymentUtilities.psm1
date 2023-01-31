@@ -2455,16 +2455,16 @@ Licensed under the MIT license.
     $region = $jsonData.infrastructure.region
     $db_zone_count = 0
     $app_zone_count = 0
-    $scs_zone_count = 0
+    $ASCS_zone_count = 0
     $web_zone_count = 0
 
     if ("sap_system" -eq $Type) {
         $db_zone_count = $jsonData.databases[0].zones.Length
         $app_zone_count = $jsonData.application.app_zones.Length
-        $scs_zone_count = $jsonData.application.scs_zones.Length
+        $ASCS_zone_count = $jsonData.application.ASCS_zones.Length
         $web_zone_count = $jsonData.application.web_zones.Length
     }
-    $zone_count = ($db_zone_count, $app_zone_count, $scs_zone_count, $web_zone_count | Measure-Object -Max).Maximum
+    $zone_count = ($db_zone_count, $app_zone_count, $ASCS_zone_count, $web_zone_count | Measure-Object -Max).Maximum
 
     Write-Host -ForegroundColor White "Deployment information"
     Write-Host -ForegroundColor White "------------------------------------------------------------------------------------------------"
@@ -2703,29 +2703,29 @@ Licensed under the MIT license.
         }
         
         Write-Host -ForegroundColor White "Central Services"
-        Write-Host -ForegroundColor White ("  Number of servers:".PadRight(25, ' ') + $jsonData.application.scs_server_count)    
-        Write-Host -ForegroundColor White ("  High availability:".PadRight(25, ' ') + $jsonData.application.scs_high_availability)    
+        Write-Host -ForegroundColor White ("  Number of servers:".PadRight(25, ' ') + $jsonData.application.ASCS_server_count)    
+        Write-Host -ForegroundColor White ("  High availability:".PadRight(25, ' ') + $jsonData.application.ASCS_high_availability)    
         Write-Host -ForegroundColor White ("  Load balancer:".PadRight(25, ' ') + "(name defined by automation")
-        if ( $scs_zone_count -gt 1) {
-            Write-Host -ForegroundColor White ("  Availability set:".PadRight(25, ' ') + "(" + $scs_zone_count.ToString() + ") (name defined by automation")
+        if ( $ASCS_zone_count -gt 1) {
+            Write-Host -ForegroundColor White ("  Availability set:".PadRight(25, ' ') + "(" + $ASCS_zone_count.ToString() + ") (name defined by automation")
         }
         else {
             Write-Host -ForegroundColor White ("  Availability set:".PadRight(25, ' ') + "(name defined by automation")
         }
-        if ($null -ne $jsonData.application.scs_os) {
-            Read-OSNode -Nodename "  Image" -os $jsonData.application.scs_os -CheckIDs $CheckIDs
+        if ($null -ne $jsonData.application.ASCS_os) {
+            Read-OSNode -Nodename "  Image" -os $jsonData.application.ASCS_os -CheckIDs $CheckIDs
         }
         else {
             Read-OSNode -Nodename "  Image" -os $jsonData.application.os -CheckIDs $CheckIDs
         }
-        if ($null -ne $jsonData.application.scs_sku) {
-            Write-Host -ForegroundColor White ("  sku:".PadRight(25, ' ') + $jsonData.application.scs_sku)    
+        if ($null -ne $jsonData.application.ASCS_sku) {
+            Write-Host -ForegroundColor White ("  sku:".PadRight(25, ' ') + $jsonData.application.ASCS_sku)    
         }
-        if ($jsonData.application.scs_zones.Length -gt 0) {
+        if ($jsonData.application.ASCS_zones.Length -gt 0) {
             Write-Host -ForegroundColor White ("Deployment:".PadRight(25, ' ') + "Zonal")    
             $Zones = "["
-            for ($zone = 0 ; $zone -lt $jsonData.application.scs_zones.Length ; $zone++) {
-                $Zones = $Zones + "" + $jsonData.application.scs_zones[$zone] + ","
+            for ($zone = 0 ; $zone -lt $jsonData.application.ASCS_zones.Length ; $zone++) {
+                $Zones = $Zones + "" + $jsonData.application.ASCS_zones[$zone] + ","
             }
             $Zones = $Zones.Substring(0, $Zones.Length - 1)
             $Zones = $Zones + "]"

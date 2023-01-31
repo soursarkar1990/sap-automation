@@ -246,37 +246,37 @@ namespace AutomationForm.Models
 
         // SAP Central Services
 
-        public int? scs_server_count { get; set; } = 1;
+        public int? ASCS_server_count { get; set; } = 1;
 
-        public string scs_server_sku { get; set; }
+        public string ASCS_server_sku { get; set; }
 
-        public bool? scs_high_availability { get; set; } = false;
+        public bool? ASCS_high_availability { get; set; } = false;
 
-        public string scs_instance_number { get; set; }
+        public string ASCS_instance_number { get; set; }
 
         public string ers_instance_number { get; set; }
 
-        public Image scs_server_image { get; set; }
+        public Image ASCS_server_image { get; set; }
 
-        public string[] scs_server_zones { get; set; }
-
-        [IpAddressValidator]
-        public string[] scs_server_app_nic_ips { get; set; }
+        public string[] ASCS_server_zones { get; set; }
 
         [IpAddressValidator]
-        public string[] scs_server_admin_nic_ips { get; set; }
+        public string[] ASCS_server_app_nic_ips { get; set; }
 
         [IpAddressValidator]
-        public string[] scs_server_loadbalancer_ips { get; set; }
-
-        public Tag[] scs_server_tags { get; set; }
+        public string[] ASCS_server_admin_nic_ips { get; set; }
 
         [IpAddressValidator]
-        public string[] scs_server_nic_secondary_ips { get; set; }
+        public string[] ASCS_server_loadbalancer_ips { get; set; }
 
-        public bool? scs_server_no_avset { get; set; } = false;
+        public Tag[] ASCS_server_tags { get; set; }
 
-        public bool? scs_server_no_ppg { get; set; } = false;
+        [IpAddressValidator]
+        public string[] ASCS_server_nic_secondary_ips { get; set; }
+
+        public bool? ASCS_server_no_avset { get; set; } = false;
+
+        public bool? ASCS_server_no_ppg { get; set; } = false;
 
         // Web Dispatchers
 

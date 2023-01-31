@@ -62,9 +62,9 @@ locals {
     ]
   ])
 
-  base_scs_data_disk_per_dbnode = (local.enable_deployment) ? flatten(
+  base_ASCS_data_disk_per_dbnode = (local.enable_deployment) ? flatten(
     [
-      for storage_type in local.scs_sizing.storage : [
+      for storage_type in local.ASCS_sizing.storage : [
         for idx, disk_count in range(storage_type.count) : {
           suffix               = format("-%s%02d", storage_type.name, disk_count + var.options.resource_offset)
           storage_account_type = storage_type.disk_type,
@@ -82,9 +82,9 @@ locals {
     ]
   ) : []
 
-  append_scs_data_disk_per_dbnode = (local.enable_deployment) ? flatten(
+  append_ASCS_data_disk_per_dbnode = (local.enable_deployment) ? flatten(
     [
-      for storage_type in local.scs_sizing.storage : [
+      for storage_type in local.ASCS_sizing.storage : [
         for idx, disk_count in range(storage_type.count) : {
           suffix = format("-%s%02d",
             storage_type.name,
@@ -105,11 +105,11 @@ locals {
     ]
   ) : []
 
-  scs_data_disk_per_dbnode = distinct(concat(local.base_scs_data_disk_per_dbnode, local.append_scs_data_disk_per_dbnode))
+  ASCS_data_disk_per_dbnode = distinct(concat(local.base_ASCS_data_disk_per_dbnode, local.append_ASCS_data_disk_per_dbnode))
 
-  scs_data_disks = flatten([
-    for idx, datadisk in local.scs_data_disk_per_dbnode : [
-      for vm_counter in range(local.scs_server_count) : {
+  ASCS_data_disks = flatten([
+    for idx, datadisk in local.ASCS_data_disk_per_dbnode : [
+      for vm_counter in range(local.ASCS_server_count) : {
         suffix                    = datadisk.suffix
         vm_index                  = vm_counter
         caching                   = datadisk.caching
@@ -191,7 +191,7 @@ locals {
     format("%s%s%s%s", local.prefix, var.naming.separator, vm, local.resource_suffixes.vm)]
   ))
 
-  full_scsserver_names = distinct(flatten([for vm in var.naming.virtualmachine_names.SCS_VMNAME :
+  full_ASCSserver_names = distinct(flatten([for vm in var.naming.virtualmachine_names.ASCS_VMNAME :
     format("%s%s%s%s", local.prefix, var.naming.separator, vm, local.resource_suffixes.vm)]
   ))
 
@@ -207,8 +207,8 @@ locals {
     format("{ host: '%s', LUN: %d, type: '%s' }", vm, idx, "sap")
   ]]))
 
-  scs_disks_ansible = distinct(flatten([for vm in var.naming.virtualmachine_names.SCS_COMPUTERNAME : [
-    for idx, datadisk in local.scs_data_disk_per_dbnode :
+  ASCS_disks_ansible = distinct(flatten([for vm in var.naming.virtualmachine_names.ASCS_COMPUTERNAME : [
+    for idx, datadisk in local.ASCS_data_disk_per_dbnode :
     format("{ host: '%s', LUN: %d, type: '%s' }", vm, idx, "sap")
   ]]))
 

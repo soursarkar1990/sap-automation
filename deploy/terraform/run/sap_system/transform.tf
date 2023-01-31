@@ -148,22 +148,22 @@ locals {
     app_no_avset  = var.application_server_no_avset || try(var.application_tier.app_no_avset, false)
     avset_arm_ids = var.application_server_vm_avset_arm_ids
 
-    scs_server_count = local.enable_app_tier_deployment ? (
-      max(var.scs_server_count, try(var.application_tier.scs_server_count, 0))
+    ASCS_server_count = local.enable_app_tier_deployment ? (
+      max(var.ASCS_server_count, try(var.application_tier.ASCS_server_count, 0))
       ) : (
       0
     )
-    scs_high_availability = local.enable_app_tier_deployment ? (
-      var.scs_high_availability || try(var.application_tier.scs_high_availability, false)
+    ASCS_high_availability = local.enable_app_tier_deployment ? (
+      var.ASCS_high_availability || try(var.application_tier.ASCS_high_availability, false)
       ) : (
       false
     )
-    scs_instance_number = coalesce(var.scs_instance_number, try(var.application_tier.scs_instance_number, "00"))
+    ASCS_instance_number = coalesce(var.ASCS_instance_number, try(var.application_tier.ASCS_instance_number, "00"))
     ers_instance_number = coalesce(var.ers_instance_number, try(var.application_tier.ers_instance_number, "02"))
 
-    scs_sku      = try(coalesce(var.scs_server_sku, var.application_tier.scs_sku), "")
-    scs_no_ppg   = var.scs_server_no_ppg || try(var.application_tier.scs_no_ppg, false)
-    scs_no_avset = var.scs_server_no_avset || try(var.application_tier.scs_no_avset, false)
+    ASCS_sku      = try(coalesce(var.ASCS_server_sku, var.application_tier.ASCS_sku), "")
+    ASCS_no_ppg   = var.ASCS_server_no_ppg || try(var.application_tier.ASCS_no_ppg, false)
+    ASCS_no_avset = var.ASCS_server_no_avset || try(var.application_tier.ASCS_no_avset, false)
 
     webdispatcher_count = local.enable_app_tier_deployment ? (
       max(var.webdispatcher_server_count, try(var.application_tier.webdispatcher_count, 0))
@@ -177,11 +177,11 @@ locals {
   }
 
   app_zones_temp = distinct(concat(var.application_server_zones, try(var.application_tier.app_zones, [])))
-  scs_zones_temp = distinct(concat(var.scs_server_zones, try(var.application_tier.scs_zones, [])))
+  ASCS_zones_temp = distinct(concat(var.ASCS_server_zones, try(var.application_tier.ASCS_zones, [])))
   web_zones_temp = distinct(concat(var.webdispatcher_server_zones, try(var.application_tier.web_zones, [])))
 
   app_tags = try(coalesce(var.application_server_tags, try(var.application_tier.app_tags, {})), {})
-  scs_tags = try(coalesce(var.scs_server_tags, try(var.application_tier.scs_tags, {})), {})
+  ASCS_tags = try(coalesce(var.ASCS_server_tags, try(var.application_tier.ASCS_tags, {})), {})
   web_tags = try(coalesce(var.webdispatcher_server_tags, try(var.application_tier.web_tags, {})), {})
 
   app_os = {
@@ -199,16 +199,16 @@ locals {
 
   app_os_specified = (length(local.app_os.source_image_id) + length(local.app_os.publisher)) > 0
 
-  scs_os = {
-    os_type         = try(coalesce(var.scs_server_image.os_type, var.application_server_image.os_type, "LINUX"), "LINUX")
-    source_image_id = try(coalesce(var.scs_server_image.source_image_id, try(var.application_tier.source_image_id, "")), "")
-    publisher       = try(coalesce(var.scs_server_image.publisher, try(var.application_tier.publisher, "SUSE")), "SUSE")
-    offer           = try(coalesce(var.scs_server_image.offer, try(var.application_tier.offer, "sles-sap-15-sp3")), "sles-sap-15-sp3")
-    sku             = try(coalesce(var.scs_server_image.sku, try(var.application_tier.sku, "gen2")), "gen2")
-    version         = try(coalesce(var.scs_server_image.version, try(var.application_tier.version, "latest")), "latest")
+  ASCS_os = {
+    os_type         = try(coalesce(var.ASCS_server_image.os_type, var.application_server_image.os_type, "LINUX"), "LINUX")
+    source_image_id = try(coalesce(var.ASCS_server_image.source_image_id, try(var.application_tier.source_image_id, "")), "")
+    publisher       = try(coalesce(var.ASCS_server_image.publisher, try(var.application_tier.publisher, "SUSE")), "SUSE")
+    offer           = try(coalesce(var.ASCS_server_image.offer, try(var.application_tier.offer, "sles-sap-15-sp3")), "sles-sap-15-sp3")
+    sku             = try(coalesce(var.ASCS_server_image.sku, try(var.application_tier.sku, "gen2")), "gen2")
+    version         = try(coalesce(var.ASCS_server_image.version, try(var.application_tier.version, "latest")), "latest")
     type            = try(var.database_vm_image.type, "marketplace")
   }
-  scs_os_specified = (length(local.scs_os.source_image_id) + length(local.scs_os.publisher)) > 0
+  ASCS_os_specified = (length(local.ASCS_os.source_image_id) + length(local.ASCS_os.publisher)) > 0
 
   web_os = {
     os_type         = try(coalesce(var.webdispatcher_server_image.os_type, var.application_server_image.os_type, "LINUX"), "LINUX")
@@ -308,9 +308,9 @@ locals {
   app_nic_secondary_ips = distinct(var.application_server_app_nic_ips)
   app_admin_nic_ips     = distinct(concat(var.application_server_admin_nic_ips, try(var.application_tier.app_admin_nic_ips, [])))
 
-  scs_nic_ips       = distinct(concat(var.scs_server_app_nic_ips, try(var.application_tier.scs_nic_ips, [])))
-  scs_admin_nic_ips = distinct(concat(var.scs_server_admin_nic_ips, try(var.application_tier.scs_admin_nic_ips, [])))
-  scs_lb_ips        = distinct(concat(var.scs_server_loadbalancer_ips, try(var.application_tier.scs_lb_ips, [])))
+  ASCS_nic_ips       = distinct(concat(var.ASCS_server_app_nic_ips, try(var.application_tier.ASCS_nic_ips, [])))
+  ASCS_admin_nic_ips = distinct(concat(var.ASCS_server_admin_nic_ips, try(var.application_tier.ASCS_admin_nic_ips, [])))
+  ASCS_lb_ips        = distinct(concat(var.ASCS_server_loadbalancer_ips, try(var.application_tier.ASCS_lb_ips, [])))
 
   web_nic_ips       = distinct(concat(var.webdispatcher_server_app_nic_ips, try(var.application_tier.web_nic_ips, [])))
   web_admin_nic_ips = distinct(concat(var.webdispatcher_server_admin_nic_ips, try(var.application_tier.web_admin_nic_ips, [])))
@@ -501,24 +501,24 @@ locals {
   application_tier = merge(local.application_temp, (
     local.app_authentication_defined ? { authentication = local.app_authentication } : null), (
     local.app_os_specified ? { app_os = local.app_os } : null), (
-    local.scs_os_specified ? { scs_os = local.scs_os } : (local.app_os_specified ? { scs_os = local.app_os } : null)), (
+    local.ASCS_os_specified ? { ASCS_os = local.ASCS_os } : (local.app_os_specified ? { ASCS_os = local.app_os } : null)), (
     local.web_os_specified ? { web_os = local.web_os } : (local.app_os_specified ? { web_os = local.app_os } : null)), (
     length(local.app_zones_temp) > 0 ? { app_zones = local.app_zones_temp } : null), (
-    length(local.scs_zones_temp) > 0 ? { scs_zones = local.scs_zones_temp } : null), (
+    length(local.ASCS_zones_temp) > 0 ? { ASCS_zones = local.ASCS_zones_temp } : null), (
     length(local.web_zones_temp) > 0 ? { web_zones = local.web_zones_temp } : null), (
     length(local.app_nic_ips) > 0 ? { app_nic_ips = local.app_nic_ips } : null), (
     length(var.application_server_nic_secondary_ips) > 0 ? { app_nic_secondary_ips = var.application_server_nic_secondary_ips } : null), (
     length(local.app_admin_nic_ips) > 0 ? { app_admin_nic_ips = local.app_admin_nic_ips } : null), (
-    length(local.scs_nic_ips) > 0 ? { scs_nic_ips = local.scs_nic_ips } : null), (
-    length(var.scs_server_nic_secondary_ips) > 0 ? { scs_nic_secondary_ips = var.scs_server_nic_secondary_ips } : null), (
-    length(local.scs_admin_nic_ips) > 0 ? { scs_admin_nic_ips = local.scs_admin_nic_ips } : null), (
-    length(local.scs_lb_ips) > 0 ? { scs_lb_ips = local.scs_lb_ips } : null), (
+    length(local.ASCS_nic_ips) > 0 ? { ASCS_nic_ips = local.ASCS_nic_ips } : null), (
+    length(var.ASCS_server_nic_secondary_ips) > 0 ? { ASCS_nic_secondary_ips = var.ASCS_server_nic_secondary_ips } : null), (
+    length(local.ASCS_admin_nic_ips) > 0 ? { ASCS_admin_nic_ips = local.ASCS_admin_nic_ips } : null), (
+    length(local.ASCS_lb_ips) > 0 ? { ASCS_lb_ips = local.ASCS_lb_ips } : null), (
     length(local.web_nic_ips) > 0 ? { web_nic_ips = local.web_nic_ips } : null), (
     length(var.webdispatcher_server_nic_secondary_ips) > 0 ? { web_nic_secondary_ips = var.webdispatcher_server_nic_secondary_ips } : null), (
     length(local.web_admin_nic_ips) > 0 ? { web_admin_nic_ips = local.web_admin_nic_ips } : null), (
     length(local.web_lb_ips) > 0 ? { web_lb_ips = local.web_lb_ips } : null), (
     length(local.app_tags) > 0 ? { app_tags = local.app_tags } : null), (
-    length(local.scs_tags) > 0 ? { scs_tags = local.scs_tags } : null), (
+    length(local.ASCS_tags) > 0 ? { ASCS_tags = local.ASCS_tags } : null), (
     length(local.web_tags) > 0 ? { web_tags = local.web_tags } : null
     )
   )

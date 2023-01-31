@@ -30,16 +30,16 @@ hsr_status_report_wait_in_s:           60
 rescue_hsr_status_report_wait_in_s:    120
 
 
-# The following values should be same as iSCSI configuration
-# run 'sudo targetcli ls' on iSCSI target virtual machines to get all iSCSI configuration
+# The following values should be same as iASCSI configuration
+# run 'sudo targetcli ls' on iASCSI target virtual machines to get all iASCSI configuration
 cluster_name:                          db{{ sid | lower }}
 # storage_object: sbd{{ cluster_name }}
-# target: "{{ iscsi_object }}.{{ cluster_name }}.local:{{ cluster_name }}"
+# target: "{{ iASCSi_object }}.{{ cluster_name }}.local:{{ cluster_name }}"
 
 # HANA utility commands
 sapcontrol_command:                    "/usr/sap/{{ db_sid | upper }}/HDB{{ db_instance_number }}/exe/sapcontrol -nr {{ db_instance_number }}"
 storage_object: sbd{{ cluster_name }}
-target: "{{ iscsi_object }}.{{ cluster_name }}.local:{{ cluster_name }}"
+target: "{{ iASCSi_object }}.{{ cluster_name }}.local:{{ cluster_name }}"
 
 
 hana_stop_start_timeout_in_seconds:    2700

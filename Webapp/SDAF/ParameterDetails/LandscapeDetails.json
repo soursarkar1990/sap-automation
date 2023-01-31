@@ -499,13 +499,13 @@
     ]
   },
   {
-    "Section": "ISCSI subnet",
-    "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/automation-configure-workload-zone?branch=main#iscsi-parameters",
+    "Section": "IASCSI subnet",
+    "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/automation-configure-workload-zone?branch=main#iASCSi-parameters",
     "Parameters": [
       {
-        "Name": "iscsi_subnet_arm_id",
+        "Name": "iASCSi_subnet_arm_id",
         "Required": false,
-        "Description": "Specifies Azure resource identifier for the existing subnet for the iSCSI subnet",
+        "Description": "Specifies Azure resource identifier for the existing subnet for the iASCSI subnet",
         "Type": "lookup",
         "Options": [
           {
@@ -513,20 +513,20 @@
             "Value": ""
           }
         ],
-        "Overrules": "iscsi_subnet_address_prefix",
+        "Overrules": "iASCSi_subnet_address_prefix",
         "Display": 3
       },
       {
-        "Name": "iscsi_subnet_address_prefix",
+        "Name": "iASCSi_subnet_address_prefix",
         "Required": false,
-        "Description": "Defines the subnet address range for the iSCSI subnet.",
+        "Description": "Defines the subnet address range for the iASCSI subnet.",
         "Type": "field",
         "Options": [],
         "Overrules": "",
         "Display": 3
       },
       {
-        "Name": "iscsi_subnet_name",
+        "Name": "iASCSi_subnet_name",
         "Required": false,
         "Description": "Should only be used if the default naming is not acceptable.",
         "Type": "field",
@@ -537,11 +537,11 @@
     ]
   },
   {
-    "Section": "ISCSI subnet network security group",
-    "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/automation-configure-workload-zone?branch=main#iscsi-parameters",
+    "Section": "IASCSI subnet network security group",
+    "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/automation-configure-workload-zone?branch=main#iASCSi-parameters",
     "Parameters": [
       {
-        "Name": "iscsi_subnet_nsg_arm_id",
+        "Name": "iASCSi_subnet_nsg_arm_id",
         "Required": false,
         "Description": "Specifies Azure resource identifier for the existing network security group to use.",
         "Type": "lookup",
@@ -551,11 +551,11 @@
             "Value": ""
           }
         ],
-        "Overrules": "iscsi_subnet_nsg_name",
+        "Overrules": "iASCSi_subnet_nsg_name",
         "Display": 3
       },
       {
-        "Name": "iscsi_subnet_nsg_name",
+        "Name": "iASCSi_subnet_nsg_name",
         "Required": false,
         "Description": "Should only be used if the default naming is not acceptable for the network security group name",
         "Type": "field",

@@ -35,11 +35,11 @@
     path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_dbload.txt"
   register:                            dbload_installed
 
-- name:                                "DBLoad: -  Set the SCS Server name list"
+- name:                                "DBLoad: -  Set the ASCS Server name list"
   ansible.builtin.set_fact:
-    scs_server_temp:                   "{{ scs_server_temp | default([]) + [item] }}"
+    ASCS_server_temp:                   "{{ ASCS_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                "DBLoad: -  Set the DB Server name list"
@@ -50,10 +50,10 @@
 
 - name:                                "DBLoad: -  Set the server facts"
   ansible.builtin.set_fact:
-    scs_server:                        "{% if scs_high_availability %}{{ sid_to_be_deployed.sid | lower }}scs{{ scs_instance_number }}cl1{% else %}{{ hostvars[scs_server_temp | first]['virtual_host'] }}{% endif %}"
+    ASCS_server:                        "{% if ASCS_high_availability %}{{ sid_to_be_deployed.sid | lower }}ASCS{{ ASCS_instance_number }}cl1{% else %}{{ hostvars[ASCS_server_temp | first]['virtual_host'] }}{% endif %}"
     db_virtual_host:                   "{{ hostvars[db_server_temp | first]['virtual_host'] }}"
 
-- name:                                "SCS Install: check media exists"
+- name:                                "ASCS Install: check media exists"
   ansible.builtin.stat:
     path:                              "{{ target_media_location }}/SWPM/sapinst"
   register:                            sapinst_found
@@ -91,7 +91,7 @@
     sap_ciBtcWPNumber:
     sap_installSAPHostAgent:
     sap_profile_dir:                   "/sapmnt/{{ sid_to_be_deployed.sid | upper }}/profile"
-    sap_scs_hostname:                  "{{ scs_server }}"
+    sap_ASCS_hostname:                  "{{ ASCS_server }}"
     sap_db_hostname:                   "{{ db_virtual_host }}"
     sap_ciVirtualHostname:
     sap_appVirtualHostname:
@@ -110,7 +110,7 @@
       - "INIFILE:    {{ sap_inifile }}"
       - "PRODUCT ID: {{ bom.product_ids.dbl }}"
       - "INSTANCE:   {{ db_instance_number }}"
-      - "SCSHOST:    {{ scs_server }}"
+      - "ASCSHOST:    {{ ASCS_server }}"
       - "DBHOST:     {{ db_virtual_host }}"
       - "SID:        {{ sid_to_be_deployed.sid | upper }}"
 

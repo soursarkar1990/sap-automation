@@ -40,17 +40,17 @@ HDB_Schema_Check_Dialogs.schemaPassword                               = {{ main_
 # If set to 'true', an 'ms_acl_info' file is created. It manages the hosts from which the Message Server accepts connections.
 # MessageServer.configureAclInfo                                      = false
 
-# Standard system only: Add gateway process to (A)SCS instance
-# NW_CI_Instance.ascsInstallGateway                                   = false
+# Standard system only: Add gateway process to (A)ASCS instance
+# NW_CI_Instance.aASCSInstallGateway                                   = false
 
-# Standard system only: Add web dispatcher process to (A)SCS instance
-# NW_CI_Instance.ascsInstallWebDispatcher                             = false
+# Standard system only: Add web dispatcher process to (A)ASCS instance
+# NW_CI_Instance.aASCSInstallWebDispatcher                             = false
 
-# Standard system with AS ABAP only: ASCS instance number. Leave empty for default.
-# NW_CI_Instance.ascsInstanceNumber                                   = 
+# Standard system with AS ABAP only: AASCS instance number. Leave empty for default.
+# NW_CI_Instance.aASCSInstanceNumber                                   = 
 
-# Standard system with AS ABAP only: Virtual host name for the ASCS instance. Leave empty for default.
-NW_CI_Instance.ascsVirtualHostname                                    = {{ sap_scs_hostname }}
+# Standard system with AS ABAP only: Virtual host name for the AASCS instance. Leave empty for default.
+NW_CI_Instance.aASCSVirtualHostname                                    = {{ sap_ASCS_hostname }}
 
 # Instance number of the primary application server instance. Leave empty for default.
 NW_CI_Instance.ciInstanceNumber                                       =  {{ sap_ciInstanceNumber }}
@@ -76,14 +76,14 @@ NW_CI_Instance.ciVirtualHostname                                      = {{ sap_c
 # Number of Java server nodes. Possible values: 'defNodes' - default number; 'srcNodes' - copy from source; 'userNodes' - user-defined number. Default is 'defNodes'
 # NW_CI_Instance.nodesNumber                                          = defNodes
 
-# Standard system with AS Java only: The SCS instance number. Leave empty for default.
-# NW_CI_Instance.scsInstanceNumber                                    = 
+# Standard system with AS Java only: The ASCS instance number. Leave empty for default.
+# NW_CI_Instance.ASCSInstanceNumber                                    = 
 
 # The internal Java message server port. Leave empty for default.
-# NW_CI_Instance.scsMSPortInternal                                    = 
+# NW_CI_Instance.ASCSMSPortInternal                                    = 
 
-# Standard system with AS Java only: Virtual host name for the SCS instance. Leave empty for default.
-NW_CI_Instance.scsVirtualHostname                                     = {{ sap_scs_hostname }}
+# Standard system with AS Java only: Virtual host name for the ASCS instance. Leave empty for default.
+NW_CI_Instance.ASCSVirtualHostname                                     = {{ sap_ASCS_hostname }}
 
 # Specify whether the all operating system users are to be removed from group 'sapinst' after the execution of Software Provisioning Manager has completed.
 NW_Delete_Sapinst_Users.removeUsers                                   = true

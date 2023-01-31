@@ -224,8 +224,8 @@ output "transport_storage_account_id" {
 #                                                                             #
 ###############################################################################
 output "dns_info_vms" {
-  value = local.iscsi_count > 0 ? (
-    zipmap(local.full_iscsiserver_names, azurerm_network_interface.iscsi[*].private_ip_address)) : (
+  value = local.iASCSi_count > 0 ? (
+    zipmap(local.full_iASCSiserver_names, azurerm_network_interface.iASCSi[*].private_ip_address)) : (
     null
   )
 }
@@ -355,22 +355,22 @@ output "install_path" {
 
 ###############################################################################
 #                                                                             #
-#                            iSCSI                                            #
+#                            iASCSI                                            #
 #                                                                             #
 ###############################################################################
 
-output "iscsi_authentication_type" {
-  description = "Authentication type for iSCSI device"
-  value       = local.iscsi_auth_type
+output "iASCSi_authentication_type" {
+  description = "Authentication type for iASCSI device"
+  value       = local.iASCSi_auth_type
 }
-output "iscsi_authentication_username" {
-  description = "Username for iSCSI device"
-  value       = local.iscsi_auth_username
+output "iASCSi_authentication_username" {
+  description = "Username for iASCSI device"
+  value       = local.iASCSi_auth_username
 }
 
-output "nics_iscsi" {
-  value = local.iscsi_count > 0 ? (
-    azurerm_network_interface.iscsi[*]) : (
+output "nics_iASCSi" {
+  value = local.iASCSi_count > 0 ? (
+    azurerm_network_interface.iASCSi[*]) : (
     []
   )
 }

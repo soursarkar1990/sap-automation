@@ -6,8 +6,8 @@ distro_name:                           "{{ ansible_os_family | upper }}-{{ ansib
 distribution_id:                       "{{ ansible_os_family | lower ~ ansible_distribution_major_version }}"
 distribution_full_id:                  "{{ ansible_os_family | lower ~ ansible_distribution_version }}"
 
-scs_virtual_hostname:                  "{{ sap_sid | lower }}scs{{ scs_instance_number }}cl1"
+ASCS_virtual_hostname:                  "{{ sap_sid | lower }}ASCS{{ ASCS_instance_number }}cl1"
 ers_virtual_hostname:                  "{{ sap_sid | lower }}ers{{ ers_instance_number }}cl2"
-iscsi_object:                          iqn.2006-04
+iASCSi_object:                          iqn.2006-04
 
-iscsi_port:                            3260
+iASCSi_port:                            3260

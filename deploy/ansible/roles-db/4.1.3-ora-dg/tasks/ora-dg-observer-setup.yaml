@@ -1,7 +1,7 @@
 ---
 - name:                                "Oracle Data Guard - Observer: Set the NFS Server name"
   ansible.builtin.set_fact:
-    nfs_server:                        "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') | first }}"
+    nfs_server:                        "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') | first }}"
 
 # # Set Primary and Secondary node names.
 # - name:                                "Set the  Server names"

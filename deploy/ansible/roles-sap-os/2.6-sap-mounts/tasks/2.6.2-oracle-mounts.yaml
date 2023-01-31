@@ -15,7 +15,7 @@
   ansible.builtin.set_fact:
     nfs_server_temp:                   "{{ nfs_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                "ORACLE: Set the NFS Server name"
@@ -110,8 +110,8 @@
     opts:                              defaults
     state:                             mounted
   vars:
-    # Get all the hostnames in <SID>_SCS group and return only the first hostname
-    nfs_server:                        "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') | first }}"
+    # Get all the hostnames in <SID>_ASCS group and return only the first hostname
+    nfs_server:                        "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') | first }}"
   loop:
     - {type: 'nfs4',    src: '{{ nfs_server }}:/sapmnt/{{ sap_sid | upper }}',    path: '/sapmnt/{{ sap_sid | upper }}' }
   when:
@@ -126,8 +126,8 @@
     opts:                              "vers=4,minorversion=1,sec=sys"
     state:                             mounted
   vars:
-    # Get all the hostnames in <SID>_SCS group and return only the first hostname
-    nfs_server:                        "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') | first }}"
+    # Get all the hostnames in <SID>_ASCS group and return only the first hostname
+    nfs_server:                        "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') | first }}"
   loop:
     - { type: 'nfs4', src: '{{ usr_sap_install_mountpoint }}', path: '{{ target_media_location }}' }
   when:

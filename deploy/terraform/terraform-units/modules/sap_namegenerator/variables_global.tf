@@ -77,7 +77,7 @@ variable "app_server_count" {
   default = 1
 }
 
-variable "scs_server_count" {
+variable "ASCS_server_count" {
   type    = number
   default = 1
 }
@@ -93,7 +93,7 @@ variable "db_server_count" {
   default = 1
 }
 
-variable "iscsi_server_count" {
+variable "iASCSi_server_count" {
   type    = number
   default = 1
 }
@@ -113,7 +113,7 @@ variable "database_high_availability" {
   default = false
 }
 
-variable "scs_high_availability" {
+variable "ASCS_high_availability" {
   type    = bool
   default = false
 }
@@ -274,8 +274,8 @@ variable "resource_prefixes" {
     "hanashared"                     = ""
     "install_volume"                 = ""
     "install_volume_smb"             = ""
-    "iscsi_subnet"                   = ""
-    "iscsi_subnet_nsg"               = ""
+    "iASCSi_subnet"                   = ""
+    "iASCSi_subnet_nsg"               = ""
     "library_rg"                     = ""
     "library_state"                  = ""
     "keyvault_private_link"          = ""
@@ -309,22 +309,22 @@ variable "resource_prefixes" {
     "storage_nic"                    = ""
     "storage_subnet"                 = ""
     "storage_subnet_nsg"             = ""
-    "scs_alb"                        = ""
-    "scs_alb_bepool"                 = ""
-    "scs_alb_feip"                   = ""
-    "scs_alb_hp"                     = ""
-    "scs_alb_rule"                   = ""
-    "scs_avset"                      = ""
-    "scs_clst_feip"                  = ""
-    "scs_clst_rule"                  = ""
-    "scs_clst_hp"                    = ""
-    "scs_ers_feip"                   = ""
-    "scs_ers_hp"                     = ""
-    "scs_ers_rule"                   = ""
-    "scs_fs_feip"                    = ""
-    "scs_fs_hp"                      = ""
-    "scs_fs_rule"                    = ""
-    "scs_scs_rule"                   = ""
+    "ASCS_alb"                        = ""
+    "ASCS_alb_bepool"                 = ""
+    "ASCS_alb_feip"                   = ""
+    "ASCS_alb_hp"                     = ""
+    "ASCS_alb_rule"                   = ""
+    "ASCS_avset"                      = ""
+    "ASCS_clst_feip"                  = ""
+    "ASCS_clst_rule"                  = ""
+    "ASCS_clst_hp"                    = ""
+    "ASCS_ers_feip"                   = ""
+    "ASCS_ers_hp"                     = ""
+    "ASCS_ers_rule"                   = ""
+    "ASCS_fs_feip"                    = ""
+    "ASCS_fs_hp"                      = ""
+    "ASCS_fs_rule"                    = ""
+    "ASCS_ASCS_rule"                   = ""
     "sdu_rg"                         = ""
     "tfstate"                        = ""
     "transport_volume"               = ""
@@ -400,8 +400,8 @@ variable "resource_suffixes" {
     "hanashared"                     = "hanashared"
     "install_volume"                 = "install"
     "install_volume_smb"             = "install-smb"
-    "iscsi_subnet"                   = "iscsi-subnet"
-    "iscsi_subnet_nsg"               = "iscsiSubnet-nsg"
+    "iASCSi_subnet"                   = "iASCSi-subnet"
+    "iASCSi_subnet_nsg"               = "iASCSiSubnet-nsg"
     "library_rg"                     = "-SAP_LIBRARY"
     "library_state"                  = "_SAP-LIBRARY.terraform.tfstate"
     "keyvault_private_link"          = "-keyvault-private-endpoint"
@@ -435,22 +435,22 @@ variable "resource_suffixes" {
     "storage_nic"                    = "-storage-nic"
     "storage_subnet"                 = "_storage-subnet"
     "storage_subnet_nsg"             = "_storageSubnet-nsg"
-    "scs_alb"                        = "scs-alb"
-    "scs_alb_bepool"                 = "scsAlb-bePool"
-    "scs_alb_feip"                   = "scsAlb-feip"
-    "scs_alb_hp"                     = "scsAlb-hp"
-    "scs_alb_rule"                   = "scsAlb-rule"
-    "scs_avset"                      = "scs-avset"
-    "scs_clst_feip"                  = "scsClst-feip"
-    "scs_clst_rule"                  = "scsClst-rule"
-    "scs_clst_hp"                    = "scsClst-hp"
-    "scs_ers_feip"                   = "scsErs-feip"
-    "scs_ers_hp"                     = "scsErs-hp"
-    "scs_ers_rule"                   = "scsErs-rule"
-    "scs_fs_feip"                    = "scsFs-feip"
-    "scs_fs_hp"                      = "scsFs-hp"
-    "scs_fs_rule"                    = "scsFs-rule"
-    "scs_scs_rule"                   = "scsScs-rule"
+    "ASCS_alb"                        = "ASCS-alb"
+    "ASCS_alb_bepool"                 = "ASCSAlb-bePool"
+    "ASCS_alb_feip"                   = "ASCSAlb-feip"
+    "ASCS_alb_hp"                     = "ASCSAlb-hp"
+    "ASCS_alb_rule"                   = "ASCSAlb-rule"
+    "ASCS_avset"                      = "ASCS-avset"
+    "ASCS_clst_feip"                  = "ASCSClst-feip"
+    "ASCS_clst_rule"                  = "ASCSClst-rule"
+    "ASCS_clst_hp"                    = "ASCSClst-hp"
+    "ASCS_ers_feip"                   = "ASCSErs-feip"
+    "ASCS_ers_hp"                     = "ASCSErs-hp"
+    "ASCS_ers_rule"                   = "ASCSErs-rule"
+    "ASCS_fs_feip"                    = "ASCSFs-feip"
+    "ASCS_fs_hp"                      = "ASCSFs-hp"
+    "ASCS_fs_rule"                    = "ASCSFs-rule"
+    "ASCS_ASCS_rule"                   = "ASCSASCS-rule"
     "sdu_rg"                         = ""
     "tfstate"                        = "tfstate"
     "transport_volume"               = "transport"
@@ -480,9 +480,9 @@ variable "app_zones" {
   default     = []
 }
 
-variable "scs_zones" {
+variable "ASCS_zones" {
   type        = list(string)
-  description = "List of availability zones for scs tier"
+  description = "List of availability zones for ASCS tier"
   default     = []
 }
 

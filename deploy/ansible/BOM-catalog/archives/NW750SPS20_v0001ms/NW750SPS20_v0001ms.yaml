@@ -7,7 +7,7 @@ target:  'NETWEAVER 7.50 SPS 20'
 version: 0001
 
 product_ids:
-  scs:    NW_ABAP_ASCS:NW750.HDB.ABAP
+  ASCS:    NW_ABAP_AASCS:NW750.HDB.ABAP
   dbl:    NW_ABAP_DB:NW750.HDB.ABAP
   pas:    NW_ABAP_CI:NW750.HDB.ABAP
   app:

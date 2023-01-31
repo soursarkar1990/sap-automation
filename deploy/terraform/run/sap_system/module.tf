@@ -20,18 +20,18 @@ module "sap_namegenerator" {
   db_server_count  = var.database_server_count
   app_server_count = try(local.application_tier.application_server_count, 0)
   web_server_count = try(local.application_tier.webdispatcher_count, 0)
-  scs_server_count = local.application_tier.scs_high_availability ? (
-    2 * local.application_tier.scs_server_count) : (
-    local.application_tier.scs_server_count
+  ASCS_server_count = local.application_tier.ASCS_high_availability ? (
+    2 * local.application_tier.ASCS_server_count) : (
+    local.application_tier.ASCS_server_count
   )
   app_zones                  = []
-  scs_zones                  = try(local.application_tier.scs_zones, [])
+  ASCS_zones                  = try(local.application_tier.ASCS_zones, [])
   web_zones                  = try(local.application_tier.web_zones, [])
   db_zones                   = try(local.database.zones, [])
   resource_offset            = try(var.options.resource_offset, 0)
   custom_prefix              = var.custom_prefix
   database_high_availability = local.database.high_availability
-  scs_high_availability      = local.application_tier.scs_high_availability
+  ASCS_high_availability      = local.application_tier.ASCS_high_availability
   use_zonal_markers          = var.use_zonal_markers
 }
 
@@ -68,7 +68,7 @@ module "common_infrastructure" {
   NFS_provider                       = var.NFS_provider
   custom_prefix                      = var.use_prefix ? var.custom_prefix : " "
   ha_validator = format("%d%d-%s",
-    local.application_tier.scs_high_availability ? 1 : 0,
+    local.application_tier.ASCS_high_availability ? 1 : 0,
     local.database.high_availability ? 1 : 0,
     var.NFS_provider
   )
@@ -104,7 +104,7 @@ module "hdb_node" {
   depends_on = [module.common_infrastructure]
   order_deployment = local.enable_db_deployment ? (
     local.db_zonal_deployment && local.application_tier.enable_deployment ? (
-      module.app_tier.scs_vm_ids[0]
+      module.app_tier.ASCS_vm_ids[0]
     ) : (null)
   ) : (null)
   database                                     = local.database
@@ -196,7 +196,7 @@ module "app_tier" {
   cloudinit_growpart_config                    = null # This needs more consideration module.common_infrastructure.cloudinit_growpart_config
   license_type                                 = var.license_type
   use_loadbalancers_for_standalone_deployments = var.use_loadbalancers_for_standalone_deployments
-  idle_timeout_scs_ers                         = var.idle_timeout_scs_ers
+  idle_timeout_ASCS_ers                         = var.idle_timeout_ASCS_ers
   use_secondary_ips                            = var.use_secondary_ips
   deploy_application_security_groups           = var.deploy_application_security_groups
   use_msi_for_clusters                         = var.use_msi_for_clusters
@@ -223,7 +223,7 @@ module "anydb_node" {
   depends_on = [module.common_infrastructure]
   order_deployment = local.enable_db_deployment ? (
     local.db_zonal_deployment && local.application_tier.enable_deployment ? (
-      module.app_tier.scs_vm_ids[0]
+      module.app_tier.ASCS_vm_ids[0]
     ) : (null)
   ) : (null)
   database                                     = local.database
@@ -288,11 +288,11 @@ module "output_files" {
   loadbalancers       = module.hdb_node.loadbalancers
   sap_sid             = local.sap_sid
   db_sid              = local.db_sid
-  nics_scs            = module.app_tier.nics_scs
+  nics_ASCS            = module.app_tier.nics_ASCS
   nics_app            = module.app_tier.nics_app
   nics_web            = module.app_tier.nics_web
   nics_anydb          = module.anydb_node.nics_anydb
-  nics_scs_admin      = module.app_tier.nics_scs_admin
+  nics_ASCS_admin      = module.app_tier.nics_ASCS_admin
   nics_app_admin      = module.app_tier.nics_app_admin
   nics_web_admin      = module.app_tier.nics_web_admin
   nics_anydb_admin    = module.anydb_node.nics_anydb_admin
@@ -310,13 +310,13 @@ module "output_files" {
     module.app_tier.apptier_disks
   )))
   use_local_credentials = module.common_infrastructure.use_local_credentials
-  scs_ha                = module.app_tier.scs_ha
+  ASCS_ha                = module.app_tier.ASCS_ha
   db_ha = upper(try(local.database.platform, "HANA")) == "HANA" ? (
     module.hdb_node.db_ha) : (
     module.anydb_node.db_ha
   )
   ansible_user = module.common_infrastructure.sid_username
-  scs_lb_ip    = module.app_tier.scs_lb_ip
+  ASCS_lb_ip    = module.app_tier.ASCS_lb_ip
   db_lb_ip = upper(try(local.database.platform, "HANA")) == "HANA" ? (
     module.hdb_node.db_lb_ip[0]) : (
     module.anydb_node.db_lb_ip[0]
@@ -329,7 +329,7 @@ module "output_files" {
   sap_transport           = try(data.terraform_remote_state.landscape.outputs.saptransport_path, "")
   ers_lb_ip               = module.app_tier.ers_lb_ip
   bom_name                = var.bom_name
-  scs_instance_number     = var.scs_instance_number
+  ASCS_instance_number     = var.ASCS_instance_number
   ers_instance_number     = var.ers_instance_number
   platform                = upper(try(local.database.platform, "HANA"))
   db_auth_type            = try(local.database.authentication.type, "key")

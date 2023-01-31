@@ -24,11 +24,11 @@
     path:                              '{{ sap_deployment_automation }}\{{ sid_to_be_deployed.sid | upper }}\sap_deployment_dbload.txt'
   register:                            dbload_installed
 
-- name:                                "DBLoad: -  Set the SCS Server name list"
+- name:                                "DBLoad: -  Set the ASCS Server name list"
   ansible.builtin.set_fact:
-    scs_server_temp:                   "{{ scs_server_temp | default([]) + [item] }}"
+    ASCS_server_temp:                   "{{ ASCS_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                "DBLoad: -  Set the DB Server name list"
@@ -41,7 +41,7 @@
   ansible.builtin.set_fact:
     sap_inifile:                       "{{ bom_base_name }}-dbload-{{ sid_to_be_deployed.sid | lower }}-{{ ansible_hostname }}.params"
     sap_inifile_template:              "{{ bom_base_name }}-dbload-inifile-param.j2"
-    scs_server:                        "{% if scs_high_availability %}{{ sid_to_be_deployed.sid | lower }}scs{{ scs_instance_number }}cl1{% else %}{{ hostvars[scs_server_temp | first]['virtual_host'] }}{% endif %}"
+    ASCS_server:                        "{% if ASCS_high_availability %}{{ sid_to_be_deployed.sid | lower }}ASCS{{ ASCS_instance_number }}cl1{% else %}{{ hostvars[ASCS_server_temp | first]['virtual_host'] }}{% endif %}"
     db_virtual_host:                   "{{ hostvars[db_server_temp | first]['virtual_host'] }}"
     dir_params:                        '{{ tmp_directory_windows }}\params'
     product_catalog:                   '{{ download_directory_windows }}\SWPM\product.catalog'
@@ -141,8 +141,8 @@
     sap_ciDialogWPNumber:
     sap_ciBtcWPNumber:
     sap_installSAPHostAgent:
-    sap_profile_dir:                   '\\{{ scs_server }}\sapmnt\{{ sid_to_be_deployed.sid | upper }}\SYS\profile'
-    sap_scs_hostname:                  "{{ scs_server }}"
+    sap_profile_dir:                   '\\{{ ASCS_server }}\sapmnt\{{ sid_to_be_deployed.sid | upper }}\SYS\profile'
+    sap_ASCS_hostname:                  "{{ ASCS_server }}"
     sap_db_hostname:                   "{{ db_virtual_host }}"
     sap_ciVirtualHostname:
     sap_appVirtualHostname:
@@ -161,7 +161,7 @@
       - "INSTALLED:  {{ dbload_installed.stat.exists }}"
       - "INIFILE:    {{ sap_inifile }}"
       - "PRODUCT ID: {{ bom.product_ids.dbl }}"
-      - "SCSHOST:    {{ scs_server }}"
+      - "ASCSHOST:    {{ ASCS_server }}"
       - "DBHOST:     {{ db_virtual_host }}"
       - "SID:        {{ sid_to_be_deployed.sid | upper }}"
 
@@ -206,8 +206,8 @@
         ansible_become_method:         runas
         ansible_become_user:           '{{ domain }}\{{ sap_sid }}adm'
         ansible_become_password:       "{{ domain_user_password }}"
-      register:                        scs_extraction
-      failed_when:                     scs_extraction.rc > 0
+      register:                        ASCS_extraction
+      failed_when:                     ASCS_extraction.rc > 0
 
     - name:                            "DBLoad: - run SAPInst"
       win_shell: |

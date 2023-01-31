@@ -11,11 +11,11 @@ locals {
   ips_dbnodes_admin = [for key, value in var.nics_dbnodes_admin : value.private_ip_address]
   ips_dbnodes_db    = [for key, value in var.nics_dbnodes_db : value.private_ip_address]
 
-  ips_primary_scs = var.nics_scs
+  ips_primary_ASCS = var.nics_ASCS
   ips_primary_app = var.nics_app
   ips_primary_web = var.nics_web
 
-  ips_scs = [for key, value in local.ips_primary_scs : value.private_ip_address]
+  ips_ASCS = [for key, value in local.ips_primary_ASCS : value.private_ip_address]
   ips_app = [for key, value in local.ips_primary_app : value.private_ip_address]
   ips_web = [for key, value in local.ips_primary_web : value.private_ip_address]
 
@@ -26,15 +26,15 @@ locals {
   dns_label     = try(var.landscape_tfstate.dns_label, "")
 
   app_server_count = length(var.nics_app)
-  scs_server_count = length(var.nics_scs)
+  ASCS_server_count = length(var.nics_ASCS)
 
-  app_tier = (local.app_server_count + local.scs_server_count) > 0
+  app_tier = (local.app_server_count + local.ASCS_server_count) > 0
 
-  db_supported_tiers  = local.app_tier ? lower(var.platform) : format("%s, scs, pas", lower(var.platform))
-  scs_supported_tiers = local.app_server_count > 0 ? "scs" : "scs, pas"
+  db_supported_tiers  = local.app_tier ? lower(var.platform) : format("%s, ASCS, pas", lower(var.platform))
+  ASCS_supported_tiers = local.app_server_count > 0 ? "ASCS" : "ASCS, pas"
 
-  # If PAS and SCS is on same server
-  pas_instance_number = (local.app_server_count + local.scs_server_count) <= 1 ? (
+  # If PAS and ASCS is on same server
+  pas_instance_number = (local.app_server_count + local.ASCS_server_count) <= 1 ? (
     "02") : (
     "00"
   )

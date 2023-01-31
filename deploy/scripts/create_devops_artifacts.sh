@@ -56,9 +56,9 @@ if [ -z "${ADO_PROJECT}" ]; then
 fi
 
 echo "Installing the extensions"
-extension_name=$(az devops extension show --org $ADO_ORGANIZATION --extension vss-services-ansible  --publisher-id  ms-vscs-rm --query extensionName)
+extension_name=$(az devops extension show --org $ADO_ORGANIZATION --extension vss-services-ansible  --publisher-id  ms-vASCS-rm --query extensionName)
 if [ -z ${extension_name} ]; then
-   az devops extension install --org $ADO_ORGANIZATION --extension-id vss-services-ansible --publisher-id ms-vscs-rm --output none
+   az devops extension install --org $ADO_ORGANIZATION --extension-id vss-services-ansible --publisher-id ms-vASCS-rm --output none
 fi
 
 

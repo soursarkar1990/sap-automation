@@ -476,22 +476,22 @@ variable "app_disk_sizes_filename" {
 #                                                                                       #
 #########################################################################################
 
-variable "scs_server_count" {
+variable "ASCS_server_count" {
   description = "The number of SAP Central Services servers"
   default     = 0
 }
 
-variable "scs_high_availability" {
+variable "ASCS_high_availability" {
   description = "If true, the SAP Central Services tier will be configured for high availability"
   default     = false
 }
 
-variable "scs_server_zones" {
+variable "ASCS_server_zones" {
   description = "If provided, the SAP Central Services tier will be deployed in the specified zones"
   default     = []
 }
 
-variable "scs_server_image" {
+variable "ASCS_server_image" {
   description = "Virtual machine image to use for the SAP Central Services server(s)"
   default = {
     "os_type"         = "LINUX"
@@ -503,8 +503,8 @@ variable "scs_server_image" {
   }
 }
 
-variable "scs_instance_number" {
-  description = "The Instance number for SCS"
+variable "ASCS_instance_number" {
+  description = "The Instance number for ASCS"
   default     = "00"
 }
 
@@ -513,42 +513,42 @@ variable "ers_instance_number" {
   default     = "02"
 }
 
-variable "scs_server_app_nic_ips" {
+variable "ASCS_server_app_nic_ips" {
   description = "If provided, the SAP Central Services tier will be configured with the specified IPs"
   default     = []
 }
 
-variable "scs_server_nic_secondary_ips" {
+variable "ASCS_server_nic_secondary_ips" {
   description = "If provided, the SAP Central Services tier will be configured with the specified IPs as secondary IPs"
   default     = []
 }
 
-variable "scs_server_admin_nic_ips" {
+variable "ASCS_server_admin_nic_ips" {
   description = "If provided, the SAP Central Services tier will be configured with the specified IPs  (admin subnet)"
   default     = []
 }
 
-variable "scs_server_loadbalancer_ips" {
+variable "ASCS_server_loadbalancer_ips" {
   description = "If provided, the SAP Central Services tier will be configured with the specified load balancer IPs"
   default     = []
 }
 
-variable "scs_server_sku" {
+variable "ASCS_server_sku" {
   description = "The Virtual Machine SKU to use"
   default     = ""
 }
 
-variable "scs_server_tags" {
+variable "ASCS_server_tags" {
   description = "If provided, the SAP Central Services tier will be configured with the specified tags"
   default     = {}
 }
 
-variable "scs_server_no_avset" {
+variable "ASCS_server_no_avset" {
   description = "If true, the SAP Central Services tier will not use an availability set"
   default     = false
 }
 
-variable "scs_server_no_ppg" {
+variable "ASCS_server_no_ppg" {
   description = "If provided, the Central Services will not be placed in a proximity placement group"
   default     = false
 }
@@ -726,8 +726,8 @@ variable "use_loadbalancers_for_standalone_deployments" {
   default     = true
 }
 
-variable "idle_timeout_scs_ers" {
-  description = "Sets the idle timeout setting for the SCS and ERS loadbalancer"
+variable "idle_timeout_ASCS_ers" {
+  description = "Sets the idle timeout setting for the ASCS and ERS loadbalancer"
   default     = 4
 }
 

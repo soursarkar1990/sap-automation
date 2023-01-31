@@ -80,7 +80,7 @@
   ansible.builtin.import_tasks:        "fencing.yaml"
   when:
     - tier == "fencing"
-    - (scs_high_availability or db_high_availability)
+    - (ASCS_high_availability or db_high_availability)
     - not use_msi_for_clusters
 
 ...

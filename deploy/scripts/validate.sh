@@ -138,10 +138,10 @@ if [ "${deployment_system}" == sap_system ] ; then
 
     db_zone_count=$(jq '.databases[0].zones  | length' "${parameterfile}")
     app_zone_count=$(jq '.application.app_zones | length' "${parameterfile}")
-    scs_zone_count=$(jq '.application.scs_zones | length' "${parameterfile}")
+    ASCS_zone_count=$(jq '.application.ASCS_zones | length' "${parameterfile}")
     web_zone_count=$(jq '.application.web_zones | length' "${parameterfile}")
 
-    ppg_count=$(max -g $db_zone_count $app_zone_count $scs_zone_count $web_zone_count)
+    ppg_count=$(max -g $db_zone_count $app_zone_count $ASCS_zone_count $web_zone_count)
 
     echo "PPG:                         " "($ppg_count) (name defined by automation)"
     echo ""
@@ -428,35 +428,35 @@ if [ "${deployment_system}" == sap_system ] ; then
     fi
     
     echo "Central Services"
-    echo "  SCS load balancer:         " "(name defined by automation)"
-    if [ $scs_zone_count -gt 1 ] ; then
-        echo "  SCS avset:                 " "($scs_zone_count) (name defined by automation)"
+    echo "  ASCS load balancer:         " "(name defined by automation)"
+    if [ $ASCS_zone_count -gt 1 ] ; then
+        echo "  ASCS avset:                 " "($ASCS_zone_count) (name defined by automation)"
     else
-        echo "  SCS avset:                 " "(name defined by automation)"
+        echo "  ASCS avset:                 " "(name defined by automation)"
     fi
-    scs_server_count=$(jq --raw-output .application.scs_server_count "${parameterfile}")
-    echo "  Number of servers:         " "${scs_server_count}"
-    scs_server_ha=$(jq --raw-output .application.scs_high_availability "${parameterfile}")
-    echo "  High availability:         " "${scs_server_ha}"
+    ASCS_server_count=$(jq --raw-output .application.ASCS_server_count "${parameterfile}")
+    echo "  Number of servers:         " "${ASCS_server_count}"
+    ASCS_server_ha=$(jq --raw-output .application.ASCS_high_availability "${parameterfile}")
+    echo "  High availability:         " "${ASCS_server_ha}"
 
-    if jq --exit-status '.application.scs_os' "${parameterfile}" >/dev/null; then
-        if jq --exit-status '.application.scs_os.source_image_id' "${parameterfile}" >/dev/null; then
-            image=$(jq --raw-output .application.scs_os.source_image_id  "${parameterfile}")
+    if jq --exit-status '.application.ASCS_os' "${parameterfile}" >/dev/null; then
+        if jq --exit-status '.application.ASCS_os.source_image_id' "${parameterfile}" >/dev/null; then
+            image=$(jq --raw-output .application.ASCS_os.source_image_id  "${parameterfile}")
             echo "  Custom image:          " "${image}"
-            if jq --exit-status '.application.scs_os.os_type' "${parameterfile}" >/dev/null; then
-                os_type=$(jq --raw-output .application.scs_os.os_type "${parameterfile}")
+            if jq --exit-status '.application.ASCS_os.os_type' "${parameterfile}" >/dev/null; then
+                os_type=$(jq --raw-output .application.ASCS_os.os_type "${parameterfile}")
                 echo "  Image os type:     " "${os_type}"
             else
-                error "SCS os_type must be specified when using custom image"
+                error "ASCS os_type must be specified when using custom image"
             fi
         else
-            publisher=$(jq --raw-output .application.scs_os.publisher "${parameterfile}")
+            publisher=$(jq --raw-output .application.ASCS_os.publisher "${parameterfile}")
             echo "  Image publisher:           " "${publisher}"
-            offer=$(jq --raw-output .application.scs_os.offer "${parameterfile}")
+            offer=$(jq --raw-output .application.ASCS_os.offer "${parameterfile}")
             echo "  Image offer:               " "${offer}"
-            sku=$(jq --raw-output .application.scs_os.sku "${parameterfile}")
+            sku=$(jq --raw-output .application.ASCS_os.sku "${parameterfile}")
             echo "  Image sku:                 " "${sku}"
-            version=$(jq --raw-output .application.scs_os.version "${parameterfile}")
+            version=$(jq --raw-output .application.ASCS_os.version "${parameterfile}")
             echo "  Image version:             " "${version}"
         fi
     else
@@ -480,9 +480,9 @@ if [ "${deployment_system}" == sap_system ] ; then
             echo "  Image version:             " "${version}"
         fi
     fi
-    if jq --exit-status '.application.scs_zones' "${parameterfile}" >/dev/null; then
+    if jq --exit-status '.application.ASCS_zones' "${parameterfile}" >/dev/null; then
         echo "  Deployment:                " "Zonal"
-        zones=$(jq --compact-output .application.scs_zones "${parameterfile}")
+        zones=$(jq --compact-output .application.ASCS_zones "${parameterfile}")
         echo "    Zones:                   " "${zones}"
     else
         echo "  Deployment:                " "Regional"
@@ -506,7 +506,7 @@ if [ "${deployment_system}" == sap_system ] ; then
                 os_type=$(jq --raw-output .application.web_os.os_type "${parameterfile}")
                 echo "  Image os type:     " "${os_type}"
             else
-                error "SCS os_type must be specified when using custom image"
+                error "ASCS os_type must be specified when using custom image"
             fi
         else
             publisher=$(jq --raw-output .application.web_os.publisher "${parameterfile}")
@@ -539,9 +539,9 @@ if [ "${deployment_system}" == sap_system ] ; then
             echo "  Image version:             " "${version}"
         fi
     fi
-    if jq --exit-status '.application.scs_zones' "${parameterfile}" >/dev/null; then
+    if jq --exit-status '.application.ASCS_zones' "${parameterfile}" >/dev/null; then
         echo "  Deployment:                " "Zonal"
-        zones=$(jq --compact-output .application.scs_zones "${parameterfile}")
+        zones=$(jq --compact-output .application.ASCS_zones "${parameterfile}")
         echo "    Zones:                   " "${zones}"
     else
         echo "  Deployment:                " "Regional"

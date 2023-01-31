@@ -4,7 +4,7 @@
 ########################################################################################################################################################################################################
 #                                                                                                                                                                                                      #
 # Installation service 'SAP S/4HANA Server 1909 > SAP HANA Database > Installation > Application Server ABAP
-#                       > Distributed System > ASCS Instance', product id 'NW_ABAP_ASCS:S4HANA1909.CORE.HDB.ABAP' #
+#                       > Distributed System > AASCS Instance', product id 'NW_ABAP_AASCS:S4HANA1909.CORE.HDB.ABAP' #
 #                                                                                                                                                                                                      #
 ########################################################################################################################################################################################################
 
@@ -19,10 +19,10 @@ NW_Delete_Sapinst_Users.removeUsers                                  = true
 NW_GetMasterPassword.masterPwd                                       = {{ main_password }}
 NW_GetSidNoProfiles.sid                                              = {{ sap_sid }}
 
-NW_SCS_Instance.ascsInstallGateway                                   = true
-NW_SCS_Instance.ascsInstallWebDispatcher                             = false
-NW_SCS_Instance.instanceNumber                                       = {{ scs_instance_number }}
-NW_SCS_Instance.scsVirtualHostname                                   = {{ sap_scs_hostname }}
+NW_ASCS_Instance.aASCSInstallGateway                                   = true
+NW_ASCS_Instance.aASCSInstallWebDispatcher                             = false
+NW_ASCS_Instance.instanceNumber                                       = {{ ASCS_instance_number }}
+NW_ASCS_Instance.ASCSVirtualHostname                                   = {{ sap_ASCS_hostname }}
 
 NW_adaptProfile.skipSecurityProfileSettings                          = true
 NW_getFQDN.FQDN                                                      = {{ sap_fqdn }}

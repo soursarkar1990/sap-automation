@@ -85,14 +85,14 @@ logical_volume_groups: "{{ lookup('template', 'logical_volume_group.j2') }}"
 #     fstype:     'xfs'
 
 #   - tier:       'sapos'
-#     node_tier:  'scs'
+#     node_tier:  'ASCS'
 #     vg:         'vg_sap'
 #     lv:         'lv_sapmnt'
 #     size:       '128g'
 #     fstype:     'xfs'
 
 #   - tier:       'sapos'
-#     node_tier:  'scs'
+#     node_tier:  'ASCS'
 #     vg:         'vg_sap'
 #     lv:         'lv_usrsapinstall'
 #     size:       '100%FREE'

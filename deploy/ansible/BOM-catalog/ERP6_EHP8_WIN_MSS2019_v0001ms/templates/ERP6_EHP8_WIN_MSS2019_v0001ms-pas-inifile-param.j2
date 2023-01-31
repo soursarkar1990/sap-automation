@@ -25,28 +25,28 @@ NW_GetSidNoProfiles.sid                                               = {{ sap_s
 # Provide  'profile' directory of SAP Netweaver-based system.
 NW_readProfileDir.profileDir                                          = {{ sap_profile_dir }}
 
-# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for ASCS and SCS instance.
-NW_SCS_Instance.instanceNumber                                        = {{ scs_instance_number }}
+# The instance number of the (A)ASCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for AASCS and ASCS instance.
+NW_ASCS_Instance.instanceNumber                                        = {{ ASCS_instance_number }}
 
-# Dual stack only: The SCS instance number. Leave empty for default.
-# NW_SCS_Instance.scsInstanceNumber =
+# Dual stack only: The ASCS instance number. Leave empty for default.
+# NW_ASCS_Instance.ASCSInstanceNumber =
 
-# The (A)SCS message server port. Leave empty for default.
-# NW_SCS_Instance.scsMSPort =
+# The (A)ASCS message server port. Leave empty for default.
+# NW_ASCS_Instance.ASCSMSPort =
 
-# You can specify a virtual host name for the ASCS instance. Leave empty for default.
-NW_SCS_Instance.scsVirtualHostname                                    = {{ sap_scs_hostname }}
+# You can specify a virtual host name for the AASCS instance. Leave empty for default.
+NW_ASCS_Instance.ASCSVirtualHostname                                    = {{ sap_ASCS_hostname }}
 
-# Standard system with AS ABAP only: Virtual host name for the ASCS instance. Leave empty for default.
-NW_CI_Instance.ascsVirtualHostname                                    = {{ sap_scs_hostname }}
+# Standard system with AS ABAP only: Virtual host name for the AASCS instance. Leave empty for default.
+NW_CI_Instance.aASCSVirtualHostname                                    = {{ sap_ASCS_hostname }}
 
 # Instance number of the primary application server instance. Leave empty for default.
-NW_CI_Instance.ascsVirtualHostname                                    = {{ sap_scs_hostname }}
+NW_CI_Instance.aASCSVirtualHostname                                    = {{ sap_ASCS_hostname }}
 NW_CI_Instance.ciInstanceNumber                                       = {{ sap_ciInstanceNumber }}
 # The ABAP message server port. Leave empty for default.
-NW_CI_Instance.ciMSPort                                               = 36{{ scs_instance_number }}
+NW_CI_Instance.ciMSPort                                               = 36{{ ASCS_instance_number }}
 NW_CI_Instance.ciVirtualHostname                                      = {{ sap_ciVirtualHostname }}
-NW_CI_Instance.scsVirtualHostname                                     = {{ sap_scs_hostname }}
+NW_CI_Instance.ASCSVirtualHostname                                     = {{ sap_ASCS_hostname }}
 
 # Distributed installation or system copy with any database and SAP Basis release 740 or higher: Execute ABAP program 'RUTPOADAPT' for depooling. Set it to 'true' if declustering / depooling is selected for the distributed database instance installation option.
 NW_CI_Instance_ABAP_Reports.executeReportsForDepooling                = true

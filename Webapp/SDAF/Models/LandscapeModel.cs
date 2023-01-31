@@ -128,19 +128,19 @@ namespace AutomationForm.Models
         public string web_subnet_nsg_name { get; set; }
 
 
-        [SubnetArmIdValidator(ErrorMessage = "Invalid ISCSI subnet arm id")]
-        public string iscsi_subnet_arm_id { get; set; }
+        [SubnetArmIdValidator(ErrorMessage = "Invalid IASCSI subnet arm id")]
+        public string iASCSi_subnet_arm_id { get; set; }
 
         //[Required]
-        [AddressPrefixValidator(ErrorMessage = "ISCSI subnet address space must be a valid RFC 1918 address")]
-        public string iscsi_subnet_address_prefix { get; set; }
+        [AddressPrefixValidator(ErrorMessage = "IASCSI subnet address space must be a valid RFC 1918 address")]
+        public string iASCSi_subnet_address_prefix { get; set; }
 
-        public string iscsi_subnet_name { get; set; }
+        public string iASCSi_subnet_name { get; set; }
 
-        [NsgArmIdValidator(ErrorMessage = "Invalid ISCSI subnet nsg arm id")]
-        public string iscsi_subnet_nsg_arm_id { get; set; }
+        [NsgArmIdValidator(ErrorMessage = "Invalid IASCSI subnet nsg arm id")]
+        public string iASCSi_subnet_nsg_arm_id { get; set; }
 
-        public string iscsi_subnet_nsg_name { get; set; }
+        public string iASCSi_subnet_nsg_name { get; set; }
 
 
         [SubnetArmIdValidator(ErrorMessage = "Invalid ANF subnet arm id")]

@@ -76,18 +76,18 @@ data "azurerm_subnet" "subnet_sap_web" {
 
 ##############################################################################################
 #
-#  Create the SCS Load Balancer
+#  Create the ASCS Load Balancer
 #
 ##############################################################################################
 
-resource "azurerm_lb" "scs" {
+resource "azurerm_lb" "ASCS" {
   provider = azurerm.main
-  count    = local.enable_scs_lb_deployment ? 1 : 0
+  count    = local.enable_ASCS_lb_deployment ? 1 : 0
   name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_alb,
+    var.naming.resource_prefixes.ASCS_alb,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_alb
+    local.resource_suffixes.ASCS_alb
   )
   resource_group_name = var.resource_group[0].name
   location            = var.resource_group[0].location
@@ -109,188 +109,188 @@ resource "azurerm_lb" "scs" {
   }
 }
 
-resource "azurerm_lb_backend_address_pool" "scs" {
+resource "azurerm_lb_backend_address_pool" "ASCS" {
   provider = azurerm.main
-  count    = local.enable_scs_lb_deployment ? 1 : 0
+  count    = local.enable_ASCS_lb_deployment ? 1 : 0
   name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_alb_bepool,
+    var.naming.resource_prefixes.ASCS_alb_bepool,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_alb_bepool
+    local.resource_suffixes.ASCS_alb_bepool
   )
-  loadbalancer_id = azurerm_lb.scs[0].id
+  loadbalancer_id = azurerm_lb.ASCS[0].id
 }
 
-resource "azurerm_lb_probe" "scs" {
+resource "azurerm_lb_probe" "ASCS" {
   provider        = azurerm.main
-  count           = local.enable_scs_lb_deployment ? (local.scs_high_availability ? 2 : 1) : 0
-  loadbalancer_id = azurerm_lb.scs[0].id
+  count           = local.enable_ASCS_lb_deployment ? (local.ASCS_high_availability ? 2 : 1) : 0
+  loadbalancer_id = azurerm_lb.ASCS[0].id
   name = format("%s%s%s%s",
-    var.naming.resource_prefixes[count.index == 0 ? "scs_alb_hp" : "scs_ers_hp"],
+    var.naming.resource_prefixes[count.index == 0 ? "ASCS_alb_hp" : "ASCS_ers_hp"],
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes[count.index == 0 ? "scs_alb_hp" : "scs_ers_hp"]
+    local.resource_suffixes[count.index == 0 ? "ASCS_alb_hp" : "ASCS_ers_hp"]
   )
   port                = local.hp_ports[count.index]
   protocol            = "Tcp"
   interval_in_seconds = 5
-  number_of_probes    = local.scs_high_availability && upper(var.application_tier.scs_os.os_type) == "WINDOWS" ? 4 : 2
+  number_of_probes    = local.ASCS_high_availability && upper(var.application_tier.ASCS_os.os_type) == "WINDOWS" ? 4 : 2
 }
 
 resource "azurerm_lb_probe" "clst" {
   provider        = azurerm.main
-  count           = local.scs_high_availability && upper(var.application_tier.scs_os.os_type) == "WINDOWS" ? 1 : 0
-  loadbalancer_id = azurerm_lb.scs[0].id
+  count           = local.ASCS_high_availability && upper(var.application_tier.ASCS_os.os_type) == "WINDOWS" ? 1 : 0
+  loadbalancer_id = azurerm_lb.ASCS[0].id
   name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_clst_hp,
+    var.naming.resource_prefixes.ASCS_clst_hp,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_clst_hp
+    local.resource_suffixes.ASCS_clst_hp
   )
   port                = local.hp_ports[count.index]
   protocol            = "Tcp"
   interval_in_seconds = 5
-  number_of_probes    = local.scs_high_availability && upper(var.application_tier.scs_os.os_type) == "WINDOWS" ? 4 : 2
+  number_of_probes    = local.ASCS_high_availability && upper(var.application_tier.ASCS_os.os_type) == "WINDOWS" ? 4 : 2
 }
 
 resource "azurerm_lb_probe" "fs" {
   provider        = azurerm.main
-  count           = local.scs_high_availability && upper(var.application_tier.scs_os.os_type) == "WINDOWS" ? 1 : 0
-  loadbalancer_id = azurerm_lb.scs[0].id
+  count           = local.ASCS_high_availability && upper(var.application_tier.ASCS_os.os_type) == "WINDOWS" ? 1 : 0
+  loadbalancer_id = azurerm_lb.ASCS[0].id
   name = format("%s%s%s",
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_fs_hp
+    local.resource_suffixes.ASCS_fs_hp
   )
   port                = local.hp_ports[count.index]
   protocol            = "Tcp"
   interval_in_seconds = 5
-  number_of_probes    = local.scs_high_availability && upper(var.application_tier.scs_os.os_type) == "WINDOWS" ? 4 : 2
+  number_of_probes    = local.ASCS_high_availability && upper(var.application_tier.ASCS_os.os_type) == "WINDOWS" ? 4 : 2
 }
 
-# Create the SCS Load Balancer Rules
-resource "azurerm_lb_rule" "scs" {
+# Create the ASCS Load Balancer Rules
+resource "azurerm_lb_rule" "ASCS" {
   provider        = azurerm.main
-  count           = local.enable_scs_lb_deployment ? 1 : 0
-  loadbalancer_id = azurerm_lb.scs[0].id
+  count           = local.enable_ASCS_lb_deployment ? 1 : 0
+  loadbalancer_id = azurerm_lb.ASCS[0].id
   name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_scs_rule,
+    var.naming.resource_prefixes.ASCS_ASCS_rule,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_scs_rule
+    local.resource_suffixes.ASCS_ASCS_rule
   )
   protocol      = "All"
   frontend_port = 0
   backend_port  = 0
   frontend_ip_configuration_name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_alb_feip,
+    var.naming.resource_prefixes.ASCS_alb_feip,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_alb_feip
+    local.resource_suffixes.ASCS_alb_feip
   )
-  backend_address_pool_ids = [azurerm_lb_backend_address_pool.scs[0].id]
-  probe_id                 = azurerm_lb_probe.scs[0].id
+  backend_address_pool_ids = [azurerm_lb_backend_address_pool.ASCS[0].id]
+  probe_id                 = azurerm_lb_probe.ASCS[0].id
   enable_floating_ip       = true
   enable_tcp_reset         = true
-  idle_timeout_in_minutes  = var.idle_timeout_scs_ers
+  idle_timeout_in_minutes  = var.idle_timeout_ASCS_ers
 }
 
 # Create the ERS Load balancer rules only in High Availability configurations
 resource "azurerm_lb_rule" "ers" {
   provider        = azurerm.main
-  count           = local.enable_scs_lb_deployment && local.scs_high_availability ? 1 : 0
-  loadbalancer_id = azurerm_lb.scs[0].id
+  count           = local.enable_ASCS_lb_deployment && local.ASCS_high_availability ? 1 : 0
+  loadbalancer_id = azurerm_lb.ASCS[0].id
   name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_ers_rule,
+    var.naming.resource_prefixes.ASCS_ers_rule,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_ers_rule
+    local.resource_suffixes.ASCS_ers_rule
   )
   protocol      = "All"
   frontend_port = 0
   backend_port  = 0
   frontend_ip_configuration_name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_ers_feip,
+    var.naming.resource_prefixes.ASCS_ers_feip,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_ers_feip
+    local.resource_suffixes.ASCS_ers_feip
   )
-  backend_address_pool_ids = [azurerm_lb_backend_address_pool.scs[0].id]
-  probe_id                 = azurerm_lb_probe.scs[1].id
+  backend_address_pool_ids = [azurerm_lb_backend_address_pool.ASCS[0].id]
+  probe_id                 = azurerm_lb_probe.ASCS[1].id
   enable_floating_ip       = true
   enable_tcp_reset         = true
-  idle_timeout_in_minutes  = var.idle_timeout_scs_ers
+  idle_timeout_in_minutes  = var.idle_timeout_ASCS_ers
 }
 
 resource "azurerm_lb_rule" "clst" {
   provider        = azurerm.main
-  count           = local.enable_scs_lb_deployment && local.win_ha_scs ? 0 : 0
-  loadbalancer_id = azurerm_lb.scs[0].id
+  count           = local.enable_ASCS_lb_deployment && local.win_ha_ASCS ? 0 : 0
+  loadbalancer_id = azurerm_lb.ASCS[0].id
   name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_clst_rule,
+    var.naming.resource_prefixes.ASCS_clst_rule,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_clst_rule
+    local.resource_suffixes.ASCS_clst_rule
   )
   protocol      = "All"
   frontend_port = 0
   backend_port  = 0
   frontend_ip_configuration_name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_clst_feip,
+    var.naming.resource_prefixes.ASCS_clst_feip,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_clst_feip
+    local.resource_suffixes.ASCS_clst_feip
   )
-  backend_address_pool_ids = [azurerm_lb_backend_address_pool.scs[0].id]
+  backend_address_pool_ids = [azurerm_lb_backend_address_pool.ASCS[0].id]
   probe_id                 = azurerm_lb_probe.clst[0].id
   enable_floating_ip       = true
 }
 
 resource "azurerm_lb_rule" "fs" {
   provider        = azurerm.main
-  count           = local.enable_scs_lb_deployment && local.win_ha_scs ? 0 : 0
-  loadbalancer_id = azurerm_lb.scs[0].id
+  count           = local.enable_ASCS_lb_deployment && local.win_ha_ASCS ? 0 : 0
+  loadbalancer_id = azurerm_lb.ASCS[0].id
   name = format("%s%s%s%s",
-    var.naming.resource_prefixes.scs_fs_rule,
+    var.naming.resource_prefixes.ASCS_fs_rule,
     local.prefix,
     var.naming.separator,
-    local.resource_suffixes.scs_fs_rule
+    local.resource_suffixes.ASCS_fs_rule
   )
   protocol      = "All"
   frontend_port = 0
   backend_port  = 0
   frontend_ip_configuration_name = format("%s%s%s%s",
     local.prefix,
-    var.naming.resource_prefixes.scs_fs_feip,
+    var.naming.resource_prefixes.ASCS_fs_feip,
     var.naming.separator,
-    local.resource_suffixes.scs_fs_feip
+    local.resource_suffixes.ASCS_fs_feip
   )
-  backend_address_pool_ids = [azurerm_lb_backend_address_pool.scs[0].id]
+  backend_address_pool_ids = [azurerm_lb_backend_address_pool.ASCS[0].id]
   probe_id                 = azurerm_lb_probe.fs[0].id
   enable_floating_ip       = true
 }
 
 ##############################################################################################
 #
-#  Create the SCS Availability Set
+#  Create the ASCS Availability Set
 #
 ##############################################################################################
-resource "azurerm_availability_set" "scs" {
-  count = local.enable_deployment && local.use_scs_avset ? (
-    max(length(local.scs_zones), 1)) : (
+resource "azurerm_availability_set" "ASCS" {
+  count = local.enable_deployment && local.use_ASCS_avset ? (
+    max(length(local.ASCS_zones), 1)) : (
     0
   )
   name = format("%s%s%s",
     local.prefix,
     var.naming.separator,
-    var.naming.availabilityset_names.scs[count.index]
+    var.naming.availabilityset_names.ASCS[count.index]
   )
   location                     = var.resource_group[0].location
   resource_group_name          = var.resource_group[0].name
   platform_update_domain_count = 20
   platform_fault_domain_count  = local.faultdomain_count
-  proximity_placement_group_id = local.scs_zonal_deployment ? (
-    var.ppg[count.index % length(local.scs_zones)].id) : (
+  proximity_placement_group_id = local.ASCS_zonal_deployment ? (
+    var.ppg[count.index % length(local.ASCS_zones)].id) : (
     var.ppg[0].id
   )
   managed = true
@@ -533,22 +533,22 @@ resource "azurerm_subnet_route_table_association" "subnet_sap_web" {
   route_table_id = var.route_table_id
 }
 
-resource "azurerm_private_dns_a_record" "scs" {
+resource "azurerm_private_dns_a_record" "ASCS" {
   provider = azurerm.dnsmanagement
-  count    = local.enable_scs_lb_deployment && length(local.dns_label) > 0 ? 1 : 0
-  name = lower(format("%sscs%scl1",
+  count    = local.enable_ASCS_lb_deployment && length(local.dns_label) > 0 ? 1 : 0
+  name = lower(format("%sASCS%scl1",
     local.sid,
-    var.application_tier.scs_instance_number
+    var.application_tier.ASCS_instance_number
   ))
   resource_group_name = coalesce(var.management_dns_resourcegroup_name, var.landscape_tfstate.dns_resource_group_name)
   zone_name           = var.landscape_tfstate.dns_label
   ttl                 = 300
-  records             = [azurerm_lb.scs[0].frontend_ip_configuration[0].private_ip_address]
+  records             = [azurerm_lb.ASCS[0].frontend_ip_configuration[0].private_ip_address]
 }
 
 resource "azurerm_private_dns_a_record" "ers" {
   provider = azurerm.dnsmanagement
-  count    = local.enable_scs_lb_deployment && length(local.dns_label) > 0 ? 1 : 0
+  count    = local.enable_ASCS_lb_deployment && length(local.dns_label) > 0 ? 1 : 0
   name = lower(format("%sers%scl2",
     local.sid,
     local.ers_instance_number
@@ -556,6 +556,6 @@ resource "azurerm_private_dns_a_record" "ers" {
   resource_group_name = coalesce(var.management_dns_resourcegroup_name, var.landscape_tfstate.dns_resource_group_name)
   zone_name           = local.dns_label
   ttl                 = 300
-  records             = [azurerm_lb.scs[0].frontend_ip_configuration[1].private_ip_address]
+  records             = [azurerm_lb.ASCS[0].frontend_ip_configuration[1].private_ip_address]
 }
 

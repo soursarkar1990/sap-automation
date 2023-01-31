@@ -1,5 +1,5 @@
 ---
 
-iscsi_object: iqn.2006-04
+iASCSi_object: iqn.2006-04
 
-iscsi_port: 3260
+iASCSi_port: 3260

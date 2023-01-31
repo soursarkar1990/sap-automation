@@ -47,8 +47,8 @@ parameters:
     type:                              boolean
     default:                           true
 
-  - name:                              scs_installation
-    displayName: SCS Installation
+  - name:                              ASCS_installation
+    displayName: ASCS Installation
     type:                              boolean
     default:                           true
 
@@ -334,11 +334,11 @@ stages:
                   azureClientSecret:         $(ARM_CLIENT_SECRET)
                   azureTenantId:             $(ARM_TENANT_ID)
                   azureSubscriptionId:       $(ARM_SUBSCRIPTION_ID)
-          - ${{ if eq(parameters.scs_installation, true) }}:
+          - ${{ if eq(parameters.ASCS_installation, true) }}:
               - template:                    templates\run-ansible.yaml
                 parameters:
                   displayName:               Central Services Installation
-                  ansibleFilePath:           ${{ parameters.sap_automation_repo_path }}/deploy/ansible/playbook_05_00_00_sap_scs_install.yaml
+                  ansibleFilePath:           ${{ parameters.sap_automation_repo_path }}/deploy/ansible/playbook_05_00_00_sap_ASCS_install.yaml
                   secretName:                "$(Preparation.SSH_KEY_NAME)"
                   passwordSecretName:        "$(Preparation.PASSWORD_KEY_NAME)"
                   userNameSecretName:        "$(Preparation.USERNAME_KEY_NAME)"

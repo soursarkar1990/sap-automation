@@ -11,8 +11,8 @@ defaults:
   target_location: "{{ target_media_location }}/download_basket"
 
 product_ids:
-  scs:
-  scs_ha:
+  ASCS:
+  ASCS_ha:
   dbl: NW_ABAP_DB:NW750.DB6.ABAP
   pas:
   pas_ha:
