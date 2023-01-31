@@ -36,10 +36,10 @@
 # Expectations:
 #
 #   Volume Groups: (pvs are only examples)
-#     - { tier: 'all',      vg: 'vg_sap',         pvs: '/dev/disk/azure/ASCSi1/lun0' }
-#     - { tier: 'hdb',      vg: 'vg_hana_data',   pvs: '/dev/disk/azure/ASCSi1/lun1,/dev/disk/azure/ASCSi1/lun2,/dev/disk/azure/ASCSi1/lun3' }
-#     - { tier: 'hdb',      vg: 'vg_hana_log',    pvs: '/dev/disk/azure/ASCSi1/lun4,/dev/disk/azure/ASCSi1/lun5,/dev/disk/azure/ASCSi1/lun6' }
-#     - { tier: 'hdb',      vg: 'vg_hana_backup', pvs: '/dev/disk/azure/ASCSi1/lun7' }
+#     - { tier: 'all',      vg: 'vg_sap',         pvs: '/dev/disk/azure/scsi1/lun0' }
+#     - { tier: 'hdb',      vg: 'vg_hana_data',   pvs: '/dev/disk/azure/scsi1/lun1,/dev/disk/azure/scsi1/lun2,/dev/disk/azure/scsi1/lun3' }
+#     - { tier: 'hdb',      vg: 'vg_hana_log',    pvs: '/dev/disk/azure/scsi1/lun4,/dev/disk/azure/scsi1/lun5,/dev/disk/azure/scsi1/lun6' }
+#     - { tier: 'hdb',      vg: 'vg_hana_backup', pvs: '/dev/disk/azure/scsi1/lun7' }
 #
 #   Logical Volumes:
 #    - { tier: 'all',         lv: 'lv_usrsap',        vg: 'vg_sap',         size: '64g',       opts: '' }
@@ -73,7 +73,7 @@
   ansible.builtin.set_fact:
     nfs_server_temp:                   "{{ nfs_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                Set the NFS Server name
@@ -274,7 +274,7 @@
 
 # STEP3 Initialise Disks for ASM
 
-# Need to map the LUN id from SAP Parameters file to the ASCSi1 list to get the list to be used for creating ASM Disks.
+# Need to map the LUN id from SAP Parameters file to the scsi1 list to get the list to be used for creating ASM Disks.
 # Capture the list of disks to create list for DATA disk group.
 
 - name:                             "Capture disks for DATA Group"
@@ -287,7 +287,7 @@
   register:                            datagroup
   args:
     # executable:       /bin/csh
-    chdir:            "/dev/disk/azure/ASCSi1"
+    chdir:            "/dev/disk/azure/scsi1"
     # creates:          /oracle/sap_deployment_automation/sbpinstalled.txt
 
 - name:                                "Filter the list from datagroup results"
@@ -304,7 +304,7 @@
 
 # - fail: msg"{{ datadiskcount }}"
 
-# We need to map the LUN id from SAP Parameters file to the ASCSi1 list to get the list to be used for creating ASM Disks.
+# We need to map the LUN id from SAP Parameters file to the scsi1 list to get the list to be used for creating ASM Disks.
 # Capture the list of disks to create list for ARCH disk group.
 
 - name:                             "Capture disks for ARCH Group"
@@ -317,7 +317,7 @@
   register:                            archgroup
   args:
     # executable:       /bin/csh
-    chdir:            "/dev/disk/azure/ASCSi1"
+    chdir:            "/dev/disk/azure/scsi1"
     # creates:          /oracle/sap_deployment_automation/sbpinstalled.txt
 
 - name:                                "Filter the arch disks from the results"
@@ -343,7 +343,7 @@
   when:                                item.type == "reco-asm"
   register:                            recogroup
   args:
-    chdir:                             "/dev/disk/azure/ASCSi1"
+    chdir:                             "/dev/disk/azure/scsi1"
 
 - name:                                "Filter the arch disks from the results"
   ansible.builtin.set_fact:

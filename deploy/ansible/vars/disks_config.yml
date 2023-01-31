@@ -269,10 +269,10 @@ logical_volumes:
     fstype:     'xfs'
   # ----------------------- End - disks required for DB2 ----------------------8
 
-  # ---------------------- Begin - disks required for ASCS ---------------------8
+  # ---------------------- Begin - disks required for SCS ---------------------8
 logical_volumes_sapmnt:
   - tier:       'sapos'
-    node_tier:  'ASCS'
+    node_tier:  'scs'
     vg:         'vg_sap'
     lv:         'lv_sapmnt'
     size:       '32g'
@@ -280,12 +280,12 @@ logical_volumes_sapmnt:
 
 logical_volumes_install:
   - tier:       'sapos'
-    node_tier:  'ASCS'
+    node_tier:  'scs'
     vg:         'vg_sap'
     lv:         'lv_usrsapinstall'
     size:       '100%FREE'
     fstype:     'xfs'
-  # ----------------------- End - disks required for ASCS ----------------------8
+  # ----------------------- End - disks required for SCS ----------------------8
 
 # Define a dynamic expression based upon the 'item' fact that can
 # only be used within a loop, that determines the number of PVs

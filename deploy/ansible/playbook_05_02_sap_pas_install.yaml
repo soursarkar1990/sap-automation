@@ -77,7 +77,7 @@
             'sid': '{{ sap_sid | upper }}',
             'dbsid_uid': '{{ hdbadm_uid }}',
             'sidadm_uid': '{{ sidadm_uid }}',
-            'aASCS_inst_no': '{{ ASCS_instance_number }}',
+            'ascs_inst_no': '{{ scs_instance_number }}',
             'pas_inst_no': '{{ pas_instance_number }}',
             'app_inst_no': '{{ app_instance_number }}'
           }
@@ -91,7 +91,7 @@
         name:                          roles-sap-os/2.5-sap-users
         tasks_from:                    user_nw.yaml
       vars:
-        ASCS_instance_number:           "{{ sid_to_be_deployed.aASCS_inst_no }}"
+        scs_instance_number:           "{{ sid_to_be_deployed.ascs_inst_no }}"
         tier:                          generic
         main_password:                 "{{ hostvars.localhost.sap_password }}"
         sapbits_location_base_path:    "{{ hostvars.localhost.sapbits_location_base_path }}"
@@ -112,7 +112,7 @@
 
 
 - hosts:                               "{{ sap_sid | upper }}_PAS  :
-                                        {{ sap_sid | upper }}_ASCS :
+                                        {{ sap_sid | upper }}_SCS :
                                         {{ sap_sid | upper }}_DB"
 
   name:                                "PAS Installation Playbook"
@@ -147,7 +147,7 @@
             'sid': '{{ sap_sid | upper }}',
             'dbsid_uid': '{{ hdbadm_uid }}',
             'sidadm_uid': '{{ sidadm_uid }}',
-            'aASCS_inst_no': '{{ ASCS_instance_number }}',
+            'ascs_inst_no': '{{ scs_instance_number }}',
             'pas_inst_no': '{{ pas_instance_number }}',
             'app_inst_no': '{{ app_instance_number }}'
           }
@@ -172,14 +172,14 @@
               ansible.builtin.debug:
                 msg:
                   - "pas_instance_number: {{ pas_instance_number }}"
-                  - "ASCS_instance_number: {{ ASCS_instance_number }}"
+                  - "scs_instance_number: {{ scs_instance_number }}"
 
             - name:                    "PAS Installation Playbook: - Assert instance numbers"
               ansible.builtin.assert:
                 that:
                   - "pas_instance_number is defined"
-                  - "ASCS_instance_number != pas_instance_number"
-                fail_msg:              "Please ensure that the ASCS_instance_number is different from the pas_instance_number"
+                  - "scs_instance_number != pas_instance_number"
+                fail_msg:              "Please ensure that the scs_instance_number is different from the pas_instance_number"
           when:                        (ansible_play_hosts_all | length) <= 2
 
         - name:                        Run the PAS installation Playbook

@@ -39,18 +39,18 @@
     path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_web.txt"
   register:                            web_installed
 
-- name:                                "Web Install: Get the ASCS Server name list"
+- name:                                "Web Install: Get the SCS Server name list"
   ansible.builtin.set_fact:
-    ASCS_server_temp:                   "{{ ASCS_server_temp | default([]) + [item] }}"
+    scs_server_temp:                   "{{ scs_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
-- name:                                "Web Install: Set the ASCS Server name"
+- name:                                "Web Install: Set the SCS Server name"
   ansible.builtin.set_fact:
-    ASCS_server:                         "{% if ASCS_high_availability %}{{ sap_sid | lower }}ASCS{{ ASCS_instance_number }}cl1{% else %}{{ ASCS_server_temp | first }}{% endif %}"
+    scs_server:                         "{% if scs_high_availability %}{{ sap_sid | lower }}scs{{ scs_instance_number }}cl1{% else %}{{ scs_server_temp | first }}{% endif %}"
 
-- name:                                "ASCS Install: check media exists"
+- name:                                "SCS Install: check media exists"
   ansible.builtin.stat:
     path:                              "{{ target_media_location }}/SWPM/sapinst"
   register:                            sapinst_found
@@ -88,7 +88,7 @@
     web_instance_number:               "00" # "{{ web_instance_number }}"
     sap_ciInstanceNumber:              "00"
     sap_profile_dir:                   /sapmnt/{{ sap_sid | upper }}/profile
-    sap_ASCS_hostname:                  "{{ ASCS_server }}"
+    sap_scs_hostname:                  "{{ scs_server }}"
     sap_webVirtualHostname:            "{{ inventory_hostname }}"
     sap_installSAPHostAgent:           false
     hdb_instance_number:               "{{ db_instance_number }}"
@@ -109,7 +109,7 @@
       - "SAPSID:     {{ sap_sid }}"
       - "PRODUCT ID: {{ web_bom_id }}"
       - "INSTANCE:   {{ web_instance_number }}"
-      - "ASCSHOST:    {{ ASCS_server }}"
+      - "SCSHOST:    {{ scs_server }}"
 
 
 - name:                                "Web Install"

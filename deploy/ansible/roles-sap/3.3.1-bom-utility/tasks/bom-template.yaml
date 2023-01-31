@@ -3,7 +3,7 @@
 # -------------------------------------+---------------------------------------8
 #
 # Description:  Download specified BOM Template File
-# <BOM>-ASCS-inifile-param.j2
+# <BOM>-scs-inifile-param.j2
 #
 # -------------------------------------+---------------------------------------8
 
@@ -12,8 +12,8 @@
   ansible.builtin.debug:
     msg:
       - "SAP SID              :        {{ sap_sid }}"
-      - "Instance Number - ASCS:        {% if ASCS_instance_number is defined %}{{ ASCS_instance_number }}{% endif %}"
-      - "ASCS Virtual Hostname :        {% if sap_ASCS_hostname is defined %}{{ sap_ASCS_hostname }}{% endif %}"
+      - "Instance Number - SCS:        {% if scs_instance_number is defined %}{{ scs_instance_number }}{% endif %}"
+      - "SCS Virtual Hostname :        {% if sap_scs_hostname is defined %}{{ sap_scs_hostname }}{% endif %}"
       - "DB Hostname          :        {% if sap_db_hostname is defined %}{{ sap_db_hostname }}{% endif %}"
       - "FQDN                 :        {{ sap_fqdn }}"
       - "sapadm UID           :        {{ sapadm_uid }}"

@@ -35,7 +35,7 @@
 # +------------------------------------4--------------------------------------*/
 
 - hosts:              "{{ sap_sid | upper }}_DB  :
-                       {{ sap_sid | upper }}_ASCS :
+                       {{ sap_sid | upper }}_SCS :
                        {{ sap_sid | upper }}_ERS :
                        {{ sap_sid | upper }}_PAS :
                        {{ sap_sid | upper }}_ERS :

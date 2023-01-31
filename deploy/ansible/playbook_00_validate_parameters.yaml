@@ -92,7 +92,7 @@
       loop_control:
         loop_var:                      item_to_check
 
-    - name:                            "0.0 Validations - Check required ASCS HA variables are present and not empty"
+    - name:                            "0.0 Validations - Check required SCS HA variables are present and not empty"
       ansible.builtin.assert:
         that:
           - "{{ item_to_check.parameter is defined }}" # Has the variable been defined
@@ -102,25 +102,25 @@
       loop:
         - {
           parameter:                 "NFS_provider",
-          error:                     "A highly available ASCS deployment requires that NFS_Provider provided",
+          error:                     "A highly available SCS deployment requires that NFS_Provider provided",
         }
         - {
           parameter:                 "sap_mnt",
-          error:                     "A highly available ASCS deployment requires a shared sap_mnt is provided",
+          error:                     "A highly available SCS deployment requires a shared sap_mnt is provided",
         }
         - {
-          parameter:                 "ASCS_lb_ip",
-          error:                     "A highly available ASCS deployment requires that ASCS_lb_ip is provided",
+          parameter:                 "scs_lb_ip",
+          error:                     "A highly available SCS deployment requires that scs_lb_ip is provided",
         }
         - {
           parameter:                 "ecs_lb_ip",
-          error:                     "A highly available ASCS deployment requires  that ers_lb_ip is provided",
+          error:                     "A highly available SCS deployment requires  that ers_lb_ip is provided",
         }
       loop_control:
         loop_var:                      item_to_check
-      when: ASCS_high_availability
+      when: scs_high_availability
 
-    - name:                            "0.0 Validations - Check required ASCS HA fencing variables are present and not empty"
+    - name:                            "0.0 Validations - Check required SCS HA fencing variables are present and not empty"
       ansible.builtin.assert:
         that:
           - "{{ item_to_check.parameter is defined }}" # Has the variable been defined
@@ -130,24 +130,24 @@
       loop:
         - {
           parameter:                   "fencing_spn_client_id",
-          error:                       "A highly available ASCS deployment requires that an SPN is defined for the fencing agent",
+          error:                       "A highly available SCS deployment requires that an SPN is defined for the fencing agent",
         }
         - {
           parameter:                   "fencing_spn_client_pwd",
-          error:                       "A highly available ASCS deployment requires that an SPN is defined for the fencing agent",
+          error:                       "A highly available SCS deployment requires that an SPN is defined for the fencing agent",
         }
         - {
           parameter:                   "fencing_spn_subscription_id",
-          error:                       "A highly available ASCS deployment requires that an SPN is defined for the fencing agent",
+          error:                       "A highly available SCS deployment requires that an SPN is defined for the fencing agent",
         }
         - {
           parameter:                   "fencing_spn_tenant_id",
-          error:                       "A highly available ASCS deployment requires that an SPN is defined for the fencing agent",
+          error:                       "A highly available SCS deployment requires that an SPN is defined for the fencing agent",
         }
       loop_control:
         loop_var:                      item_to_check
       when:
-        - ASCS_high_availability
+        - scs_high_availability
         - not use_msi_for_clusters
 
     - name:                            "0.0 Validations - Check required Database HA variables are present and not empty"
@@ -160,23 +160,23 @@
       loop:
         - {
           parameter:                   "db_lb_ip",
-          error:                       "A highly available ASCS deployment requires that ASCS_lb_ip is provided",
+          error:                       "A highly available SCS deployment requires that scs_lb_ip is provided",
         }
         - {
           parameter:                   "fencing_spn_client_id",
-          error:                       "A highly available ASCS deployment requires that an SPN is defined for the fencing agent",
+          error:                       "A highly available SCS deployment requires that an SPN is defined for the fencing agent",
         }
         - {
           parameter:                   "fencing_spn_client_pwd",
-          error:                       "A highly available ASCS deployment requires that an SPN is defined for the fencing agent",
+          error:                       "A highly available SCS deployment requires that an SPN is defined for the fencing agent",
         }
         - {
           parameter:                   "fencing_spn_subscription_id",
-          error:                       "A highly available ASCS deployment requires that an SPN is defined for the fencing agent",
+          error:                       "A highly available SCS deployment requires that an SPN is defined for the fencing agent",
         }
         - {
           parameter:                   "fencing_spn_tenant_id",
-          error:                       "A highly available ASCS deployment requires that an SPN is defined for the fencing agent",
+          error:                       "A highly available SCS deployment requires that an SPN is defined for the fencing agent",
         }
       loop_control:
         loop_var:                      item_to_check
@@ -261,7 +261,7 @@
 # +------------------------------------4--------------------------------------*/
 
 - hosts: "{{ sap_sid | upper }}_DB  :
-    {{ sap_sid | upper }}_ASCS :
+    {{ sap_sid | upper }}_SCS :
     {{ sap_sid | upper }}_ERS :
     {{ sap_sid | upper }}_PAS :
     {{ sap_sid | upper }}_ERS :
@@ -305,41 +305,41 @@
           - "Virtual Host Name: {{ virtual_host }}"
           - "DNS:               {{ ansible_domain }}"
 
-    - name:                            "0.0 Validations - Validate ASCS and HDB instance numbers"
+    - name:                            "0.0 Validations - Validate SCS and HDB instance numbers"
       ansible.builtin.assert:
         that:
-          - "ASCS_instance_number != db_instance_number"
-        fail_msg:                      "Please ensure that the ASCS_instance_number is different from the db_instance_number when performing a standalone installation"
+          - "scs_instance_number != db_instance_number"
+        fail_msg:                      "Please ensure that the scs_instance_number is different from the db_instance_number when performing a standalone installation"
       when:                            (ansible_play_hosts_all | length) == 1
       tags:
-        - 0.0-ASCS-db-instance-single
+        - 0.0-scs-db-instance-single
 
-    - name:                            "0.0 Validations - Validate ASCS and HDB SIDs"
+    - name:                            "0.0 Validations - Validate SCS and HDB SIDs"
       ansible.builtin.assert:
         that:
           - "sap_sid != db_sid"
         fail_msg:                      "Please ensure that the sap_sid is different from the db_sid when performing a standalone installation"
       when:                            (ansible_play_hosts_all | length) == 1
       tags:
-        - 0.0-ASCS-db-single
+        - 0.0-scs-db-single
 
-    - name: Validate ASCS and PAS instance numbers
+    - name: Validate SCS and PAS instance numbers
       ansible.builtin.assert:
         that:
-          - "ASCS_instance_number != pas_instance_number"
-        fail_msg:                      "Please ensure that the pas_instance_number is different from the ASCS_instance_number when installing PAS on AASCS"
+          - "scs_instance_number != pas_instance_number"
+        fail_msg:                      "Please ensure that the pas_instance_number is different from the scs_instance_number when installing PAS on ASCS"
       when:                            (ansible_play_hosts_all | length) == 2
       tags:
-        - 0.0-ASCS-pas
+        - 0.0-scs-pas
 
-    - name:                            "0.0 Validations - Validate ASCS and PAS instance numbers"
+    - name:                            "0.0 Validations - Validate SCS and PAS instance numbers"
       ansible.builtin.assert:
         that:
-          - "ASCS_instance_number != pas_instance_number"
-        fail_msg:                      "Please ensure that the pas_instance_number is different from the ASCS_instance_number on standalone installation"
+          - "scs_instance_number != pas_instance_number"
+        fail_msg:                      "Please ensure that the pas_instance_number is different from the scs_instance_number on standalone installation"
       when:                            (ansible_play_hosts_all | length) == 1
       tags:
-        - 0.0-ASCS-pas-single
+        - 0.0-scs-pas-single
 
     - name:                            "0.0 Validations - Check internet connectivity"
       ansible.builtin.uri:

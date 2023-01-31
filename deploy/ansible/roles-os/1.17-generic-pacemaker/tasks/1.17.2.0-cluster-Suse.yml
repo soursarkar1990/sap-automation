@@ -37,10 +37,10 @@
       # ansible.builtin.command:         "crm cluster init -y cluster --name 'hdb_{{ db_sid | upper }}' --interface eth0"
       when:                            node_tier == 'hana'
 
-    - name:                            "1.17 Generic Pacemaker - Ensure cluster (ASCS_{{ sap_sid | upper }}) is configured"
-      ansible.builtin.command:         "ha-cluster-init -y --name 'ASCS_{{ sap_sid | upper }}' --interface eth0 --no-overwrite-sshkey"
-      # ansible.builtin.command:         "crm cluster init -y cluster --name 'ASCS_{{ sap_sid | upper }}' --interface eth0"
-      when:                            node_tier == 'ASCS'
+    - name:                            "1.17 Generic Pacemaker - Ensure cluster (scs_{{ sap_sid | upper }}) is configured"
+      ansible.builtin.command:         "ha-cluster-init -y --name 'scs_{{ sap_sid | upper }}' --interface eth0 --no-overwrite-sshkey"
+      # ansible.builtin.command:         "crm cluster init -y cluster --name 'scs_{{ sap_sid | upper }}' --interface eth0"
+      when:                            node_tier == 'scs'
 
     - name:                            "1.17 Generic Pacemaker - Ensure cluster (db2_{{ db_sid | upper }}) is configured"
       ansible.builtin.command:         "ha-cluster-init -y --name 'db2_{{ db_sid | upper }}' --interface eth0 --no-overwrite-sshkey"

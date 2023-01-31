@@ -44,17 +44,17 @@ HDB_Schema_Check_Dialogs.schemaPassword = des25(x7l9qrJYn90vBPKRLK1JWtQ5GUU=)
 # Location of the input file for the 'ABAP SecureStore' key. The input file must have two lines: 'key = <key>', 'key-id = <key ID>'. You can generate a key using 'rsecssfx'. Leave empty if you want to use the default key.
 # NW_ABAP_SSFS_CustomKey.ssfsKeyInputFile = 
 
-# Standard system only: Add gateway process to (A)ASCS instance
-# NW_CI_Instance.aASCSInstallGateway = false
+# Standard system only: Add gateway process to (A)SCS instance
+# NW_CI_Instance.ascsInstallGateway = false
 
-# Standard system only: Add web dispatcher process to (A)ASCS instance
-# NW_CI_Instance.aASCSInstallWebDispatcher = false
+# Standard system only: Add web dispatcher process to (A)SCS instance
+# NW_CI_Instance.ascsInstallWebDispatcher = false
 
-# Standard system with AS ABAP only: AASCS instance number. Leave empty for default.
-# NW_CI_Instance.aASCSInstanceNumber = 
+# Standard system with AS ABAP only: ASCS instance number. Leave empty for default.
+# NW_CI_Instance.ascsInstanceNumber = 
 
-# Standard system with AS ABAP only: Virtual host name for the AASCS instance. Leave empty for default.
-NW_CI_Instance.aASCSVirtualHostname = x00app00l3c4
+# Standard system with AS ABAP only: Virtual host name for the ASCS instance. Leave empty for default.
+NW_CI_Instance.ascsVirtualHostname = x00app00l3c4
 
 # Instance number of the primary application server instance. Leave empty for default.
 NW_CI_Instance.ciInstanceNumber = 00
@@ -80,14 +80,14 @@ NW_CI_Instance.ciVirtualHostname = x00app00l3c4
 # Number of Java server nodes. Possible values: 'defNodes' - default number; 'srcNodes' - copy from source; 'userNodes' - user-defined number. Default is 'defNodes'
 # NW_CI_Instance.nodesNumber = defNodes
 
-# Standard system with AS Java only: The ASCS instance number. Leave empty for default.
-# NW_CI_Instance.ASCSInstanceNumber = 
+# Standard system with AS Java only: The SCS instance number. Leave empty for default.
+# NW_CI_Instance.scsInstanceNumber = 
 
 # The internal Java message server port. Leave empty for default.
-# NW_CI_Instance.ASCSMSPortInternal = 
+# NW_CI_Instance.scsMSPortInternal = 
 
-# Standard system with AS Java only: Virtual host name for the ASCS instance. Leave empty for default.
-NW_CI_Instance.ASCSVirtualHostname = x00app00l3c4
+# Standard system with AS Java only: Virtual host name for the SCS instance. Leave empty for default.
+NW_CI_Instance.scsVirtualHostname = x00app00l3c4
 
 # Activate ICF node '/SAP/BC/REST/SLPROTOCOL'
 # NW_CI_Instance_ABAP_Reports.enableActivateICFService = false

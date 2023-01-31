@@ -81,7 +81,7 @@
         verbosity:                     2
 
   when:
-    - ASCS_high_availability or db_high_availability
+    - scs_high_availability or db_high_availability
     - not use_msi_for_clusters
 ...
 # /*---------------------------------------------------------------------------8

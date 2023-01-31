@@ -34,11 +34,11 @@
     path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_app.txt"
   register:                            app_installed
 
-- name:                                "APP Install: Set the ASCS Server name list"
+- name:                                "APP Install: Set the SCS Server name list"
   ansible.builtin.set_fact:
-    ASCS_server_temp:                   "{{ ASCS_server_temp | default([]) + [item] }}"
+    scs_server_temp:                   "{{ scs_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                "PAS Install: -  Set the DB Server name list"
@@ -47,14 +47,14 @@
   with_items:
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
-- name:                                "APP Install: Set the ASCS Server name"
+- name:                                "APP Install: Set the SCS Server name"
   ansible.builtin.set_fact:
-    ASCS_server:                        "{% if ASCS_high_availability %}{{ sid_to_be_deployed.sid | lower }}ASCS{{ ASCS_instance_number }}cl1{% else %}{{ hostvars[ASCS_server_temp | first]['virtual_host'] }}{% endif %}"
+    scs_server:                        "{% if scs_high_availability %}{{ sid_to_be_deployed.sid | lower }}scs{{ scs_instance_number }}cl1{% else %}{{ hostvars[scs_server_temp | first]['virtual_host'] }}{% endif %}"
     db_virtual_host:                   "{{ hostvars[db_server_temp | first]['virtual_host'] }}"
-    file_path:                         "{% if ASCS_high_availability %}INSTALL/HA/ABAP/APPX{% else %}INSTALL/DISTRIBUTED/ABAP/APPS{% endif %}"
+    file_path:                         "{% if scs_high_availability %}INSTALL/HA/ABAP/APPX{% else %}INSTALL/DISTRIBUTED/ABAP/APPS{% endif %}"
     db_lb_virtual_host:                "{% if db_high_availability %}{{ sid_to_be_deployed.sid | lower }}{{ db_sid | lower }}db{{ db_instance_number }}cl{% else %}{{ hostvars[db_server_temp | first]['virtual_host'] }}{% endif %}"
 
-- name:                                "ASCS Install: check media exists"
+- name:                                "SCS Install: check media exists"
   ansible.builtin.stat:
     path:                              "{{ target_media_location }}/SWPM/sapinst"
   register:                            sapinst_found
@@ -86,13 +86,13 @@
     sap_cd_package_cd3:
     sap_cd_package_cd4:
     sap_cd_package_cd5:
-    sap_ciInstanceNumber:             "{{ ASCS_instance_number }}"
+    sap_ciInstanceNumber:             "{{ scs_instance_number }}"
     app_instance_number:
     sap_ciDialogWPNumber:              12
     sap_ciBtcWPNumber:                 8
     sap_installSAPHostAgent:           "false"
     sap_profile_dir:                   /sapmnt/{{ sid_to_be_deployed.sid | upper }}/profile
-    sap_ASCS_hostname:                  "{{ ASCS_server }}"
+    sap_scs_hostname:                  "{{ scs_server }}"
     sap_db_hostname:                   "{{ db_lb_virtual_host }}"
     sap_ciVirtualHostname:             "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_APP') | first }}"
     sap_appVirtualHostname:            "{{ virtual_host }}"

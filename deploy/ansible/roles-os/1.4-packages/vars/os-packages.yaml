@@ -66,7 +66,7 @@ packages:
     - { tier: 'ha',    package: 'pacemaker',                                    node_tier: 'all',     state: 'present' }
     - { tier: 'ha',    package: 'nmap-ncat',                                    node_tier: 'all',     state: 'present' }
     - { tier: 'ha',    package: 'resource-agents-sap-hana',                     node_tier: 'hana',    state: 'present' }
-    - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'ASCS',     state: 'present' }
+    - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'scs',     state: 'present' }
     - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'ers',     state: 'present' }
     - { tier: 'ha',    package: 'acl',                                          node_tier: 'hana',    state: 'present' }
     # ------------------------- End - Packages required for Clustering -----------------------------------------8
@@ -143,12 +143,12 @@ packages:
     - { tier: 'ha',    package: 'nmap-ncat',                                    node_tier: 'all',     state: 'present' }
     - { tier: 'ha',    package: 'fence-agents-azure-arm',                       node_tier: 'all',     state: 'present' }
     - { tier: 'ha',    package: 'resource-agents-sap-hana',                     node_tier: 'hana',    state: 'present' }
-    - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'ASCS',     state: 'present' }
+    - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'scs',     state: 'present' }
     - { tier: 'ha',    package: 'resource-agents-sap',                          node_tier: 'ers',     state: 'present' }
   # ------------------------- End - Packages required for Clustering -----------------------------------------8
   # ------------------------- Begin - Packages required for Start/Stop ------------------------------------8
     - { tier: 'ha',    package: 'sap-cluster-connector',                        node_tier: 'hana',    state: 'present' }
-    - { tier: 'ha',    package: 'sap-cluster-connector',                        node_tier: 'ASCS',     state: 'present' }
+    - { tier: 'ha',    package: 'sap-cluster-connector',                        node_tier: 'scs',     state: 'present' }
     - { tier: 'ha',    package: 'sap-cluster-connector',                        node_tier: 'ers',     state: 'present' }
 
   # ------------------------- End - Packages required for Start/Stop -----------------------------------------8
@@ -196,7 +196,7 @@ packages:
   # Assumption: Public_Cloud_Module_x86_64 already available
     - { tier: 'ha',    package: 'python-azure-mgmt-compute',                    node_tier: 'all',     state: 'present' }
     - { tier: 'ha',    package: 'python-azure-identity',                                node_tier: 'all',     state: 'present' }  # Added as part of documentation update
-    - { tier: 'ha',    package: 'sap-suse-cluster-connector',                   node_tier: 'ASCS',     state: 'present' }
+    - { tier: 'ha',    package: 'sap-suse-cluster-connector',                   node_tier: 'scs',     state: 'present' }
   # -------------------------- End - packages required for Clustering ------------------------------------8
   sles_sap12.4:
   sles_sap12.5:
@@ -236,7 +236,7 @@ packages:
     - { tier: 'sapos', package: 'libstdc++6',                                   node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'libatomic1',                                   node_tier: 'all',     state: 'present' }
     - { tier: 'sapos', package: 'uuidd',                                        node_tier: 'all',     state: 'present' }
-    - { tier: 'sapos', package: 'acl',                                          node_tier: 'ASCS',     state: 'present' }
+    - { tier: 'sapos', package: 'acl',                                          node_tier: 'scs',     state: 'present' }
     - { tier: 'sapos', package: 'acl',                                          node_tier: 'ers',     state: 'present' }
   # ----------------------- Begin - Packages required for Clustering -------------------------------------8
     - { tier: 'ha',    package: 'acl',                                          node_tier: 'hana',    state: 'present' }
@@ -254,13 +254,13 @@ packages:
   # identify requirements for azure-cli-vm which allows the restart of VMs
   # [3]  sudo zypper search --requires -n azure-cli-vm=2.2.2
     - { tier: 'ha',    package: 'azure-cli',                                    node_tier: 'hana',    state: 'present' }
-    - { tier: 'ha',    package: 'azure-cli',                                    node_tier: 'ASCS',     state: 'present' }
+    - { tier: 'ha',    package: 'azure-cli',                                    node_tier: 'scs',     state: 'present' }
     - { tier: 'ha',    package: 'azure-cli',                                    node_tier: 'ers',     state: 'present' }
     - { tier: 'ha',    package: 'python3-azure-mgmt-compute',                   node_tier: 'hana',    state: 'present' }
-    - { tier: 'ha',    package: 'python3-azure-mgmt-compute',                   node_tier: 'ASCS',     state: 'present' }
+    - { tier: 'ha',    package: 'python3-azure-mgmt-compute',                   node_tier: 'scs',     state: 'present' }
     - { tier: 'ha',    package: 'python3-azure-mgmt-compute',                   node_tier: 'ers',     state: 'present' }
     - { tier: 'ha',    package: 'python3-azure-identity',                       node_tier: 'ers',     state: 'present' } # Added as part of documentation update
-    - { tier: 'ha',    package: 'sap-suse-cluster-connector',                   node_tier: 'ASCS',     state: 'present' }
+    - { tier: 'ha',    package: 'sap-suse-cluster-connector',                   node_tier: 'scs',     state: 'present' }
     - { tier: 'ha',    package: 'sap-suse-cluster-connector',                   node_tier: 'ers',     state: 'present' }
   # ------------------------ End - packages required for Clustering --------------------------------------8
   sles_sap15.1:

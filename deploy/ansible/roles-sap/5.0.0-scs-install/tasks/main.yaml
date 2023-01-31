@@ -1,29 +1,29 @@
 # /*---------------------------------------------------------------------------8
 # |                                                                            |
 # |             SAP: Register BOM                                              |
-# |         SAP ASCS: deploy ASCS Parameter file install template                |
-# |         SAP ASCS: Install                                                   |
+# |         SAP SCS: deploy SCS Parameter file install template                |
+# |         SAP SCS: Install                                                   |
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
 ---
 
-- name:                                "ASCS Install"
+- name:                                "SCS Install"
   ansible.builtin.debug:
     msg:
       - "SID:        {{ sid_to_be_deployed.sid | upper }}"
 
-- name:                                "ASCS Install: Set the ASCS Server name"
+- name:                                "SCS Install: Set the SCS Server name"
   ansible.builtin.set_fact:
-    ASCS_server:                        "{{ virtual_host }}"
+    scs_server:                        "{{ virtual_host }}"
 
-- name:                                "ASCS Install: Set BOM facts"
+- name:                                "SCS Install: Set BOM facts"
   ansible.builtin.set_fact:
-    sap_inifile:                       "{{ bom_base_name }}-ASCS-{{ sid_to_be_deployed.sid | lower }}-{{ ansible_hostname }}.params"
-    sap_inifile_template:              "{{ bom_base_name }}-ASCS-inifile-param.j2"
+    sap_inifile:                       "{{ bom_base_name }}-scs-{{ sid_to_be_deployed.sid | lower }}-{{ ansible_hostname }}.params"
+    sap_inifile_template:              "{{ bom_base_name }}-scs-inifile-param.j2"
     dir_params:                        "{{ tmp_directory }}/.{{ sid_to_be_deployed.sid | lower }}-params"
 
-- name:                                "ASCS Install: -  Create directories"
+- name:                                "SCS Install: -  Create directories"
   ansible.builtin.file:
     path:                              "{{ item.path }}"
     state:                             directory
@@ -33,24 +33,24 @@
     - { mode: '0755', path: '{{ tmp_directory }}/{{ sid_to_be_deployed.sid | upper }}' }
     - { mode: '0755', path: '/etc/sap_deployment_automation/{{ sap_sid | upper }}' }
 
-- name:                                "ASCS Install: reset"
+- name:                                "SCS Install: reset"
   ansible.builtin.file:
-    path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_ASCS.txt"
+    path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_scs.txt"
     state:                             absent
   when:                                reinstall
 
-- name:                                "ASCS Install: check if {{ sid_to_be_deployed.sid | upper }} is installed"
+- name:                                "SCS Install: check if {{ sid_to_be_deployed.sid | upper }} is installed"
   ansible.builtin.stat:
-    path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_ASCS.txt"
-  register:                            ASCS_installed
-  when:                                "'ASCS' in supported_tiers"
+    path:                              "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_scs.txt"
+  register:                            scs_installed
+  when:                                "'scs' in supported_tiers"
 
-- name:                                "ASCS Install: check if installed"
+- name:                                "SCS Install: check if installed"
   ansible.builtin.debug:
-    var:                               ASCS_installed
+    var:                               scs_installed
     verbosity:                         2
 
-- name:                                "ASCS Install: check media exists"
+- name:                                "SCS Install: check media exists"
   ansible.builtin.stat:
     path:                              "{{ target_media_location }}/SWPM/sapinst"
   register:                            sapinst_found
@@ -60,20 +60,20 @@
     msg:                               "INSTALL:0002:Unable to find sapinst, please check that the installation media is mounted"
   when: not sapinst_found.stat.exists
 
-- name:                                "ASCS Install: Include 3.3.1-bom-utility role"
+- name:                                "SCS Install: Include 3.3.1-bom-utility role"
   ansible.builtin.include_role:
     name:                              roles-sap/3.3.1-bom-utility
     tasks_from:                        bom-register
   vars:
     bom_name:                          "{{ bom_base_name }}"
-    task_prefix:                       "ASCS Install: "
+    task_prefix:                       "SCS Install: "
 
-- name:                                "ASCS Install: Include roles-sap/3.3.1-bom-utility role"
+- name:                                "SCS Install: Include roles-sap/3.3.1-bom-utility role"
   ansible.builtin.include_role:
     name:                              roles-sap/3.3.1-bom-utility
     tasks_from:                        bom-template
   vars:
-    task_prefix:                       "ASCS Install: "
+    task_prefix:                       "SCS Install: "
     always_upload_jinja_templates:     false
     bom_name:                          "{{ bom_base_name }}"
     sap_cd_package_cd1:
@@ -88,35 +88,35 @@
     sap_ciBtcWPNumber:
     sap_installSAPHostAgent:
     sap_profile_dir:
-    sap_ASCS_hostname:                  "{{ virtual_host }}"
+    sap_scs_hostname:                  "{{ virtual_host }}"
     sap_db_hostname:
     sap_ciVirtualHostname:
     sap_appVirtualHostname:
     tier:                              "{{ tier }}"
     param_directory:                   "{{ dir_params }}"
     sap_sid:                           "{{ sid_to_be_deployed.sid }}"
-    ASCS_instance_number:               "{{ sid_to_be_deployed.aASCS_inst_no }}"
+    scs_instance_number:               "{{ sid_to_be_deployed.ascs_inst_no }}"
     sidadm_uid:                        "{{ sid_to_be_deployed.sidadm_uid }}"
     hdb_instance_number:               "{{ db_instance_number }}"
   tags:
     - skip_ansible_lint
 
-- name:                                "ASCS Install: install variables"
+- name:                                "SCS Install: install variables"
   ansible.builtin.debug:
     msg:
-      - "INSTALLED:  {{ ASCS_installed.stat.exists }}"
+      - "INSTALLED:  {{ scs_installed.stat.exists }}"
       - "INIFILE:    {{ sap_inifile }}"
-      - "PRODUCT ID: {{ bom.product_ids.ASCS }}"
-      - "INSTANCE:   {{ sid_to_be_deployed.aASCS_inst_no }}"
+      - "PRODUCT ID: {{ bom.product_ids.scs }}"
+      - "INSTANCE:   {{ sid_to_be_deployed.ascs_inst_no }}"
       - "MEDIA:      {{ target_media_location }}"
       - "HOST:       {{ virtual_host }}"
       - "SID:        {{ sid_to_be_deployed.sid | upper }}"
 
-- name:                                "ASCS Install"
+- name:                                "SCS Install"
   block:
 
 # *====================================4=======================================8
-# |  SAP ASCS: Install                                                          |
+# |  SAP SCS: Install                                                          |
 # | 2230669 - System Provisioning Using a Parameter Input File                 |
 # *====================================4=======================================8
 
@@ -126,91 +126,91 @@
         state:                         directory
         mode:                          0755
 
-    - name:                            "ASCS Install: Progress"
+    - name:                            "SCS Install: Progress"
       ansible.builtin.debug:
-        msg:                           "Start ASCS Installation"
+        msg:                           "Start SCS Installation"
 
-    - name:                            "ASCS Install: - comment out required message server prots in /etc/services"
+    - name:                            "SCS Install: - comment out required message server prots in /etc/services"
       ansible.builtin.replace:
         path:                          /etc/services
-        regexp:                        '^([a-z\-]+\s+36{{ ASCS_instance_number }}/.*)$'
+        regexp:                        '^([a-z\-]+\s+36{{ scs_instance_number }}/.*)$'
         replace:                       '# \1'
         backup:                        true
 
-    - name:                            "ASCS Install: SAP ASCS Install on {{ ansible_hostname }}"
+    - name:                            "SCS Install: SAP SCS Install on {{ ansible_hostname }}"
       ansible.builtin.shell: |
                                        umask {{ custom_umask | default('022') }};
                                        ./sapinst SAPINST_INPUT_PARAMETERS_URL={{ dir_params }}/{{ sap_inifile }}  \
-                                                 SAPINST_EXECUTE_PRODUCT_ID={{ bom.product_ids.ASCS }}             \
+                                                 SAPINST_EXECUTE_PRODUCT_ID={{ bom.product_ids.scs }}             \
                                                  SAPINST_SKIP_DIALOGS=true                                        \
                                                  SAPINST_USE_HOSTNAME={{ virtual_host }}                          \
                                                  SAPINST_START_GUISERVER=false
       args:
         chdir:                         "{{ target_media_location }}/SWPM"
-        creates:                       "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_ASCS.txt"
+        creates:                       "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_scs.txt"
       environment:
         SAPSYSTEMNAME:                 "{{ sid_to_be_deployed.sid | upper }}"
         TMPDIR:                        "{{ tmp_directory }}/{{ sid_to_be_deployed.sid | upper }}"
-      register:                        ASCS_installation
-      failed_when:                     ASCS_installation.rc > 0
+      register:                        scs_installation
+      failed_when:                     scs_installation.rc > 0
       tags:
         - skip_ansible_lint
 
-    - name:                            "ASCS Install: Cleanup ini file {{ ansible_hostname }}"
+    - name:                            "SCS Install: Cleanup ini file {{ ansible_hostname }}"
       ansible.builtin.file:
         path:                          "{{ dir_params }}/{{ sap_inifile }}"
         state:                         absent
 
-    - name:                            "ASCS Install: Installation results"
+    - name:                            "SCS Install: Installation results"
       ansible.builtin.debug:
-        var:                           ASCS_installation
-      when:                            ASCS_installation.rc > 0
+        var:                           scs_installation
+      when:                            scs_installation.rc > 0
 
-    - name:                            "ASCS Install: Installation results"
+    - name:                            "SCS Install: Installation results"
       ansible.builtin.debug:
-        msg:                           "ASCS Installation succeeded"
-      when:                            ASCS_installation.rc == 0
+        msg:                           "SCS Installation succeeded"
+      when:                            scs_installation.rc == 0
 
     - name:                            Find the installationSuccesfullyFinished.dat (SAPINST)
       ansible.builtin.find:
-        paths:                         "{{ tmp_directory }}/{{ sid_to_be_deployed.sid | upper }}/sapinst_instdir/{{ bom.product_ids.ASCS.replace('.', '/').replace('/ABAP', '').split(':')[1] }}/INSTALL/DISTRIBUTED/ABAP/AASCS"
+        paths:                         "{{ tmp_directory }}/{{ sid_to_be_deployed.sid | upper }}/sapinst_instdir/{{ bom.product_ids.scs.replace('.', '/').replace('/ABAP', '').split(':')[1] }}/INSTALL/DISTRIBUTED/ABAP/ASCS"
         file_type:                     file
         patterns:                      'installationSuccesfullyFinished.dat'
         recurse:                       true
-      register:                        ASCS_installed_according_to_sapinst
+      register:                        scs_installed_according_to_sapinst
 
-    - name:                            "ASCS Install: show"
+    - name:                            "SCS Install: show"
       ansible.builtin.debug:
-        var:                           ASCS_installed_according_to_sapinst
+        var:                           scs_installed_according_to_sapinst
         verbosity:                     2
 
-    - name:                            "ASCS Install: flag"
+    - name:                            "SCS Install: flag"
       ansible.builtin.file:
-        path:                          "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_ASCS.txt"
+        path:                          "/etc/sap_deployment_automation/{{ sid_to_be_deployed.sid | upper }}/sap_deployment_scs.txt"
         state:                         touch
         mode:                          0755
       when:
-        - ASCS_installation.rc == 0
-        - ASCS_installed_according_to_sapinst is defined
-        - ASCS_installed_according_to_sapinst | length > 0
+        - scs_installation.rc == 0
+        - scs_installed_according_to_sapinst is defined
+        - scs_installed_according_to_sapinst | length > 0
 
 
   when:
-    - "'ASCS' in supported_tiers"
-    - not ASCS_installed.stat.exists
+    - "'scs' in supported_tiers"
+    - not scs_installed.stat.exists
 
-- name:                                "ASCS Install status"
+- name:                                "SCS Install status"
   block:
 
-    - name:                            "ASCS Install status"
+    - name:                            "SCS Install status"
       ansible.builtin.debug:
-        msg:                           "ASCS is already installed"
+        msg:                           "SCS is already installed"
 
-    - name:                            "ASCS: - return value"
+    - name:                            "SCS: - return value"
       ansible.builtin.set_fact:
-        ASCS_already_installed:         true
+        scs_already_installed:         true
   when:
-    - ASCS_installed.stat.exists
+    - scs_installed.stat.exists
 
 ...
 # /*---------------------------------------------------------------------------8

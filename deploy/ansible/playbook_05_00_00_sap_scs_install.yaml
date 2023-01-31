@@ -1,39 +1,39 @@
 # /*---------------------------------------------------------------------------------------------------8
 # |                                                                                                    |
-# |                      Playbook for SAP ASCS HA Install and Pacemaker configuration                   |
+# |                      Playbook for SAP SCS HA Install and Pacemaker configuration                   |
 # |                                                                                                    |
 # +------------------------------------4--------------------------------------------------------------*/
 ---
 
 - hosts:                               localhost
-  name:                                "ASCS Installation Playbook: - Initialization"
+  name:                                "SCS Installation Playbook: - Initialization"
   gather_facts:                        false
   vars_files:
     - vars/ansible-input-api.yaml                               # API Input template with defaults
 
   tasks:
-    - name:                            "ASCS Installation Playbook: - Create Progress folder"
+    - name:                            "SCS Installation Playbook: - Create Progress folder"
       ansible.builtin.file:
         path:                          "{{ _workspace_directory }}/.progress"
         state:                         directory
         mode:                          0755
 
-    - name:                            "ASCS Installation Playbook: - Remove ASCS-install-done flag"
+    - name:                            "SCS Installation Playbook: - Remove scs-install-done flag"
       ansible.builtin.file:
-        path:                          "{{ _workspace_directory }}/.progress/ASCS-install-done"
+        path:                          "{{ _workspace_directory }}/.progress/scs-install-done"
         state:                          absent
 
-    - name:                            "ASCS Installation Playbook: - Remove ers-install-done flag"
+    - name:                            "SCS Installation Playbook: - Remove ers-install-done flag"
       ansible.builtin.file:
         path:                          "{{ _workspace_directory }}/.progress/ers-install-done"
         state:                          absent
 
 
-    - name:                            "ASCS Installation Playbook: - Set ASCS fact"
+    - name:                            "SCS Installation Playbook: - Set scs fact"
       ansible.builtin.set_fact:
-        tier:                          ASCS
+        tier:                          scs
 
-    - name:                            "ASCS Installation Playbook: - Read/Create passwords"
+    - name:                            "SCS Installation Playbook: - Read/Create passwords"
       ansible.builtin.include_role:
         name:                          roles-misc/0.1-passwords
         public:                        true
@@ -41,7 +41,7 @@
       tags:
         - 0.1-passwords
 
-    - name:                            "ASCS Installation Playbook: - Read/Create key vault secrets"
+    - name:                            "SCS Installation Playbook: - Read/Create key vault secrets"
       ansible.builtin.include_role:
         name:                          roles-misc/0.2-kv-secrets
         public:                        true
@@ -50,7 +50,7 @@
       tags:
         - kv-secrets
 
-    - name:                            "ASCS Installation Playbook: - Read storage account details"
+    - name:                            "SCS Installation Playbook: - Read storage account details"
       ansible.builtin.include_role:
         name:                          roles-misc/0.3.sap-installation-media-storage-details
         public:                        true
@@ -59,11 +59,11 @@
 
 # /*---------------------------------------------------------------------------8
 # |                                                                            |
-# |   Playbook for SAP OS USERS and Groups Creation for AASCS/ERS               |
+# |   Playbook for SAP OS USERS and Groups Creation for ASCS/ERS               |
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
-- hosts:                               "{{ sap_sid | upper }}_ASCS:
+- hosts:                               "{{ sap_sid | upper }}_SCS:
                                         {{ sap_sid | upper }}_ERS"
   serial:                              1
   name:                                SAP Generic OS Groups and User Creation
@@ -75,19 +75,19 @@
     - vars/ansible-input-api.yaml                                              # API Input template with defaults
 
   tasks:
-    - name:                        "ASCS Installation Playbook: Define this SID"
+    - name:                        "SCS Installation Playbook: Define this SID"
       ansible.builtin.set_fact:
         this_sid:
           {
             'sid': '{{ sap_sid | upper }}',
             'dbsid_uid': '{{ hdbadm_uid }}',
             'sidadm_uid': '{{ sidadm_uid }}',
-            'aASCS_inst_no': '{{ ASCS_instance_number }}',
+            'ascs_inst_no': '{{ scs_instance_number }}',
             'pas_inst_no': '{{ pas_instance_number }}',
             'app_inst_no': '{{ app_instance_number }}'
           }
 
-    - name:                            "ASCS Installation Playbook: Define list of SIDs"
+    - name:                            "SCS Installation Playbook: Define list of SIDs"
       ansible.builtin.set_fact:
         all_sids:                      "{% if MULTI_SIDS is defined %}{{ MULTI_SIDS }}{% else %}{{ all_sids | default([]) + [this_sid] }}{% endif %}"
 
@@ -97,7 +97,7 @@
         tasks_from:                    user_nw.yaml
       vars:
         sap_sid:                      "{{ sid_to_be_deployed.sid }}"
-        ASCS_instance_number:          "{{ sid_to_be_deployed.aASCS_inst_no }}"
+        scs_instance_number:          "{{ sid_to_be_deployed.ascs_inst_no }}"
         sidadm_uid:                   "{{ sid_to_be_deployed.sidadm_uid }}"
         tier:                          generic
         main_password:                 "{{ hostvars.localhost.sap_password }}"
@@ -113,14 +113,14 @@
 
 # /*---------------------------------------------------------------------------8
 # |                                                                            |
-# |                       Playbook for SAP ASCS Install                         |
+# |                       Playbook for SAP SCS Install                         |
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
 
-- hosts:                               "{{ sap_sid | upper }}_ASCS  :
+- hosts:                               "{{ sap_sid | upper }}_SCS  :
                                         {{ sap_sid | upper }}_DB"
-  name:                                "ASCS Installation Playbook: - ASCS"
+  name:                                "SCS Installation Playbook: - SCS"
   remote_user:                         "{{ orchestration_ansible_user }}"
   become:                              true
   gather_facts:                        true                                    # Important to collect hostvars information
@@ -133,122 +133,122 @@
 # Build the list of tasks to be executed in order here.
 #
 # -------------------------------------+---------------------------------------8
-    - name:                            "ASCS Installation Playbook: - Standalone ASCS Setup"
+    - name:                            "SCS Installation Playbook: - Standalone SCS Setup"
       block:
-        - name:                        "ASCS Installation Playbook: Define this SID"
+        - name:                        "SCS Installation Playbook: Define this SID"
           ansible.builtin.set_fact:
             this_sid:
               {
                 'sid': '{{ sap_sid | upper }}',
                 'dbsid_uid': '{{ hdbadm_uid }}',
                 'sidadm_uid': '{{ sidadm_uid }}',
-                'aASCS_inst_no': '{{ ASCS_instance_number }}',
+                'ascs_inst_no': '{{ scs_instance_number }}',
                 'pas_inst_no': '{{ pas_instance_number }}',
                 'app_inst_no': '{{ app_instance_number }}'
               }
 
-        - name:                        "ASCS Installation Playbook: Define list of SIDs"
+        - name:                        "SCS Installation Playbook: Define list of SIDs"
           ansible.builtin.set_fact:
             all_sids:                  "{% if MULTI_SIDS is defined %}{{ MULTI_SIDS }}{% else %}{{ all_sids | default([]) + [this_sid] }}{% endif %}"
 
-        - name:                        Run the ASCS Installation Playbook
+        - name:                        Run the SCS Installation Playbook
           block:
-            - name:                    "ASCS Installation Playbook: - Print Instance Numbers"
+            - name:                    "SCS Installation Playbook: - Print Instance Numbers"
               ansible.builtin.debug:
                 msg:
                   - "db_instance_number: {{ db_instance_number }}"
-                  - "ASCS_instance_number: {{ ASCS_instance_number }}"
+                  - "scs_instance_number: {{ scs_instance_number }}"
                 verbosity:             2
 
-            - name:                    "ASCS Installation Playbook: - ASCS Assertions"
+            - name:                    "SCS Installation Playbook: - SCS Assertions"
               ansible.builtin.assert:
                 that:
-                  - "ASCS_instance_number != db_instance_number"
-                fail_msg:              "Please ensure that the ASCS_instance_number is different from the db_instance_number"
+                  - "scs_instance_number != db_instance_number"
+                fail_msg:              "Please ensure that the scs_instance_number is different from the db_instance_number"
           when:                        (ansible_play_hosts_all | length) == 1
 
-        - name:                        "ASCS Installation Playbook: - Set 'ASCS' tier facts"
+        - name:                        "SCS Installation Playbook: - Set 'scs' tier facts"
           ansible.builtin.set_fact:
-            tier:                      ASCS
+            tier:                      scs
             main_password:             "{{ hostvars.localhost.sap_password }}"
-            ASCS_high_availability:     "{{ ASCS_high_availability }}"
+            scs_high_availability:     "{{ scs_high_availability }}"
             sapbits_location_base_path: "{{ hostvars.localhost.sapbits_location_base_path }}"
             sapbits_sas_token:         "{{ hostvars.localhost.sapbits_sas_token }}"
             always_upload_jinja_templates: false
           tags:
             - always
 
-        - name:                        "ASCS Installation Playbook: - Show SAP password"
+        - name:                        "SCS Installation Playbook: - Show SAP password"
           ansible.builtin.debug:
             msg:                       "{{ hostvars.localhost.sap_password }}"
             verbosity:                 4
 
-        - name:                        Run the ASCS Installation Playbook
+        - name:                        Run the SCS Installation Playbook
           block:
-            - name:                    "ASCS Installation Playbook: - Install SAPInst"
+            - name:                    "SCS Installation Playbook: - Install SAPInst"
               ansible.builtin.include_role:
-                name:                  roles-sap/5.0.0-ASCS-install
+                name:                  roles-sap/5.0.0-scs-install
               vars:
-                ASCS_instance_number:   "{{ sid_to_be_deployed.aASCS_inst_no }}"
+                scs_instance_number:   "{{ sid_to_be_deployed.ascs_inst_no }}"
               loop:                    "{{ all_sids }}"
               loop_control:
                 loop_var:              sid_to_be_deployed
 
-            - name:                    "ASCS Installation Playbook: - Ensure ASCS-install-done flag exists"
+            - name:                    "SCS Installation Playbook: - Ensure scs-install-done flag exists"
               delegate_to:             localhost
               become:                  false
               ansible.builtin.file:
-                path:                  "{{ _workspace_directory }}/.progress/ASCS-install-done"
+                path:                  "{{ _workspace_directory }}/.progress/scs-install-done"
                 state:                 touch
                 mode:                  0755
               when:
-                - ASCS_already_installed is defined or (ASCS_installation.rc is defined and ASCS_installation.rc == 0)
+                - scs_already_installed is defined or (scs_installation.rc is defined and scs_installation.rc == 0)
 
           always:
-            - name:                    "ASCS Installation Playbook: - Get the Error lines from installation output"
+            - name:                    "SCS Installation Playbook: - Get the Error lines from installation output"
               ansible.builtin.set_fact:
                 error_lines:           "{{ error_lines | default([]) + [item] }}"
-              with_items:              "{{ ASCS_installation.stdout_lines }}"
+              with_items:              "{{ scs_installation.stdout_lines }}"
               when:
-                - ASCS_installation.stdout_lines is defined
+                - scs_installation.stdout_lines is defined
                 - '"ERROR" in item'
-                - ASCS_installation.rc > 0
+                - scs_installation.rc > 0
 
-            - name:                    "ASCS Installation Playbook: - Run post installation routines"
+            - name:                    "SCS Installation Playbook: - Run post installation routines"
               ansible.builtin.include_role:
                 name:                  roles-sap/7.0.0-post-install
               vars:
-                suffix:                "_ASCS"
-                prefix:                "{{ bom.product_ids.ASCS.replace('.', '/').replace('/ABAP', '').split(':')[1] }}"
-                path:                  'INSTALL/DISTRIBUTED/ABAP/AASCS'
-                tier:                  'ASCS'
+                suffix:                "_SCS"
+                prefix:                "{{ bom.product_ids.scs.replace('.', '/').replace('/ABAP', '').split(':')[1] }}"
+                path:                  'INSTALL/DISTRIBUTED/ABAP/ASCS'
+                tier:                  'scs'
                 this_sid:              "{{ sid_to_be_deployed.sid | upper }}"
               loop:                    "{{ all_sids }}"
               loop_control:
                 loop_var:              sid_to_be_deployed
 
-            - name:                    "ASCS Installation Playbook: - Show errors from HANA installation"
+            - name:                    "SCS Installation Playbook: - Show errors from HANA installation"
               ansible.builtin.debug:
                 msg:                   "{{ error_lines }}"
               when:
                 - error_lines is defined
 
           tags:
-            - 5.0.0-ASCS-install
+            - 5.0.0-scs-install
       when:
-        - not ASCS_high_availability
-        - "'ASCS' in supported_tiers"
+        - not scs_high_availability
+        - "'scs' in supported_tiers"
 
 
 # /*---------------------------------------------------------------------------8
 # |                                                                            |
-# |              Playbook for SAP ASCS HA and Pacemaker Resources               |
+# |              Playbook for SAP SCS HA and Pacemaker Resources               |
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
-- hosts:                               "{{ sap_sid | upper }}_ASCS :
+- hosts:                               "{{ sap_sid | upper }}_SCS :
                                         {{ sap_sid | upper }}_ERS"
-  name:                                "ASCS HA Install and Pacemaker Resources"
+  name:                                "SCS HA Install and Pacemaker Resources"
   remote_user:                         "{{ orchestration_ansible_user }}"
   become:                              true
   gather_facts:                        true                                    # Important to collect hostvars information
@@ -261,15 +261,15 @@
 # Build the list of tasks to be executed in order here.
 #
 # -------------------------------------+---------------------------------------8
-    - name:                            "ASCS HA Installation Playbook: - HA ASCS Setup"
+    - name:                            "SCS HA Installation Playbook: - HA SCS Setup"
       block:
-        - name:                        "ASCS HA Installation Playbook: - Assertion"
+        - name:                        "SCS HA Installation Playbook: - Assertion"
           ansible.builtin.assert:
             that:
               - sap_mnt is defined
-            fail_msg:                  A highly available ASCS deployment requires a shared sap_mnt
+            fail_msg:                  A highly available SCS deployment requires a shared sap_mnt
 
-        - name:                        "ASCS HA Installation Playbook: - Initialize facts"
+        - name:                        "SCS HA Installation Playbook: - Initialize facts"
           ansible.builtin.set_fact:
             tier:                       ha
             password_ha_db_cluster:     "{{ hostvars.localhost.db_cluster_password }}"
@@ -278,7 +278,7 @@
             secondary_instance_name:    "{{ ansible_play_hosts_all[1] }}"         # Setting up Secondary Instance Name
             sapbits_location_base_path: "{{ hostvars.localhost.sapbits_location_base_path }}"
             sapbits_sas_token:          "{{ hostvars.localhost.sapbits_sas_token }}"
-            ASCS_virtual_hostname:       "{{ sap_sid | lower }}ASCS{{ ASCS_instance_number }}cl1"
+            scs_virtual_hostname:       "{{ sap_sid | lower }}scs{{ scs_instance_number }}cl1"
             ecs_virtual_hostname:       "{{ sap_sid | lower }}ers{{ ers_instance_number }}cl2"
             fencing_spn_client_id:      "{% if not use_msi_for_clusters %}{{ hostvars.localhost.sap_fencing_spn_client_id }}{% endif %}"
             fencing_spn_client_pwd:     "{% if not use_msi_for_clusters %}{{ hostvars.localhost.sap_fencing_spn_pwd }}{% endif %}"
@@ -287,84 +287,84 @@
           tags:
             - always
 
-        - name:                    "ASCS HA Installation Playbook: - Ensure the repositories are registered"
+        - name:                    "SCS HA Installation Playbook: - Ensure the repositories are registered"
           ansible.builtin.include_role:
             name:                  roles-os/1.3-repository
           tags:
             - 1.3-repository
 
-        - name:                    "ASCS HA Installation Playbook: - Ensure the packages are registered"
+        - name:                    "SCS HA Installation Playbook: - Ensure the packages are registered"
           ansible.builtin.include_role:
             name:                  roles-os/1.4-packages
           tags:
             - 1.4-packages
 
-        - name:                    "ASCS HA Installation Playbook: - Ensure the kernel parameters are set"
+        - name:                    "SCS HA Installation Playbook: - Ensure the kernel parameters are set"
           ansible.builtin.include_role:
             name:                  roles-os/1.9-kernelparameters
           tags:
             - 1.9-kernelparameters
 
-        - name:                    "ASCS HA Installation Playbook: - Ensure the needed services are started"
+        - name:                    "SCS HA Installation Playbook: - Ensure the needed services are started"
           ansible.builtin.include_role:
             name:                  roles-os/1.16-services
           tags:
             - 1.16-services
 
-        - name:                    "ASCS HA Installation Playbook: - Install Pacemaker"
+        - name:                    "SCS HA Installation Playbook: - Install Pacemaker"
           ansible.builtin.include_role:
             name:                  roles-os/1.17-generic-pacemaker       # Configures the Pacemaker cluster with Azure fence agent
           tags:
             - 1.17-generic-pacemaker
 
-        - name:                    "ASCS HA Installation Playbook: - Ensure the file systems are mounted"
+        - name:                    "SCS HA Installation Playbook: - Ensure the file systems are mounted"
           ansible.builtin.include_role:
             name:                  roles-sap-os/2.6-sap-mounts
           tags:
             - 2.6-sap-mounts
       when:
-        - ASCS_high_availability
-        - "'ASCS' in supported_tiers or 'ers' in supported_tiers "
+        - scs_high_availability
+        - "'scs' in supported_tiers or 'ers' in supported_tiers "
 
-    - name:                            "ASCS HA Installation Playbook: - HA ASCS Setup"
+    - name:                            "SCS HA Installation Playbook: - HA SCS Setup"
       block:
-        - name:                        "ASCS Installation Playbook: Define this SID"
+        - name:                        "SCS Installation Playbook: Define this SID"
           ansible.builtin.set_fact:
             this_sid:
               {
                 'sid': '{{ sap_sid | upper }}',
                 'dbsid_uid': '{{ hdbadm_uid }}',
                 'sidadm_uid': '{{ sidadm_uid }}',
-                'aASCS_inst_no': '{{ ASCS_instance_number }}',
+                'ascs_inst_no': '{{ scs_instance_number }}',
                 'pas_inst_no': '{{ pas_instance_number }}',
                 'app_inst_no': '{{ app_instance_number }}'
               }
 
-        - name:                        "ASCS Installation Playbook: Define list of SIDs"
+        - name:                        "SCS Installation Playbook: Define list of SIDs"
           ansible.builtin.set_fact:
             all_sids:                  "{% if MULTI_SIDS is defined %}{{ MULTI_SIDS }}{% else %}{{ [this_sid] }}{% endif %}"
 
-        - name:                        Run the ASCS HA Installation Playbook
+        - name:                        Run the SCS HA Installation Playbook
           block:
-            - name:                    "ASCS HA Installation Playbook: - Configure Pacemaker and AASCS/ERS"
+            - name:                    "SCS HA Installation Playbook: - Configure Pacemaker and ASCS/ERS"
               ansible.builtin.include_role:
-                name:                  roles-sap/5.6-ASCSers-pacemaker
+                name:                  roles-sap/5.6-scsers-pacemaker
                 public:                true
               vars:
-                ASCS_instance_number:   "{{ sid_to_be_deployed.aASCS_inst_no }}"
+                scs_instance_number:   "{{ sid_to_be_deployed.ascs_inst_no }}"
               loop:                    "{{ all_sids }}"
               loop_control:
                 loop_var:              sid_to_be_deployed
 
-            - name:                    "ASCS Installation Playbook: - Ensure ASCS-install-done flag exists"
+            - name:                    "SCS Installation Playbook: - Ensure scs-install-done flag exists"
               delegate_to:             localhost
               become:                  false
               ansible.builtin.file:
-                path:                  "{{ _workspace_directory }}/.progress/ASCS-install-done"
+                path:                  "{{ _workspace_directory }}/.progress/scs-install-done"
                 state:                 touch
                 mode:                  0755
               when:
-                - ASCS_already_installed is defined or (ASCS_installation.rc is defined and ASCS_installation.rc == 0)
+                - scs_already_installed is defined or (scs_installation.rc is defined and scs_installation.rc == 0)
 
             - name:                    "ERS Installation Playbook: - Ensure ers-install-done flag exists"
               delegate_to:             localhost
@@ -378,20 +378,20 @@
 
           always:
 
-            - name:                    "ASCS HA Installation Playbook: - Run post installation routines ASCS"
+            - name:                    "SCS HA Installation Playbook: - Run post installation routines SCS"
               ansible.builtin.include_role:
                 name:                  roles-sap/7.0.0-post-install
               vars:
-                suffix:                "_ASCS"
-                prefix:                "{{ ASCS_bom_id.replace('.', '/').replace('/ABAPHA', '').split(':')[1] }}"
-                path:                  'INSTALL/HA/ABAP/AASCS'
-                tier:                  'ASCS'
+                suffix:                "_SCS"
+                prefix:                "{{ scs_bom_id.replace('.', '/').replace('/ABAPHA', '').split(':')[1] }}"
+                path:                  'INSTALL/HA/ABAP/ASCS'
+                tier:                  'scs'
                 this_sid:              "{{ sap_sid | upper }}"
               when:
-                - ASCS_bom_id is defined
-                - node_tier == 'ASCS'
+                - scs_bom_id is defined
+                - node_tier == 'scs'
 
-            - name:                    "ASCS HA Installation Playbook: - Run post installation routines ERS"
+            - name:                    "SCS HA Installation Playbook: - Run post installation routines ERS"
               ansible.builtin.include_role:
                 name:                  roles-sap/7.0.0-post-install
               vars:
@@ -404,22 +404,22 @@
                 - ers_bom_id is defined
                 - node_tier == 'ers'
 
-            - name:                    "ASCS HA Installation Playbook: - Get the Error lines from installation output (ASCS)"
+            - name:                    "SCS HA Installation Playbook: - Get the Error lines from installation output (SCS)"
               ansible.builtin.set_fact:
                 error_lines:           "{{ error_lines | default([]) + [item] }}"
-              with_items:              "{{ ASCS_installation.stdout_lines }}"
+              with_items:              "{{ scs_installation.stdout_lines }}"
               when:
-                - ASCS_installation.stdout_lines is defined
-                - ASCS_installation.rc is defined
+                - scs_installation.stdout_lines is defined
+                - scs_installation.rc is defined
                 - '"ERROR" in item'
 
-            - name:                    "ASCS HA Installation Playbook: - Show errors from ASCS installation"
+            - name:                    "SCS HA Installation Playbook: - Show errors from SCS installation"
               ansible.builtin.debug:
                 msg:                   "{{ error_lines }}"
               when:
                 - error_lines is defined
 
-            - name:                    "ASCS HA Installation Playbook: - Get the Error lines from installation output (ERS)"
+            - name:                    "SCS HA Installation Playbook: - Get the Error lines from installation output (ERS)"
               ansible.builtin.set_fact:
                 error_lines:           "{{ error_lines | default([]) + [item] }}"
               with_items:              "{{ ers_installation.stdout_lines }}"
@@ -429,17 +429,17 @@
                 - '"ERROR" in item'
                 - ers_installation.rc > 0
 
-            - name:                    "ASCS HA Installation Playbook: - Show errors from ERS installation"
+            - name:                    "SCS HA Installation Playbook: - Show errors from ERS installation"
               ansible.builtin.debug:
                 msg:                   "{{ error_lines }}"
               when:
                 - error_lines is defined
 
           tags:
-            - 5.6-ASCSers-pacemaker
+            - 5.6-scsers-pacemaker
       when:
-        - ASCS_high_availability
-        - "'ASCS' in supported_tiers or 'ers' in supported_tiers "
+        - scs_high_availability
+        - "'scs' in supported_tiers or 'ers' in supported_tiers "
         - MULTI_SIDS is undefined
 
 ...

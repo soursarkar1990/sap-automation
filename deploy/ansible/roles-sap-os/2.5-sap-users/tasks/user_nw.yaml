@@ -1,8 +1,8 @@
 # /*---------------------------------------------------------------------------8
 # |                                                                            |
 # |             SAP: Register BOM                                              |
-# |         SAP ASCS: deploy ASCS Parameter file install template                |
-# |         SAP ASCS: Install                                                   |
+# |         SAP SCS: deploy SCS Parameter file install template                |
+# |         SAP SCS: Install                                                   |
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
@@ -26,16 +26,16 @@
 
 - name:                                "User Creation: Set the Server name list"
   ansible.builtin.set_fact:
-    ASCS_server_temp:                   "{{ ASCS_server_temp | default([]) + [item] }}"
+    scs_server_temp:                   "{{ scs_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sid_to_be_deployed.sid | upper }}_ASCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sid_to_be_deployed.sid | upper }}_SCS') }}"
     - "{{ query('inventory_hostnames', '{{ sid_to_be_deployed.sid | upper }}_DB') }}"
     - "{{ query('inventory_hostnames', '{{ sid_to_be_deployed.sid | upper }}_PAS') }}"
     - "{{ query('inventory_hostnames', '{{ sid_to_be_deployed.sid | upper }}_APP') }}"
 
-- name:                                "User Creation: Set the ASCS Server name"
+- name:                                "User Creation: Set the SCS Server name"
   ansible.builtin.set_fact:
-    ASCS_server:                        "{{ ASCS_server_temp | first }}"
+    scs_server:                        "{{ scs_server_temp | first }}"
 
 - name:                                "User Creation: reset"
   ansible.builtin.file:
@@ -82,7 +82,7 @@
     sap_ciBtcWPNumber:
     sap_installSAPHostAgent:
     sap_profile_dir:
-    sap_ASCS_hostname:                  "{{ ASCS_server }}"
+    sap_scs_hostname:                  "{{ scs_server }}"
     sap_db_hostname:
     sap_ciVirtualHostname:
     sap_appVirtualHostname:
@@ -103,7 +103,7 @@
   block:
 
 # *====================================4=======================================8
-# |  SAP ASCS: Install                                                          |
+# |  SAP SCS: Install                                                          |
 # | 2230669 - System Provisioning Using a Parameter Input File                 |
 # *====================================4=======================================8
 

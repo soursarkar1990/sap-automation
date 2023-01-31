@@ -16,14 +16,14 @@ Examples:
       10.1.2.43          x01app01l2e7.sap.contoso.com                      x01app01l2e7         
       10.1.2.5           x01dhdb00l02e7.sap.contoso.com                    x01dhdb00l02e7       
       10.1.2.68          x01dhdb00l02e7eth1_0.sap.contoso.com              x01dhdb00l02e7eth1_0 
-      10.1.2.38          x01ASCS00l2e7.sap.contoso.com                      x01ASCS00l2e7         
+      10.1.2.38          x01scs00l2e7.sap.contoso.com                      x01scs00l2e7         
       10.1.2.26          x01web00l2e7.sap.contoso.com                      x01web00l2e7         
 
   play_hosts (flat list of host names to loop over):
       x01app00l2e7
       x01app01l2e7
       x01dhdb00l02e7
-      x01ASCS00l2e7
+      x01scs00l2e7
       x01web00l2e7
 
   ansible_interfaces (a sorted list could look like this):
@@ -45,7 +45,7 @@ Examples:
           eth1
           eth2
           eth3
-      x01ASCS00l2e7
+      x01scs00l2e7
           eth0
       x01web00l2e7
           eth0

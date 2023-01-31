@@ -1,8 +1,8 @@
 # /*---------------------------------------------------------------------------8
 # |                                                                            |
 # |             SAP: Register BOM                                              |
-# |         SAP ASCS: deploy ASCS Parameter file install template                |
-# |         SAP ASCS: Install                                                   |
+# |         SAP SCS: deploy SCS Parameter file install template                |
+# |         SAP SCS: Install                                                   |
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
@@ -36,7 +36,7 @@
   register:                            ers_installed
   when: node_tier == 'ers'
 
-- name:                                "ASCS Install: check media exists"
+- name:                                "SCS Install: check media exists"
   ansible.builtin.stat:
     path:                              "{{ target_media_location }}/SWPM/sapinst"
   register:                            sapinst_found
@@ -79,7 +79,7 @@
     sap_db_hostname:
     sap_ciVirtualHostname:
     sap_appVirtualHostname:
-    sap_ASCS_hostname:                  "{{ sap_sid | lower }}ASCS{{ ASCS_instance_number }}cl1"
+    sap_scs_hostname:                  "{{ sap_sid | lower }}scs{{ scs_instance_number }}cl1"
     param_directory:                   "{{ dir_params }}"
     hdb_instance_number:               "{{ db_instance_number }}"
   tags:

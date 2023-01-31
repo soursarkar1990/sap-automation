@@ -99,13 +99,13 @@ NW_webdispatcher_Instance.backEndSID = X00
 NW_webdispatcher_Instance.msHTTPPort = 8100
 
 # Back-end message server host. Mandatory if 'NW_Webdispatcher_Instance.configureSystemConnectivity' is set to 'true'.
-NW_webdispatcher_Instance.msHost = x00ASCS01l8ad
+NW_webdispatcher_Instance.msHost = x00scs01l8ad
 
 # SAP System Client. Mandatory if 'NW_Webdispatcher_Instance.activateICF' is set to 'true'
 # NW_webdispatcher_Instance.rfcClient = 000
 
 # Application Server Instance Host. Mandatory if 'NW_Webdispatcher_Instance.activateICF' is set to 'true'
-NW_webdispatcher_Instance.rfcHost = x00ASCS01l8ad
+NW_webdispatcher_Instance.rfcHost = x00scs01l8ad
 
 # Application Server Instance Number. Mandatory if 'NW_Webdispatcher_Instance.activateICF' is set to 'true'
 # NW_webdispatcher_Instance.rfcInstance =

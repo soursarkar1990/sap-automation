@@ -6,11 +6,11 @@
 
 HDB_Schema_Check_Dialogs.schemaName = SAPHANADB
 HDB_Schema_Check_Dialogs.schemaPassword = 
-NW_CI_Instance.aASCSVirtualHostname = x00app00l014
+NW_CI_Instance.ascsVirtualHostname = x00app00l014
 NW_CI_Instance.ciInstanceNumber = 00
 NW_CI_Instance.ciMSPort = 3600
 NW_CI_Instance.ciVirtualHostname = x00app00l014
-NW_CI_Instance.ASCSVirtualHostname = x00app00l014
+NW_CI_Instance.scsVirtualHostname = x00app00l014
 NW_DDIC_Password.needDDICPasswords = false
 NW_Delete_Sapinst_Users.removeUsers = true
 NW_GetMasterPassword.masterPwd = 

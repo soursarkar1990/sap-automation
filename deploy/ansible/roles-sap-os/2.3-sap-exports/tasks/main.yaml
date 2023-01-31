@@ -10,7 +10,7 @@
     - { path: '/usr/sap/trans' }
     - { path: '/sapmnt/{{ sap_sid | upper }}' }
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - MULTI_SIDS is undefined
     - sap_mnt is undefined
     - sap_trans is undefined
@@ -24,7 +24,7 @@
   loop:
     - { path: '/sapmnt' }
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - MULTI_SIDS is defined
 
 # Create Folders under sapmnt whilst using Local disk for Multi-SID installation.
@@ -36,7 +36,7 @@
         state:                         directory
         mode:                          0755
       when:
-        - node_tier == 'ASCS'
+        - node_tier == 'scs'
         - MULTI_SIDS is defined
       loop: "{{ MULTI_SIDS }}"
 
@@ -84,7 +84,7 @@
         - distribution_id == "redhat8"
 
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - usr_sap_install_mountpoint is undefined
 
 - name:                                "2.3 SAP Exports: - Create SAP Directories (sapmnt)"
@@ -130,7 +130,7 @@
         - distribution_id == "redhat8"
 
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - sap_mnt is undefined
 
 - name:                                "2.3 SAP Exports: - Create SAP Directories (saptrans)"
@@ -176,7 +176,7 @@
         - distribution_id == "redhat8"
 
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - sap_trans is undefined
 
 - name:                               "Exports: Create SAP Directories for MSIDs"
@@ -187,7 +187,7 @@
   loop:
     - { path: '/sapmnt' }
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - MULTI_SIDS is defined
 
 # Create Folders under sapmnt whilst using Local disk for Multi-SID installation.
@@ -199,7 +199,7 @@
         state:                         directory
         mode:                          0755
       when:
-        - node_tier == 'ASCS'
+        - node_tier == 'scs'
         - MULTI_SIDS is defined
       loop: "{{ MULTI_SIDS }}"
 
@@ -220,7 +220,7 @@
     - { tier: 'preparation', path: '/etc/nfs.conf',      regexp: '^# vers4.2=',                  line: ' vers4.2=y'                                                      }
   when:
     - (ansible_distribution | lower ~ ansible_distribution_major_version) == "oraclelinux8"
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - sap_mnt is not defined
     - MULTI_SIDS is not defined
 
@@ -240,7 +240,7 @@
     - { tier: 'preparation', path: '/etc/nfs.conf',      regexp: '^# vers4.2=',                  line: ' vers4.2=y'                                                      }
   when:
     - (ansible_distribution | lower ~ ansible_distribution_major_version) == "oraclelinux8"
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - sap_mnt is not defined
     - MULTI_SIDS is defined
 
@@ -255,7 +255,7 @@
   loop: "{{ MULTI_SIDS }}"
   when:
     - (ansible_distribution | lower ~ ansible_distribution_major_version) == "oraclelinux8"
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - sap_mnt is not defined
     - MULTI_SIDS is defined
 
@@ -292,5 +292,5 @@
         state:                         restarted
 
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - (sap_trans is undefined) or (usr_sap_install_mountpoint is undefined) or (sap_mnt is undefined)

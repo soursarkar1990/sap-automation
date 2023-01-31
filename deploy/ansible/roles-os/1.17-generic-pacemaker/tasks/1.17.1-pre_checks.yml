@@ -17,7 +17,7 @@
       - "fencing_spn_client_id | trim | length > 0"
       - "fencing_spn_client_pwd is defined"
       - "fencing_spn_client_pwd | trim | length > 0"
-    fail_msg:                          "A highly available ASCS deployment requires that an SPN is defined for the fencing agent"
+    fail_msg:                          "A highly available SCS deployment requires that an SPN is defined for the fencing agent"
   when:                                not use_msi_for_clusters
 
 - name:                                "1.17 Generic Pacemaker - Check the required cluster password is set"
@@ -25,7 +25,7 @@
     that:
       - "password_ha_db_cluster is defined"
       - "password_ha_db_cluster | trim | length > 0"
-    fail_msg:                          "A highly available ASCS deployment requires that an cluster password is set"
+    fail_msg:                          "A highly available SCS deployment requires that an cluster password is set"
 
 - name:                                "1.17 Generic Pacemaker - Check the required Clustering scripts are available"
   ansible.builtin.stat:

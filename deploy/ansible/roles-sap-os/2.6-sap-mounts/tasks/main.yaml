@@ -37,7 +37,7 @@
   ansible.builtin.set_fact:
     nfs_server_temp:                   "{{ nfs_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                "2.6 SAP Mounts: - Set the NFS Server name"
@@ -127,11 +127,11 @@
     state:                             directory
     mode:                              0755
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - MULTI_SIDS is defined
     - sap_trans is undefined
 
-- name:                                "2.6 SAP Mounts: - Mount local install file system on ASCS (when not using AFS)"
+- name:                                "2.6 SAP Mounts: - Mount local install file system on SCS (when not using AFS)"
   ansible.posix.mount:
     src:                               '/dev/vg_sap/lv_usrsapinstall'
     path:                              '{{ target_media_location }}'
@@ -139,11 +139,11 @@
     opts:                              defaults
     state:                             mounted
   when:
-    - "'ASCS' in supported_tiers"
+    - "'scs' in supported_tiers"
     - usr_sap_install_mountpoint is undefined
 
 # Mount Filesystems
-- name:                                "2.6 SAP Mounts: - Mount local sapmnt on (ASCS) {{ ansible_hostname }}"
+- name:                                "2.6 SAP Mounts: - Mount local sapmnt on (scs) {{ ansible_hostname }}"
   ansible.posix.mount:
     src:                               '/dev/vg_sap/lv_sapmnt'
     path:                              '/sapmnt/{{ sap_sid | upper }}'
@@ -153,10 +153,10 @@
   when:
     - tier == 'sapos'
     - sap_mnt is undefined
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - MULTI_SIDS is undefined
     - sap_disk_exists == '1'
-    - "'ASCS' in supported_tiers"
+    - "'scs' in supported_tiers"
 
 - name:                                "2.6 SAP Mounts: - Create SAP Directories (sapmnt)"
   ansible.builtin.file:
@@ -209,14 +209,14 @@
     state:                             mounted
   when:
     - tier == 'sapos'
-    - node_tier != 'ASCS'
-    - "'ASCS' not in supported_tiers"
+    - node_tier != 'scs'
+    - "'scs' not in supported_tiers"
     - usr_sap_install_mountpoint is not defined
 
-# Mount File systems for ASCS server in Multi-SID installations
-- name:                                "2.6 SAP Mounts: - Mount local sapmnt (ASCS) for oracle shared home installation"
+# Mount File systems for SCS server in Multi-SID installations
+- name:                                "2.6 SAP Mounts: - Mount local sapmnt (scs) for oracle shared home installation"
   block:
-    - name:                            "2.6 SAP Mounts: - Mount local sapmnt (ASCS) for oracle shared home installation"
+    - name:                            "2.6 SAP Mounts: - Mount local sapmnt (scs) for oracle shared home installation"
       ansible.posix.mount:
         src:                           "{{ item.src }}"
         path:                          "{{ item.path }}"
@@ -238,7 +238,7 @@
       loop:                            "{{ MULTI_SIDS }}"
   when:
     - tier == 'sapos'
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
     - MULTI_SIDS is defined
     - sap_mnt is undefined
 
@@ -252,13 +252,13 @@
     opts:                              defaults
     state:                             mounted
   vars:
-    # Get all the hostnames in <SID>_ASCS group and return only the first hostname
-    nfs_server:                        "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') | first }}"
+    # Get all the hostnames in <SID>_SCS group and return only the first hostname
+    nfs_server:                        "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') | first }}"
   loop:                                "{{ MULTI_SIDS }}"
   when:
     - tier == 'sapos'
     - MULTI_SIDS is defined
-    - node_tier != 'ASCS'
+    - node_tier != 'scs'
     - node_tier != 'oracle-multi-sid'
     - sap_mnt is undefined
 

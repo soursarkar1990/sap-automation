@@ -20,7 +20,7 @@ playbook_00_transition_start_for_sap_install.yaml                               
 playbook_01_os_base_config.yaml                                                                                 \
 playbook_02_os_sap_specific_config.yaml                                                                         \
 playbook_03_bom_processing.yaml                                                                                 \
-playbook_04a_sap_ASCS_install.yaml                                                                               \
+playbook_04a_sap_scs_install.yaml                                                                               \
 playbook_05a_hana_db_install.yaml                                                                               \
 playbook_06a_sap_dbload.yaml                                                                                    \
 playbook_06b_sap_pas_install.yaml                                                                               \

@@ -6,7 +6,7 @@
 # Description:  Download the specified BOM file to the ansible controller.
 #               Download any dependent BOM files to the ansible controller.
 #               Create Download directories, both static and dynamic.
-#               Download all media from BOMs to the ASCS
+#               Download all media from BOMs to the SCS
 #
 #
 # Objects:

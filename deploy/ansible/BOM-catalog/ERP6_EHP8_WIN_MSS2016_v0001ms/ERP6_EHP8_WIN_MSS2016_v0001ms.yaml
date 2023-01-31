@@ -7,8 +7,8 @@ defaults:
   target_location: "{{ target_media_location }}/download_basket"
 
 product_ids:
-  ASCS:
-  ASCS_ha:
+  scs:
+  scs_ha:
   dbl:
   pas:
   pas_ha:

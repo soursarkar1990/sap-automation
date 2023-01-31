@@ -38,7 +38,7 @@
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
-- hosts:                                              "{{ sap_sid | upper }}_ASCS : {{ sap_sid | upper }}_DB"
+- hosts:                                              "{{ sap_sid | upper }}_SCS : {{ sap_sid | upper }}_DB"
 
   name:                                               BOM Processing
   remote_user:                                        "{{ orchestration_ansible_user }}"
@@ -55,7 +55,7 @@
 # -------------------------------------+---------------------------------------8
     - name:                                           "Perform BoM processing"
       when:
-        - "'ASCS' in supported_tiers"
+        - "'scs' in supported_tiers"
       block:
 
         - name:                                       Set facts

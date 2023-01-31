@@ -43,7 +43,7 @@
 # +------------------------------------4--------------------------------------*/
 
 
-- hosts:                               "{{ sap_sid | upper }}_ASCS :
+- hosts:                               "{{ sap_sid | upper }}_SCS :
                                         {{ sap_sid | upper }}_DB"
   name:                                Post Installation
   remote_user:                         "{{ orchestration_ansible_user }}"

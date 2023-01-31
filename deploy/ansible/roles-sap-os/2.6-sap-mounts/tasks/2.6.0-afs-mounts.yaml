@@ -12,7 +12,7 @@
         'sid': '{{ sap_sid | upper }}',
         'dbsid_uid': '{{ hdbadm_uid }}',
         'sidadm_uid': '{{ sidadm_uid }}',
-        'aASCS_inst_no': '{{ ASCS_instance_number }}',
+        'ascs_inst_no': '{{ scs_instance_number }}',
         'pas_inst_no': '{{ pas_instance_number }}',
         'app_inst_no': '{{ app_instance_number }}'
       }
@@ -25,7 +25,7 @@
   ansible.builtin.set_fact:
     first_server_temp:                 "{{ first_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                "AFS Mount: Create list of all_sap_mounts to support"
@@ -96,7 +96,7 @@
             mode:                      0755
           loop:
             - { path: '/saptmp/usrsap{{ sap_sid | upper }}'                              }
-            - { path: '/saptmp/usrsap{{ sap_sid | upper }}aASCS{{ ASCS_instance_number }}' }
+            - { path: '/saptmp/usrsap{{ sap_sid | upper }}ascs{{ scs_instance_number }}' }
             - { path: '/saptmp/usrsap{{ sap_sid | upper }}ers{{ ers_instance_number }}'  }
             - { path: '/saptmp/usrsap{{ sap_sid | upper }}sys'                           }
 
@@ -120,7 +120,7 @@
             path:                      "{{ item.path }}"
             state:                     absent
           loop:
-            - { path: '/saptmp/usrsap{{ sap_sid | upper }}aASCS{{ ASCS_instance_number }}' }
+            - { path: '/saptmp/usrsap{{ sap_sid | upper }}ascs{{ scs_instance_number }}' }
             - { path: '/saptmp/usrsap{{ sap_sid | upper }}ers{{ ers_instance_number }}'  }
             - { path: '/saptmp/usrsap{{ sap_sid | upper }}sys'                           }
             - { path: '/saptmp/usrsap{{ sap_sid | upper }}'                              }
@@ -144,7 +144,7 @@
         - skip_ansible_lint
   when:
     - tier == 'sapos'
-    - "'ASCS' in supported_tiers"
+    - "'scs' in supported_tiers"
 
 - name:                                "AFS Mount: sap_mnt"
   block:
@@ -185,9 +185,9 @@
 # |                                                                            |
 # +------------------------------------4--------------------------------------*/
 
-- name:                                "AFS Mount: sap_mnt (ASCS & ers)"
+- name:                                "AFS Mount: sap_mnt (scs & ers)"
   block:
-    - name:                            "AFS Mount: Create SAP Directories (ASCS & ers)"
+    - name:                            "AFS Mount: Create SAP Directories (scs & ers)"
       ansible.builtin.file:
         path:                          "{{ item.path }}"
         state:                         directory
@@ -197,11 +197,11 @@
       loop:
         - { path: '/usr/sap/{{ sap_sid | upper }}' }
         - { path: '/usr/sap/{{ sap_sid | upper }}/SYS' }
-        - { path: '/usr/sap/{{ sap_sid | upper }}/AASCS{{ ASCS_instance_number }}' }
+        - { path: '/usr/sap/{{ sap_sid | upper }}/ASCS{{ scs_instance_number }}' }
         - { path: '/usr/sap/{{ sap_sid | upper }}/ERS{{ ers_instance_number }}' }
       register: is_created_now3
 
-    - name:                            "AFS Mount: Change attribute only when we create SAP Directories (ASCS & ers)"
+    - name:                            "AFS Mount: Change attribute only when we create SAP Directories (scs & ers)"
       ansible.builtin.file:
         path:                          "{{ item.item.path }}"
         state:                         directory
@@ -215,7 +215,7 @@
         - skip_ansible_lint
   when:
     - tier == 'sapos'
-    - "'ASCS' in supported_tiers or 'ers' in supported_tiers "
+    - "'scs' in supported_tiers or 'ers' in supported_tiers "
     - sap_mnt is defined
     - MULTI_SIDS is undefined
 
@@ -232,7 +232,7 @@
       loop:
         - { type: 'nfs4',  src: '{{ sap_mnt }}/sapmnt{{ sap_sid | upper }}',    path: '/sapmnt/{{ sap_sid | upper }}'      }
       when:
-        - not ASCS_high_availability
+        - not scs_high_availability
         - node_tier != 'hana'
         - sap_mnt is defined
         - MULTI_SIDS is undefined
@@ -255,7 +255,7 @@
       loop:
         - { type: 'nfs4',  src: '{{ sap_mnt }}/sapmnt{{ sap_sid | upper }}',    path: '/sapmnt/{{ sap_sid | upper }}'      }
       when:
-        - not ASCS_high_availability
+        - not scs_high_availability
         - node_tier != 'hana'
         - sap_mnt is defined
         - MULTI_SIDS is undefined
@@ -271,7 +271,7 @@
     state:                             mounted
   loop:                                "{{ MULTI_SIDS }}"
   when:
-    - not ASCS_high_availability
+    - not scs_high_availability
     - sap_mnt is defined
     - MULTI_SIDS is defined
 
@@ -297,7 +297,7 @@
         state:                         mounted
 
   when:
-    - ASCS_high_availability
+    - scs_high_availability
     - node_tier != 'hana'
     - sap_mnt is defined
 
@@ -337,8 +337,8 @@
       loop:
         - { type: 'nfs4',  src: '{{ sap_mnt }}/usrsap{{ sap_sid | upper }}sys', path: '/usr/sap/{{ sap_sid | upper }}/SYS' }
   when:
-    - ASCS_high_availability
-    - node_tier == 'ASCS'
+    - scs_high_availability
+    - node_tier == 'scs'
     - sap_mnt is defined
 
 - name:                                "AFS Mount: usr/sap/{{ sap_sid | upper }}/SYS"
@@ -377,7 +377,7 @@
       loop:
         - { type: 'nfs4',  src: '{{ sap_mnt }}/usrsap{{ sap_sid | upper }}sys', path: '/usr/sap/{{ sap_sid | upper }}/SYS' }
   when:
-    - ASCS_high_availability
+    - scs_high_availability
     - node_tier == 'ers'
     - sap_mnt is defined
 
@@ -413,7 +413,7 @@
       'path':              '/usr/sap/trans',
       'permissions':       '0775',
       'set_chattr_on_dir': false,
-      'target_nodes':      ['app','pas', 'ers', 'ASCS'],
+      'target_nodes':      ['app','pas', 'ers', 'scs'],
       'create_temp_folders': false
     }
   vars:

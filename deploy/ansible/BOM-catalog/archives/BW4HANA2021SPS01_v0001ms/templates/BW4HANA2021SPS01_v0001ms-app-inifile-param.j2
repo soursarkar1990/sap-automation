@@ -5,7 +5,7 @@
 #                                                                                                                                                                                                      #
 # Installation service 'SAP BW/4HANA 2021 > SAP BW/4HANA Server > SAP HANA Database > Installation > Application Server ABAP
 #                       > Distributed System > Database Instance', product id 'NW_ABAP_DB:BW4HANA2021.CORE.HDB.ABAP'
-#                       > Distributed System > AASCS Instance', product id 'NW_ABAP_AASCS:BW4HANA2021.CORE.HDB.ABAP' #
+#                       > Distributed System > ASCS Instance', product id 'NW_ABAP_ASCS:BW4HANA2021.CORE.HDB.ABAP' #
 #                       > Additional SAP System Instances > Additional Application Server Instance', product id 'NW_DI:BW4HANA2021.CORE.HDB.PD' 
 #                                                                                                                                                                                                      #
 ########################################################################################################################################################################################################
@@ -44,7 +44,7 @@ HDB_Schema_Check_Dialogs.schemaPassword                               = {{ main_
 NW_HDB_DBClient.clientPathStrategy                                    = SAPCPE
 NW_HDB_getDBInfo.instanceNumber                                       = {{ db_instance_number }}
 
-NW_checkMsgServer.abapMSPort                                          = 36{{ ASCS_instance_number }}
+NW_checkMsgServer.abapMSPort                                          = 36{{ scs_instance_number }}
 NW_getLoadType.loadType                                               = SAP
 NW_readProfileDir.profileDir                                          = {{ sap_profile_dir }}
 
