@@ -78,7 +78,8 @@ stages:
                             boldred="\e[1;31m"
 
                             set -eu
-                            echo "$(deployerfolder)/$(deployerfolder).tfvars"
+                            varsfile="$(deployerfolder)/$(deployerfolder).tfvars"
+                            echo "$(varsfile)"
                             file_deployer_tfstate_key=$(deployerfolder).tfstate                          
                             file_key_vault=$(deployerfolder).tfstate
                             #ENVIRONMENT=$(echo $(deployerfolder)/$(deployerfolder).tfvars | awk -F'-' '{print $1}' | xargs) ; echo Environment ${ENVIRONMENT}
