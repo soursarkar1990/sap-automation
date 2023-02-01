@@ -269,7 +269,7 @@ resource "azurerm_storage_account" "transport" {
   account_tier                    = "Premium"
   account_replication_type        = "ZRS"
   account_kind                    = "FileStorage"
-  enable_https_traffic_only       = false
+  enable_https_traffic_only       = true
   min_tls_version                 = "TLS1_2"
   allow_nested_items_to_be_public = false
 
@@ -464,7 +464,7 @@ resource "azurerm_storage_account" "install" {
   account_tier                    = "Premium"
   account_replication_type        = "ZRS"
   account_kind                    = "FileStorage"
-  enable_https_traffic_only       = false
+  enable_https_traffic_only       = true
   min_tls_version                 = "TLS1_2"
   allow_nested_items_to_be_public = false
 
