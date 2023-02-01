@@ -78,7 +78,8 @@ stages:
                             boldred="\e[1;31m"
 
                             set -eu
-                            file_deployer_tfstate_key=$(deployerfolder).tfstate
+
+                            file_deployer_tfstate_key=$(deployerfolder).tfstate                          
                             file_key_vault=$(deployerfolder).tfstate
                             ENVIRONMENT=$(echo $(deployerfolder) | awk -F'-' '{print $1}' | xargs) ; echo Environment ${ENVIRONMENT}
                             LOCATION=$(echo $(deployerfolder) | awk -F'-' '{print $2}' | xargs) ;    echo Location ${LOCATION}
@@ -327,7 +328,7 @@ stages:
                 - bash: |
                       #!/bin/bash
                       set -u
-                      REMOTE_STATE_SA=$(libraryfolder).tfstate
+
                       echo "##vso[build.updatebuildnumber]Deploying the control plane defined in $(deployerfolder) $(libraryfolder)"
                           green="\e[1;32m"
                           reset="\e[0m"
@@ -336,7 +337,8 @@ stages:
                           ENVIRONMENT=$(echo $(deployerfolder) | awk -F'-' '{print $1}' | xargs) ; echo Environment ${ENVIRONMENT}
                           LOCATION=$(echo $(deployerfolder) | awk -F'-' '{print $2}' | xargs) ;    echo Location ${LOCATION}
                           deployer_environment_file_name=${CONFIG_REPO_PATH}/.sap_deployment_automation/${ENVIRONMENT}${LOCATION}
-
+                          file_deployer_tfstate_key=$(deployerfolder).tfstate
+                          
                           echo "Agent: " $(this_agent)
                       echo -e "$green--- Checkout $(Build.SourceBranchName) ---$reset"
                           cd $CONFIG_REPO_PATH
