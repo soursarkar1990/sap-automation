@@ -78,12 +78,12 @@ stages:
                             boldred="\e[1;31m"
 
                             set -eu
-                            varsfile="$(deployerfolder)/$(deployerfolder).tfvars"
+                            varsfile=$(deployerfolder)/$(deployerfolder).tfvars
                             echo "$(varsfile)"
                             file_deployer_tfstate_key=$(deployerfolder).tfstate                          
                             file_key_vault=$(deployerfolder).tfstate
-                            #ENVIRONMENT=$(echo $(deployerfolder)/$(deployerfolder).tfvars | awk -F'-' '{print $1}' | xargs) ; echo Environment ${ENVIRONMENT}
-                            #LOCATION=$(echo $(deployerfolder)/$(deployerfolder).tfvars | awk -F'-' '{print $2}' | xargs) ;    echo Location ${LOCATION}
+                            ENVIRONMENT=$(echo $(varsfile) | awk -F'-' '{print $1}' | xargs) ; echo Environment ${ENVIRONMENT}
+                            LOCATION=$(echo $(varsfile) | awk -F'-' '{print $2}' | xargs) ;    echo Location ${LOCATION}
                             deployer_environment_file_name=$CONFIG_REPO_PATH/.sap_deployment_automation/${ENVIRONMENT}${LOCATION}
                             if [ -f ${deployer_environment_file_name} ]; then
                               step=$(cat ${deployer_environment_file_name}  | grep step= | awk -F'=' '{print $2}' | xargs) ; echo 'Step' ${step}
