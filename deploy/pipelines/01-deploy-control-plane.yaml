@@ -327,7 +327,7 @@ stages:
                 - bash: |
                       #!/bin/bash
                       set -u
-                      REMOTE_STATE_SA=$(deployerfolder).tfstate
+                      REMOTE_STATE_SA=$(libraryfolder).tfstate
                       echo "##vso[build.updatebuildnumber]Deploying the control plane defined in $(deployerfolder) $(libraryfolder)"
                           green="\e[1;32m"
                           reset="\e[0m"
