@@ -28,7 +28,11 @@
     - path: "{{ download_directory }}/files"
 
 
+<<<<<<< HEAD
 - name:                                "3.3.1 BoM Processing: - Set Python version {{ distribution_id }}"
+=======
+- name:                                "3.3.1 BoM Processing: - Set Python version for {{ distribution_id }}"
+>>>>>>> 78ffbdf1523bc9bc0df305fc5e07c69a87eee559
   ansible.builtin.set_fact:
     python_version:                    'python2'
 

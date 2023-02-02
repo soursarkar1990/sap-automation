@@ -73,6 +73,7 @@
   vars:
     bom_name:                          "{{ bom_base_name }}"
     task_prefix:                       "PAS Install: "
+<<<<<<< HEAD
 
 - name:                                "PAS Install: Include roles-sap/3.3.1-bom-utility role"
   ansible.builtin.include_role:
@@ -108,6 +109,23 @@
     hdb_instance_number:               "{{ db_instance_number }}"
   tags:
     - skip_ansible_lint
+=======
+    sa_enabled:                        true
+
+# - name:                                "PAS Install: Default instance type"
+#   ansible.builtin.set_fact:
+#     instance_type:                     "ASCS"
+#     public:                            true
+#   when:                                bom.InstanceType is not defined
+
+# - name:                                "PAS Install: register instance type if JAVA"
+#   ansible.builtin.set_fact:
+#     instance_type:                     "JAVA"
+#     public:                            true
+#   when:
+#     - bom.InstanceType is defined
+#     - bom.InstanceType | upper == 'JAVA'
+>>>>>>> 78ffbdf1523bc9bc0df305fc5e07c69a87eee559
 
 - name:                                "PAS Install: register variables"
   ansible.builtin.set_fact:
