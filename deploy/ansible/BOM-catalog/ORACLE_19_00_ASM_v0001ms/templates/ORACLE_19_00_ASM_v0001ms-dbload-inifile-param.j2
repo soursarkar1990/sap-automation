@@ -19,7 +19,7 @@ NW_Unpack.dbaToolsSar                                      = {{ target_media_loc
 NW_Unpack.sapExeDbSar                                      = {{ target_media_location }}/download_basket/SAPEXEDB_801-80002605.SAR
 
 NW_GetMasterPassword.masterPwd                             = {{ main_password }}
-NW_checkMsgServer.abapMSPort                               = 36{{ ASCS_instance_number }}
+NW_checkMsgServer.abapMSPort                               = 36{{ scs_instance_number }}
 NW_getDBInfoGeneric.dbhost                                 =  {{ sap_db_hostname }}
 NW_getDBInfoGeneric.dbsid                                  = {{db_sid | upper}}
 NW_getFQDN.FQDN                                            = {{ sap_fqdn }}

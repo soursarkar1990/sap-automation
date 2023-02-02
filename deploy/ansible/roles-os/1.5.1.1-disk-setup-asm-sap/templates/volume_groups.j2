@@ -14,7 +14,7 @@
     Note: '_' used as dummy variable that can be ignored
 #}
 {%     for disk in disks if (disk.host == inventory_hostname) and (disk.type == disktype) %}
-{%         set _ = pvlist.append('/dev/disk/azure/ASCSi1/lun' ~ disk.LUN) %}
+{%         set _ = pvlist.append('/dev/disk/azure/scsi1/lun' ~ disk.LUN) %}
 {%     endfor %}
 {#
     Add list of pvs and diskcount to VG dictionary

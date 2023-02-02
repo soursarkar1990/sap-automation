@@ -94,11 +94,11 @@
     path:                              '{{ sap_deployment_automation }}\{{ sid_to_be_deployed.sid | upper }}\sap_deployment_pas.txt'
   register:                            pas_installed
 
-- name:                                "PAS Install: Set the ASCS Server name list"
+- name:                                "PAS Install: Set the SCS Server name list"
   ansible.builtin.set_fact:
-    ASCS_server_temp:                   "{{ ASCS_server_temp | default([]) + [item] }}"
+    scs_server_temp:                   "{{ scs_server_temp | default([]) + [item] }}"
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
 - name:                                "PAS Install: -  Set the DB Server name list"
@@ -107,12 +107,12 @@
   with_items:
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
-- name:                                "PAS Install: Set the ASCS Server name"
+- name:                                "PAS Install: Set the SCS Server name"
   ansible.builtin.set_fact:
-    ASCS_server:                        "{% if ASCS_high_availability %}{{ sid_to_be_deployed.sid | lower }}ASCS{{ ASCS_instance_number }}cl1{% else %}{{ hostvars[ASCS_server_temp | first]['virtual_host'] }}{% endif %}"
+    scs_server:                        "{% if scs_high_availability %}{{ sid_to_be_deployed.sid | lower }}scs{{ scs_instance_number }}cl1{% else %}{{ hostvars[scs_server_temp | first]['virtual_host'] }}{% endif %}"
     db_virtual_host:                   "{{ hostvars[db_server_temp | first]['virtual_host'] }}"
     instance_number:                   "{% if node_tier == 'pas' %}'00'{% else %}'01'{% endif %}"
-    file_path:                         "{% if ASCS_high_availability %}INSTALL/HA/ABAP/APP1{% else %}INSTALL/DISTRIBUTED/ABAP/APP1{% endif %}"
+    file_path:                         "{% if scs_high_availability %}INSTALL/HA/ABAP/APP1{% else %}INSTALL/DISTRIBUTED/ABAP/APP1{% endif %}"
     db_lb_virtual_host:                "{% if db_high_availability %}{{ sid_to_be_deployed.sid | lower }}{{ db_sid | lower }}db{{ db_instance_number }}cl{% else %}{{ hostvars[db_server_temp | first]['virtual_host'] }}{% endif %}"
 
 - name:                                "PAS Install: Include 3.3.1-bom-utility role"
@@ -123,6 +123,7 @@
     bom_name:                          "{{ bom_base_name }}"
     tier:                              "pas"
     task_prefix:                       "PAS Install: "
+    sa_enabled:                        true
 
 - name:                                "PAS Install: Include roles-sap/windows/3.3.1-bom-utility role"
   ansible.builtin.include_role:
@@ -143,15 +144,15 @@
     sap_ciDialogWPNumber:              12
     sap_ciBtcWPNumber:                 8
     sap_installSAPHostAgent:           "false"
-    sap_profile_dir:                   '\\{{ ASCS_server }}\sapmnt\{{ sid_to_be_deployed.sid | upper }}\SYS\profile'
-    sap_ASCS_hostname:                  "{{ ASCS_server }}"
+    sap_profile_dir:                   '\\{{ scs_server }}\sapmnt\{{ sid_to_be_deployed.sid | upper }}\SYS\profile'
+    sap_scs_hostname:                  "{{ scs_server }}"
     sap_db_hostname:                   "{{ db_virtual_host }}"
     sap_ciVirtualHostname:
     sap_appVirtualHostname:
     tier:                              "{{ tier }}"
     param_directory:                   "{{ dir_params }}"
     sap_sid:                           "{{ sid_to_be_deployed.sid }}"
-    ASCS_instance_number:               "{{ sid_to_be_deployed.ASCS_inst_no }}"
+    scs_instance_number:               "{{ sid_to_be_deployed.ascs_inst_no }}"
     sidadm_uid:                        "{{ sid_to_be_deployed.sidadm_uid }}"
     virt_do_not_resolve_hostname:      "{{ db_lb_virtual_host }}"
 
@@ -210,8 +211,8 @@
         ansible_become_method:         runas
         ansible_become_user:           '{{ domain }}\{{ sap_sid }}adm'
         ansible_become_password:       "{{ domain_user_password }}"
-      register:                        ASCS_extraction
-      failed_when:                     ASCS_extraction.rc > 0
+      register:                        scs_extraction
+      failed_when:                     scs_extraction.rc > 0
 
     # - name:                            "Install SAP vcredist package"
     #   win_package:

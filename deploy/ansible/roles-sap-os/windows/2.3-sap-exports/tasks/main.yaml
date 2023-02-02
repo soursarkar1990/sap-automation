@@ -1,15 +1,15 @@
 ---
-- name:                                Get the ASCS Server name list
+- name:                                Get the SCS Server name list
   ansible.builtin.set_fact:
-    ASCS_server_temp: "{{ ASCS_server_temp | default([]) + [item] }}"
+    scs_server_temp: "{{ scs_server_temp | default([]) + [item] }}"
 
   with_items:
-    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_ASCS') }}"
+    - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_SCS') }}"
     - "{{ query('inventory_hostnames', '{{ sap_sid | upper }}_DB') }}"
 
-- name:                                "Set the ASCS Server name"
+- name:                                "Set the SCS Server name"
   ansible.builtin.set_fact:
-    ASCS_server: "{{ hostvars[ASCS_server_temp | first]['virtual_host'] }}"
+    scs_server: "{{ hostvars[scs_server_temp | first]['virtual_host'] }}"
 
 - name:                                "Exports: Create SAP Directories"
   ansible.windows.win_dsc:
@@ -20,7 +20,7 @@
   loop:
     - { path: "{{ target_media_location_windows }}" }
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
 
 - name:                                "2.3 SAP Exports: - Enable Folder Sharing"
   ansible.windows.win_share:
@@ -32,11 +32,11 @@
     state:                             present
   register:                            win_share_info
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
 
 - name:                                "Show Share Output"
   ansible.builtin.debug:
     var:                               win_share_info
   when:
-    - node_tier == 'ASCS'
+    - node_tier == 'scs'
 ...
