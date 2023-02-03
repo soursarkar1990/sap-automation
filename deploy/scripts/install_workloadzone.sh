@@ -1073,6 +1073,5 @@ if [ -n "${subnet_id}" ]; then
 fi
 
 unset TF_DATA_DIR
-echo "${workload_config_information}"
-cat ${workload_config_information}
+
 exit $return_value
