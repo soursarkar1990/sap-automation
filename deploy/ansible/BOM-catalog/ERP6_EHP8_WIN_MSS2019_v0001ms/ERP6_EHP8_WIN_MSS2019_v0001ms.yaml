@@ -10,7 +10,7 @@ defaults:
   target_location: "{{ target_media_location }}/download_basket"
 
 product_ids:
-  scs:                          NW_ABAP_scs:BS2016.ERP608.MSS.PD
+  scs:                          NW_ABAP_ASCS:BS2016.ERP608.MSS.PD
   scs_ha:                       NW_FirstClusterNode_ABAP:BS2016.ERP608.MSS.PDHA
   dbl:                          NW_ABAP_DB:BS2016.ERP608.MSS.PD
   pas:                          NW_ABAP_CI:BS2016.ERP608.MSS.PD

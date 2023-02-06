@@ -23,8 +23,8 @@ NW_Delete_Sapinst_Users.removeUsers                                  = true
 NW_GetMasterPassword.masterPwd                                       = {{ main_password }}
 NW_GetSidNoProfiles.sid                                              = {{ sid_to_be_deployed.sid | upper }}
 NW_getUnicode.isUnicode                                              = true
-NW_SCS_Instance.scsInstallGateway                                   = true
-NW_SCS_Instance.scsInstallWebDispatcher                             = false
+NW_SCS_Instance.ascsInstallGateway                                   = true
+NW_SCS_Instance.ascsInstallWebDispatcher                             = false
 NW_SCS_Instance.instanceNumber                                       = {{ sid_to_be_deployed.pas_inst_no }}
 NW_SCS_Instance.scsVirtualHostname                                   = {{ sap_scs_hostname }}
 
@@ -33,7 +33,7 @@ NW_getFQDN.FQDN                                                      = {{ sap_fq
 
 NW_DDIC_Password.needDDICPasswords                                   = false
 NW_GetMasterPassword.masterPwd                                       = {{ main_password }}
-NW_checkMsgServer.abapMSPort                                         = 36{{ sid_to_be_deployed.scs_inst_no }}
+NW_checkMsgServer.abapMSPort                                         = 36{{ sid_to_be_deployed.ascs_inst_no }}
 NW_getDBInfoGeneric.dbhost                                           = {{ sap_db_hostname }}
 NW_getDBInfoGeneric.dbsid                                            = {{ sid_to_be_deployed.sid  | upper }}
 NW_getLoadType.loadType                                              = SAP
@@ -48,8 +48,8 @@ storageBasedCopy.ora.listenerName                                    = LISTENER
 storageBasedCopy.ora.listenerPort                                    = 1521
 #NW_readProfileDir.profileDir                                        = /sapmnt/{{ sap_sid | upper }}/profile
 
-NW_CI_Instance.scsVirtualHostname                                    = {{ sap_scs_hostname }}
-NW_CI_Instance.ciInstanceNumber                                       = {{ sid_to_be_deployed.scs_inst_no }}
+NW_CI_Instance.ascsVirtualHostname                                    = {{ sap_scs_hostname }}
+NW_CI_Instance.ciInstanceNumber                                       = {{ sid_to_be_deployed.ascs_inst_no }}
 NW_CI_Instance.ciMSPort                                               = 36{{ scs_instance_number }}
 NW_CI_Instance.ciVirtualHostname                                      = {{ sap_ciVirtualHostname }}
 NW_CI_Instance.scsVirtualHostname                                     = {{ sap_scs_hostname }}

@@ -45,16 +45,16 @@ HDB_Schema_Check_Dialogs.schemaPassword = des25(x7l9qrJYn90vBPKRLK1JWtQ5GUU=)
 # NW_ABAP_SSFS_CustomKey.ssfsKeyInputFile = 
 
 # Standard system only: Add gateway process to (A)SCS instance
-# NW_CI_Instance.scsInstallGateway = false
+# NW_CI_Instance.ascsInstallGateway = false
 
 # Standard system only: Add web dispatcher process to (A)SCS instance
-# NW_CI_Instance.scsInstallWebDispatcher = false
+# NW_CI_Instance.ascsInstallWebDispatcher = false
 
-# Standard system with AS ABAP only: scs instance number. Leave empty for default.
-# NW_CI_Instance.scsInstanceNumber = 
+# Standard system with AS ABAP only: ASCS instance number. Leave empty for default.
+# NW_CI_Instance.ascsInstanceNumber = 
 
-# Standard system with AS ABAP only: Virtual host name for the scs instance. Leave empty for default.
-NW_CI_Instance.scsVirtualHostname = x00app00l3c4
+# Standard system with AS ABAP only: Virtual host name for the ASCS instance. Leave empty for default.
+NW_CI_Instance.ascsVirtualHostname = x00app00l3c4
 
 # Instance number of the primary application server instance. Leave empty for default.
 NW_CI_Instance.ciInstanceNumber = 00

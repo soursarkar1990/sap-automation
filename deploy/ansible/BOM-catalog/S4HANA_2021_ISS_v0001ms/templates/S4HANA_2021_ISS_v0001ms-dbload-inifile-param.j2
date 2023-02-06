@@ -4,7 +4,7 @@
 ########################################################################################################################################################################################################
 #                                                                                                                                                                                                      #
 # Installation service 'SAP S/4HANA Server 2021 > SAP HANA Database > Installation > Application Server ABAP                                                                                           #
-#                       > Distributed System > scs Instance', product id 'NW_ABAP_scs:S4HANA2021.CORE.HDB.ABAP'                                                                                      #
+#                       > Distributed System > ASCS Instance', product id 'NW_ABAP_ASCS:S4HANA2021.CORE.HDB.ABAP'                                                                                      #
 #                       > Distributed System > Database Instance', product id 'NW_ABAP_DB:S4HANA2021.CORE.HDB.ABAP'                                                                                    #
 #                       > Distributed System > Primary Application Server Instance', product id 'NW_ABAP_CI:S4HANA2021.CORE.HDB.ABAP'                                                                  #
 #                       > Additional SAP System Instances > Additional Application Server Instance', product id 'NW_DI:S4HANA2021.CORE.HDB.PD'                                                         #
@@ -30,8 +30,8 @@ NW_Delete_Sapinst_Users.removeUsers                                   = true
 NW_GetMasterPassword.masterPwd                                        = {{ main_password }}
 NW_GetSidNoProfiles.sid                                               = {{ sap_sid | upper }}
 
-NW_SCS_Instance.scsInstallGateway                                    = true
-NW_SCS_Instance.scsInstallWebDispatcher                              = false
+NW_SCS_Instance.ascsInstallGateway                                    = true
+NW_SCS_Instance.ascsInstallWebDispatcher                              = false
 NW_SCS_Instance.instanceNumber                                        = {{ scs_instance_number }}
 NW_SCS_Instance.scsVirtualHostname                                    = {{ sap_scs_hostname }}
 

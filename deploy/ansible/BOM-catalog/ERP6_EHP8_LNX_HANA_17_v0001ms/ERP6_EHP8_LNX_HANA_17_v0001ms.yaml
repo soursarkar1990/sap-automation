@@ -9,7 +9,7 @@ defaults:
   target_location: "{{ target_media_location }}/download_basket"
 
 product_ids:
-  scs:                          NW_ABAP_scs:NW750.HDB.ABAP
+  scs:                          NW_ABAP_ASCS:NW750.HDB.ABAP
   scs_ha:
   dbl:                          NW_ABAP_DB:NW750.HDB.ABAP
   pas:                          NW_ABAP_CI:NW750.HDB.ABAP

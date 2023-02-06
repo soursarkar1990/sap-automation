@@ -1,6 +1,6 @@
 ---
 
-# @TODO- Check if any modification is required from scs/SCS resources perspective
+# @TODO- Check if any modification is required from ASCS/SCS resources perspective
 
 - name:                                "5.6 SCSERS - SUSE - Cleanup resources"
   ansible.builtin.command:             crm resource cleanup

@@ -65,7 +65,7 @@ use_msi_for_clusters:                  false
 
 hana_components:                       "all"
 
-instance_type:                         "scs"
+instance_type:                         "ASCS"
 # DB2 specific parameters
 # db2_sid:                                "DB6"
 db2sysadm_gid:                         3000

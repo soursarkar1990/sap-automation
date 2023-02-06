@@ -1,6 +1,6 @@
 ########################################################################################################################################################################################################
 #                                                                                                                                                                                                      #
-# Installation service 'SAP S/4HANA Server 2021 > SAP HANA Database > Installation > Application Server ABAP > Distributed System > scs Instance', product id 'NW_ABAP_scs:S4HANA2021.CORE.HDB.ABAP' #
+# Installation service 'SAP S/4HANA Server 2021 > SAP HANA Database > Installation > Application Server ABAP > Distributed System > ASCS Instance', product id 'NW_ABAP_ASCS:S4HANA2021.CORE.HDB.ABAP' #
 #                                                                                                                                                                                                      #
 ########################################################################################################################################################################################################
 
@@ -14,7 +14,7 @@ nwUsers.sidadmPassword =
 NW_GetMasterPassword.masterPwd = 
 NW_GetSidNoProfiles.sid = X00
 
-NW_SCS_Instance.scsInstallGateway = true
+NW_SCS_Instance.ascsInstallGateway = true
 NW_SCS_Instance.instanceNumber = 00
 NW_SCS_Instance.scsVirtualHostname = x00scs00l014
 

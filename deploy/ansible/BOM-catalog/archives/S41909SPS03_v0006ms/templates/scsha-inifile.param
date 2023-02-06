@@ -1,6 +1,6 @@
 ################################################################################################################################################################################################################
 #                                                                                                                                                                                                              #
-# Installation service 'SAP S/4HANA Server 1909 > SAP HANA Database > Installation > Application Server ABAP > High-Availability System > scs Instance', product id 'NW_ABAP_scs:S4HANA1909.CORE.HDB.ABAPHA' #
+# Installation service 'SAP S/4HANA Server 1909 > SAP HANA Database > Installation > Application Server ABAP > High-Availability System > ASCS Instance', product id 'NW_ABAP_ASCS:S4HANA1909.CORE.HDB.ABAPHA' #
 #                                                                                                                                                                                                              #
 ################################################################################################################################################################################################################
 archives.downloadBasket = /usr/sap/install/download_basket
@@ -15,15 +15,15 @@ NW_GetMasterPassword.masterPwd =
 NW_GetSidNoProfiles.sid =
 
 # Add gateway process in the (A)SCS instance
-NW_SCS_Instance.scsInstallGateway = true
+NW_SCS_Instance.ascsInstallGateway = true
 
 # Add Web Dispatcher process in the (A)SCS instance
-NW_SCS_Instance.scsInstallWebDispatcher = false
+NW_SCS_Instance.ascsInstallWebDispatcher = false
 
-# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for scs and SCS instance.
+# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for ASCS and SCS instance.
 NW_SCS_Instance.instanceNumber = 
 
-# You can specify a virtual host name for the scs instance. Leave empty for default.
+# You can specify a virtual host name for the ASCS instance. Leave empty for default.
 NW_SCS_Instance.scsVirtualHostname = 
 
 # SAP INTERNAL USE ONLY

@@ -1,11 +1,11 @@
 ---
 
-# RHEL Clustering - Deploy scs/ERS cluster resources
+# RHEL Clustering - Deploy ASCS/ERS cluster resources
 # Azure ref: https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-rhel-netapp-files
 
 # STEPS
 # [1] Configure cluster default properties
-# [1] Create a virtual IP resource and health-probe for the scs instance
+# [1] Create a virtual IP resource and health-probe for the ASCS instance
 
 - name:                                "5.6 SCSERS - RHEL - Cluster Configuration before Install"
   throttle:                            1
@@ -19,40 +19,40 @@
     - name:                            "5.6 SCSERS - RHEL - Put Secondary host on standby"
       ansible.builtin.command:         pcs node standby {{ secondary_instance_name }}
 
-    - name:                            "5.6 SCSERS - RHEL - Set fact for scs Filesystem"
+    - name:                            "5.6 SCSERS - RHEL - Set fact for ASCS Filesystem"
       ansible.builtin.set_fact:
-        scs_filesystem_device:        "{{ sap_mnt }}/usrsap{{ sap_sid }}{{ instance_type | lower }}{{ scs_instance_number }}"
+        ascs_filesystem_device:        "{{ sap_mnt }}/usrsap{{ sap_sid }}{{ instance_type | lower }}{{ scs_instance_number }}"
 
     - name:                            "5.6 SCSERS - RHEL - SCS - Configure File system resources"
       ansible.builtin.command: >
                                        pcs resource create fs_{{ sap_sid }}_{{ instance_type | upper }} Filesystem \
-                                       device='{{ scs_filesystem_device }}' \
+                                       device='{{ ascs_filesystem_device }}' \
                                        directory='{{ profile_directory }}' fstype='nfs' force_unmount=safe options='sec=sys,vers=4.1' \
                                        op start interval=0 timeout=60 \
                                        op stop interval=0 timeout=120 \
                                        op monitor interval=200 timeout=40 \
                                        --group g-{{ sap_sid }}_{{ instance_type | upper }}
-      register:                        scs_fs_resource
-      failed_when:                     scs_fs_resource.rc > 1
+      register:                        ascs_fs_resource
+      failed_when:                     ascs_fs_resource.rc > 1
 
-    - name:                            "5.6 SCSERS - RHEL - SCS - Create scs VIP - This is LB frontend scs/SCS IP"
+    - name:                            "5.6 SCSERS - RHEL - SCS - Create ASCS VIP - This is LB frontend ASCS/SCS IP"
       ansible.builtin.command: >
                                        pcs resource create vip_{{ sap_sid }}_{{ instance_type | upper }} IPaddr2 \
                                        ip={{ scs_lb_ip }} cidr_netmask={{ subnet_prefix }} \
                                        --group g-{{ sap_sid }}_{{ instance_type | upper }}
-      register:                        scs_vip
-      failed_when:                     scs_vip.rc > 1
+      register:                        ascs_vip
+      failed_when:                     ascs_vip.rc > 1
 
     - name:                            "5.6 SCSERS - RHEL - SCS - create Azure LB resource"
       ansible.builtin.command: >
                                        pcs resource create nc_{{ sap_sid }}_{{ instance_type | upper }} azure-lb port=620{{ scs_instance_number }} \
                                        --group g-{{ sap_sid }}_{{ instance_type | upper }}
-      register:                        scs_lb
-      failed_when:                     scs_lb.rc > 1
+      register:                        ascs_lb
+      failed_when:                     ascs_lb.rc > 1
 
   when: inventory_hostname == primary_instance_name
 
-# [1] Install SAP NetWeaver scs - this is where we call the SCS role
+# [1] Install SAP NetWeaver ASCS - this is where we call the SCS role
 - name:                                "5.6 SCSERS - RHEL - SCS - Install SCS on Primary host"
   throttle:                            1
   block:
@@ -188,8 +188,8 @@
 
   when: inventory_hostname == secondary_instance_name
 
-# [A] Add firewall rules for scs and ERS on both nodes Add the firewall rules for scs and ERS on both nodes.
-- name:                                 "5.6 SCSERS - RHEL - Add firewall rules for scs and ERS on both nodes"
+# [A] Add firewall rules for ASCS and ERS on both nodes Add the firewall rules for ASCS and ERS on both nodes.
+- name:                                 "5.6 SCSERS - RHEL - Add firewall rules for ASCS and ERS on both nodes"
   ansible.posix.firewalld:
     zone:                               public
     port:                               "{{ item.port }}/tcp"

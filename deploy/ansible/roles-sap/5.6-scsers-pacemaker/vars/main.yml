@@ -33,7 +33,7 @@ cluster_name: nw{{ sid | lower }}
 # storage_object: sbd{{ cluster_name }}
 # target: "{{ iscsi_object }}.{{ cluster_name }}.local:{{ cluster_name }}"
 
-# SAP scs/ERS Utility Commands
+# SAP ASCS/ERS Utility Commands
 sapcontrolscs_command: "sapcontrol -nr {{ scs_instance_number }}"
 sapcontrolers_command: "sapcontrol -nr {{ ers_instance_number }}"
 

@@ -1,6 +1,6 @@
 ---
 
-# RHEL Clustering - Deploy scs/ERS cluster resources
+# RHEL Clustering - Deploy ASCS/ERS cluster resources
 # Azure ref: https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-rhel-netapp-files
 
 # [1] Create the SAP cluster resources
@@ -11,7 +11,7 @@
     - name:                            "5.6 SCSERS - RHEL - ENSA1 - Enable Maintenance mode for the cluster"
       ansible.builtin.command:         pcs property set maintenance-mode=true
 
-    - name:                            "5.6 SCSERS - RHEL - ENSA1 - Configure SAP scs/SCS resources"
+    - name:                            "5.6 SCSERS - RHEL - ENSA1 - Configure SAP ASCS/SCS resources"
       ansible.builtin.command: >
                                        pcs resource create rsc_sap_{{ sap_sid }}_{{ instance_type | upper }}{{ scs_instance_number }} SAPInstance \
                                        InstanceName={{ instance_name }} START_PROFILE="{{ start_profile_path }}" \
@@ -21,10 +21,10 @@
                                        op start interval=0 timeout=600 op stop interval=0 timeout=600 \
                                        --group g-{{ sap_sid }}_{{ instance_type | upper }} \
                                        --before nc_{{ sap_sid }}_{{ instance_type | upper }}
-      register:                        scs_rsc_sap
-      failed_when:                     scs_rsc_sap.rc > 1
+      register:                        ascs_rsc_sap
+      failed_when:                     ascs_rsc_sap.rc > 1
 
-    - name:                            "5.6 SCSERS - RHEL - ENSA1 - Set the scs resource stickiness"
+    - name:                            "5.6 SCSERS - RHEL - ENSA1 - Set the ASCS resource stickiness"
       ansible.builtin.command:         pcs resource meta g-{{ sap_sid }}_{{ instance_type | upper }} resource-stickiness=3000
 
     - name:                            "5.6 SCSERS - RHEL - ENSA1 - Configure SAP ERS resources"
@@ -64,7 +64,7 @@
     - name:                            "5.6 SCSERS - RHEL - ENSA2 - Enable Maintenance mode for the cluster"
       ansible.builtin.command:         pcs property set maintenance-mode=true
 
-    - name:                            "5.6 SCSERS - RHEL - ENSA2 - Configure SAP scs/SCS resources"
+    - name:                            "5.6 SCSERS - RHEL - ENSA2 - Configure SAP ASCS/SCS resources"
       ansible.builtin.command: >
                                        pcs resource create rsc_sap_{{ sap_sid }}_{{ instance_type | upper }}{{ scs_instance_number }} SAPInstance \
                                        InstanceName={{ instance_name }} START_PROFILE="{{ start_profile_path }}" \
@@ -74,10 +74,10 @@
                                        op start interval=0 timeout=600 op stop interval=0 timeout=600 \
                                        --group g-{{ sap_sid }}_{{ instance_type | upper }} \
                                        --before nc_{{ sap_sid }}_{{ instance_type | upper }}
-      register:                        scs_rsc_sap
-      failed_when:                     scs_rsc_sap.rc > 1
+      register:                        ascs_rsc_sap
+      failed_when:                     ascs_rsc_sap.rc > 1
 
-    - name:                            "5.6 SCSERS - RHEL - ENSA2 - Set the scs resource stickiness"
+    - name:                            "5.6 SCSERS - RHEL - ENSA2 - Set the ASCS resource stickiness"
       ansible.builtin.command:         pcs resource meta g-{{ sap_sid }}_{{ instance_type | upper }} resource-stickiness=3000
 
     - name:                            "5.6 SCSERS - RHEL - ENSA2 - Configure SAP ERS resources"

@@ -5,8 +5,8 @@ version: "1"
 platform: "ORACLE"
 
 product_ids:
-  scs:     NW_ABAP_scs:NW750.ORA.ABAP
-  scs_ha:  NW_ABAP_scs:NW750.ORA.ABAPHA
+  scs:     NW_ABAP_ASCS:NW750.ORA.ABAP
+  scs_ha:  NW_ABAP_ASCS:NW750.ORA.ABAPHA
   ers:     NW_ERS:NW750.ORA.ABAPHA
   ers_ha:  NW_ERS:NW750.ORA.ABAPHA
   dbl:     NW_ABAP_DB:NW750.ORA.ABAP
