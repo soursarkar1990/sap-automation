@@ -366,54 +366,54 @@ ANF_qos_type = "Manual"
 
 ###########################################################################
 #                                                                         #
-#                                    IASCSI                                #
+#                                    IscsI                                #
 #                                                                         #
 ###########################################################################
 
-/* iASCSi subnet information */
+/* iscsi subnet information */
 # If defined these parameters control the subnet name and the subnet prefix
-# iASCSi_subnet_name is an optional parameter and should only be used if the default naming is not acceptable 
-#iASCSi_subnet_name = ""
+# iscsi_subnet_name is an optional parameter and should only be used if the default naming is not acceptable 
+#iscsi_subnet_name = ""
 
-# iASCSi_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet
-#iASCSi_subnet_arm_id = ""
+# iscsi_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet
+#iscsi_subnet_arm_id = ""
 
-# iASCSi_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-#iASCSi_subnet_address_prefix = ""
+# iscsi_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
+#iscsi_subnet_address_prefix = ""
 
-# iASCSi_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing nsg 
-#iASCSi_subnet_nsg_arm_id = ""
+# iscsi_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing nsg 
+#iscsi_subnet_nsg_arm_id = ""
 
-# iASCSi_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
-#iASCSi_subnet_nsg_name = ""
+# iscsi_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name 
+#iscsi_subnet_nsg_name = ""
 
 
 ###########################################################################
 #                                                                         #
-#                                IASCSI Devices                            #
+#                                IscsI Devices                            #
 #                                                                         #
 ###########################################################################
 
-# Number of iASCSI devices to be created
-#iASCSi_count = null
+# Number of iscsI devices to be created
+#iscsi_count = null
 
-#Size of iASCSI Virtual Machines to be created
-#iASCSi_size = null
+#Size of iscsI Virtual Machines to be created
+#iscsi_size = null
 
-# Defines if the iASCSI devices use DHCP
-#iASCSi_useDHCP = null
+# Defines if the iscsI devices use DHCP
+#iscsi_useDHCP = null
 
-# Defines the Virtual Machine image for the iASCSI devices
-#iASCSi_image = null
+# Defines the Virtual Machine image for the iscsI devices
+#iscsi_image = null
 
-# Defines the Virtual Machine authentication type for the iASCSI devices
-#iASCSi_authentication_type = null
+# Defines the Virtual Machine authentication type for the iscsI devices
+#iscsi_authentication_type = null
 
-# Defines the username for the iASCSI devices
-#iASCSi_authentication_username = null
+# Defines the username for the iscsI devices
+#iscsi_authentication_username = null
 
-# Defines the IP Addresses for the iASCSI devices
-#iASCSi_nic_ips = null
+# Defines the IP Addresses for the iscsI devices
+#iscsi_nic_ips = null
 
 ##########################################################################################
 #                                                                                        #

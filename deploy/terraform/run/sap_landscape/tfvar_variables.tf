@@ -490,52 +490,52 @@ variable "ANF_install_volume_size" {
 
 #########################################################################################
 #                                                                                       #
-#  iASCSI definitioms                                                                    #
+#  iscsI definitioms                                                                    #
 #                                                                                       #
 #########################################################################################
 
-variable "iASCSi_subnet_name" {
-  description = "If provided, the name of the iASCSI subnet"
+variable "iscsi_subnet_name" {
+  description = "If provided, the name of the iscsI subnet"
   default     = ""
 }
 
-variable "iASCSi_subnet_arm_id" {
-  description = "If provided, Azure resource id for the iASCSI subnet"
+variable "iscsi_subnet_arm_id" {
+  description = "If provided, Azure resource id for the iscsI subnet"
   default     = ""
 }
 
-variable "iASCSi_subnet_address_prefix" {
-  description = "The address prefix for the iASCSI subnet"
+variable "iscsi_subnet_address_prefix" {
+  description = "The address prefix for the iscsI subnet"
   default     = ""
 }
 
-variable "iASCSi_subnet_nsg_name" {
-  description = "If provided, the name of the iASCSI subnet NSG"
+variable "iscsi_subnet_nsg_name" {
+  description = "If provided, the name of the iscsI subnet NSG"
   default     = ""
 }
 
-variable "iASCSi_subnet_nsg_arm_id" {
-  description = "If provided, Azure resource id for the iASCSI subnet NSG"
+variable "iscsi_subnet_nsg_arm_id" {
+  description = "If provided, Azure resource id for the iscsI subnet NSG"
   default     = ""
 }
 
-variable "iASCSi_count" {
-  description = "The number of iASCSI Virtual Machines to create"
+variable "iscsi_count" {
+  description = "The number of iscsI Virtual Machines to create"
   default     = 0
 }
 
-variable "iASCSi_size" {
-  description = "The size of the iASCSI Virtual Machine"
+variable "iscsi_size" {
+  description = "The size of the iscsI Virtual Machine"
   default     = ""
 }
 
-variable "iASCSi_useDHCP" {
-  description = "value indicating if iASCSI Virtual Machine should use DHCP"
+variable "iscsi_useDHCP" {
+  description = "value indicating if iscsI Virtual Machine should use DHCP"
   default     = false
 }
 
-variable "iASCSi_image" {
-  description = "The virtual machine image for the iASCSI Virtual Machine"
+variable "iscsi_image" {
+  description = "The virtual machine image for the iscsI Virtual Machine"
   default = {
     "source_image_id" = ""
     "publisher"       = "SUSE"
@@ -545,19 +545,19 @@ variable "iASCSi_image" {
   }
 }
 
-variable "iASCSi_authentication_type" {
-  description = "iASCSI Virtual Machine authentication type"
+variable "iscsi_authentication_type" {
+  description = "iscsI Virtual Machine authentication type"
   default     = "key"
 }
 
-variable "iASCSi_authentication_username" {
-  description = "User name for iASCSI Virtual Machine"
+variable "iscsi_authentication_username" {
+  description = "User name for iscsI Virtual Machine"
   default     = "azureadm"
 }
 
 
-variable "iASCSi_nic_ips" {
-  description = "IP addresses for the iASCSI Virtual Machine NICs"
+variable "iscsi_nic_ips" {
+  description = "IP addresses for the iscsI Virtual Machine NICs"
   default     = []
 }
 

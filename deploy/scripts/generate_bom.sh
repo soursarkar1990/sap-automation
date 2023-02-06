@@ -150,7 +150,7 @@ END {
 
   printf("---\n\nname: \"%s\"\ntarget: \"%s\"\n", product, targetname);
   printf("\ndefaults:\n  target_location: \"{{ target_media_location }}/download_basket\"\n");
-  printf("\nproduct_ids:\n  ASCS:\n  ASCS_ha:\n  dbl:\n  pas:\n  pas_ha:\n  app:\n  app_ha:\n  web:\n  ers:\n  ers_ha:\n");
+  printf("\nproduct_ids:\n  scs:\n  scs_ha:\n  dbl:\n  pas:\n  pas_ha:\n  app:\n  app_ha:\n  web:\n  ers:\n  ers_ha:\n");
   printf("\nmaterials:\n  dependencies:\n    - name: \"HANA2\"  # <- edit as needed\n\n  media:\n");
 
   while ( getline < "tempworkfile" ) {

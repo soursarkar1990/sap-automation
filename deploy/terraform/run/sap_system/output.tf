@@ -89,18 +89,18 @@ output "database_loadbalancer_ip" {
   value = upper(try(local.database.platform, "HANA")) == "HANA" ? module.hdb_node.db_lb_ip : module.anydb_node.db_lb_ip
 }
 
-output "ASCS_loadbalancer_ips" {
-  description = "ASCS Loadbalancer IP"
-  value       = tolist(module.app_tier.ASCS_loadbalancer_ips)
+output "scs_loadbalancer_ips" {
+  description = "scs Loadbalancer IP"
+  value       = tolist(module.app_tier.scs_loadbalancer_ips)
 }
 
 output "database_loadbalancer_id" {
   value = upper(try(local.database.platform, "HANA")) == "HANA" ? module.hdb_node.db_lb_id : module.anydb_node.db_lb_id
 }
 
-output "ASCS_loadbalancer_id" {
-  description = "ASCS Loadbalancer ID"
-  value       = module.app_tier.ASCS_lb_id
+output "scs_loadbalancer_id" {
+  description = "scs Loadbalancer ID"
+  value       = module.app_tier.scs_lb_id
 }
 
 
@@ -116,9 +116,9 @@ output "app_vm_ids" {
   value       = module.app_tier.app_vm_ids
 }
 
-output "ASCS_vm_ids" {
+output "scs_vm_ids" {
   description = "Virtual Machine IDs for the Central Services servers"
-  value       = module.app_tier.ASCS_vm_ids
+  value       = module.app_tier.scs_vm_ids
 }
 
 output "web_vm_ids" {

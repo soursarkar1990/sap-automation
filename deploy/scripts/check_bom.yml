@@ -40,7 +40,7 @@
       vars:
         reference: "bom.product_ids"
         dict: "{{ bom.product_ids }}"
-        required: ['ASCS','ers', 'db', 'pas', 'aas', 'web']
+        required: ['scs','ers', 'db', 'pas', 'aas', 'web']
         optional: []
       when: bom.product_ids is defined
       ignore_errors: true

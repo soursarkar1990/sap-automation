@@ -6,8 +6,8 @@
         "db": [
             "db-avset"
         ],
-        "ASCS": [
-            "ASCS-avset"
+        "scs": [
+            "scs-avset"
         ],
         "web": [
             "web-avset"
@@ -86,8 +86,8 @@
         "hanashared": "",
         "install_volume": "",
         "install_volume_smb": "",
-        "iASCSi_subnet": "",
-        "iASCSi_subnet_nsg": "",
+        "iscsi_subnet": "",
+        "iscsi_subnet_nsg": "",
         "keyvault_private_link": "",
         "keyvault_private_svc": "",
         "kv": "",
@@ -104,22 +104,22 @@
         "sapbits": "",
         "sapmnt": "",
         "sapmnt_smb": "",
-        "ASCS_alb": "",
-        "ASCS_alb_bepool": "",
-        "ASCS_alb_feip": "",
-        "ASCS_alb_hp": "",
-        "ASCS_alb_rule": "",
-        "ASCS_avset": "",
-        "ASCS_clst_feip": "",
-        "ASCS_clst_hp": "",
-        "ASCS_clst_rule": "",
-        "ASCS_ers_feip": "",
-        "ASCS_ers_hp": "",
-        "ASCS_ers_rule": "",
-        "ASCS_fs_feip": "",
-        "ASCS_fs_hp": "",
-        "ASCS_fs_rule": "",
-        "ASCS_ASCS_rule": "",
+        "scs_alb": "",
+        "scs_alb_bepool": "",
+        "scs_alb_feip": "",
+        "scs_alb_hp": "",
+        "scs_alb_rule": "",
+        "scs_avset": "",
+        "scs_clst_feip": "",
+        "scs_clst_hp": "",
+        "scs_clst_rule": "",
+        "scs_ers_feip": "",
+        "scs_ers_hp": "",
+        "scs_ers_rule": "",
+        "scs_fs_feip": "",
+        "scs_fs_hp": "",
+        "scs_fs_rule": "",
+        "scs_scs_rule": "",
         "sdu_rg": "",
         "storage_nic": "",
         "storage_private_link_diag": "",
@@ -205,8 +205,8 @@
         "hanashared": "hanashared",
         "install_volume": "install",
         "install_volume_smb": "install-smb",
-        "iASCSi_subnet": "iASCSi-subnet",
-        "iASCSi_subnet_nsg": "iASCSiSubnet-nsg",
+        "iscsi_subnet": "iscsi-subnet",
+        "iscsi_subnet_nsg": "iscsiSubnet-nsg",
         "keyvault_private_link": "-keyvault-privatelink",
         "keyvault_private_svc": "-keyvault-privateservice",
         "kv": "",
@@ -223,22 +223,22 @@
         "sapbits": "sapbits",
         "sapmnt": "sapmnt",
         "sapmnt_smb": "sapmnt-smb",
-        "ASCS_alb": "ASCS-alb",
-        "ASCS_alb_bepool": "ASCSAlb-bePool",
-        "ASCS_alb_feip": "ASCSAlb-feip",
-        "ASCS_alb_hp": "ASCSAlb-hp",
-        "ASCS_alb_rule": "ASCSAlb-rule",
-        "ASCS_avset": "ASCS-avset",
-        "ASCS_clst_feip": "ASCSClst-feip",
-        "ASCS_clst_hp": "ASCSClst-hp",
-        "ASCS_clst_rule": "ASCSClst-rule",
-        "ASCS_ers_feip": "ASCSErs-feip",
-        "ASCS_ers_hp": "ASCSErs-hp",
-        "ASCS_ers_rule": "ASCSErs-rule",
-        "ASCS_fs_feip": "ASCSFs-feip",
-        "ASCS_fs_hp": "ASCSFs-hp",
-        "ASCS_fs_rule": "ASCSFs-rule",
-        "ASCS_ASCS_rule": "ASCSASCS-rule",
+        "scs_alb": "scs-alb",
+        "scs_alb_bepool": "scsAlb-bePool",
+        "scs_alb_feip": "scsAlb-feip",
+        "scs_alb_hp": "scsAlb-hp",
+        "scs_alb_rule": "scsAlb-rule",
+        "scs_avset": "scs-avset",
+        "scs_clst_feip": "scsClst-feip",
+        "scs_clst_hp": "scsClst-hp",
+        "scs_clst_rule": "scsClst-rule",
+        "scs_ers_feip": "scsErs-feip",
+        "scs_ers_hp": "scsErs-hp",
+        "scs_ers_rule": "scsErs-rule",
+        "scs_fs_feip": "scsFs-feip",
+        "scs_fs_hp": "scsFs-hp",
+        "scs_fs_rule": "scsFs-rule",
+        "scs_scs_rule": "scsscs-rule",
         "sdu_rg": "",
         "storage_nic": "-storage-nic",
         "storage_private_link_diag": "-diag-storage-privatelink",
@@ -329,8 +329,8 @@
         "HANA_VMNAME": [
             "x00dhdb00l0f6f"
         ],
-        "IASCSI_COMPUTERNAME": [
-            "devsap01weeuiASCSi00"
+        "IscsI_COMPUTERNAME": [
+            "devsap01weeuiscsi00"
         ],
         "OBSERVER_COMPUTERNAME": [
             "x00observer00lf6f"
@@ -338,14 +338,14 @@
         "OBSERVER_VMNAME": [
             "x00observer00lf6f"
         ],
-        "ASCS_COMPUTERNAME": [
-            "x00ASCS00lf6f"
+        "scs_COMPUTERNAME": [
+            "x00scs00lf6f"
         ],
-        "ASCS_SECONDARY_DNSNAME": [
-            "x00ASCS00lf6f"
+        "scs_SECONDARY_DNSNAME": [
+            "x00scs00lf6f"
         ],
-        "ASCS_VMNAME": [
-            "x00ASCS00lf6f"
+        "scs_VMNAME": [
+            "x00scs00lf6f"
         ],
         "WEB_COMPUTERNAME": [
             "x00web00lf6f"

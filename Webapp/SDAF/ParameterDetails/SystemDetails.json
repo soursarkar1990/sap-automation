@@ -636,7 +636,7 @@
     "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/automation-configure-system?branch=main#sap-central-services-parameters",
     "Parameters": [
       {
-        "Name": "ASCS_server_count",
+        "Name": "scs_server_count",
         "Required": false,
         "Description": "Defines how many SAP Central Services servers to deploy.",
         "Type": "field",
@@ -645,7 +645,7 @@
         "Display": 2
       },
       {
-        "Name": "ASCS_high_availability",
+        "Name": "scs_high_availability",
         "Required": false,
         "Description": "Defines if SAP Central services are deployed highly available.",
         "Type": "checkbox",
@@ -654,7 +654,7 @@
         "Display": 1
       },
       {
-        "Name": "ASCS_server_zones",
+        "Name": "scs_server_zones",
         "Required": false,
         "Description": "Defines the availability zones in which deploy the SAP Central Services servers.",
         "Type": "list",
@@ -680,7 +680,7 @@
         "Display": 1
       },
       {
-        "Name": "ASCS_server_sku",
+        "Name": "scs_server_sku",
         "Required": false,
         "Description": "Defines the virtual machine SKU to use for the SAP Central Services servers.",
         "Type": "field",
@@ -689,16 +689,16 @@
         "Display": 2
       },
       {
-        "Name": "ASCS_server_image_offering",
+        "Name": "scs_server_image_offering",
         "Required": false,
         "Description": "Defines the virtual machine image to use for the SAP Central Services servers.",
         "Type": "image_dropdown",
         "Options": [],
-        "Overrules": "ASCS_server_image",
+        "Overrules": "scs_server_image",
         "Display": 1
       },
       {
-        "Name": "ASCS_server_image",
+        "Name": "scs_server_image",
         "Required": false,
         "Description": "Defines the virtual machine image to use for the SAP Central Services servers.",
         "Type": "image",
@@ -712,7 +712,7 @@
         "Display": 2
       },
       {
-        "Name": "ASCS_server_app_nic_ips",
+        "Name": "scs_server_app_nic_ips",
         "Required": false,
         "Description": "Provides the static IP addresses for the SAP Central Services servers.",
         "Type": "list",
@@ -726,7 +726,7 @@
         "Display": 3
       },
       {
-        "Name": "ASCS_server_nic_secondary_ips",
+        "Name": "scs_server_nic_secondary_ips",
         "Required": false,
         "Description": "If provided, the secondary static IP addresses for the SAP Central Services servers. Required for SAP Virtual Hostname support.",
         "Type": "list",
@@ -740,7 +740,7 @@
         "Display": 3
       },
       {
-        "Name": "ASCS_server_admin_nic_ips",
+        "Name": "scs_server_admin_nic_ips",
         "Required": false,
         "Description": "Provides the static IP addresses for the SAP Central Services servers secondary network interfaces.",
         "Type": "list",
@@ -754,7 +754,7 @@
         "Display": 3
       },
       {
-        "Name": "ASCS_server_loadbalancer_ips",
+        "Name": "scs_server_loadbalancer_ips",
         "Required": false,
         "Description": "Provides the static IP addresses for the SAP Central Services load balancer.",
         "Type": "list",
@@ -768,7 +768,7 @@
         "Display": 3
       },
       {
-        "Name": "ASCS_server_no_avset",
+        "Name": "scs_server_no_avset",
         "Required": false,
         "Description": "Defines if the SAP Central Services tier will not use an availability set.",
         "Type": "checkbox",
@@ -777,7 +777,7 @@
         "Display": 3
       },
       {
-        "Name": "ASCS_server_no_ppg",
+        "Name": "scs_server_no_ppg",
         "Required": false,
         "Description": "Defines if the Central Services will not be placed in a proximity placement group.",
         "Type": "checkbox",
@@ -786,7 +786,7 @@
         "Display": 3
       },
       {
-        "Name": "ASCS_server_tags",
+        "Name": "scs_server_tags",
         "Required": false,
         "Description": "Provides the tags to be associated to the SAP Central Services servers",
         "Type": "tag",

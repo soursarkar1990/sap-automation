@@ -35,13 +35,13 @@ NW_GetSidNoProfiles.sid                                               = {{ sap_s
 NW_SAPCrypto.SAPCryptoFile                                            = {{ download_basket_dir }}/SAPEXE_1100-80002573.SAR
 
 # Add gateway process in the (A)SCS instance
-# NW_SCS_Instance.ascsInstallGateway                                  = false
+# NW_SCS_Instance.scsInstallGateway                                  = false
 
 # Add Web Dispatcher process in the (A)SCS instance
-# NW_SCS_Instance.ascsInstallWebDispatcher                            = false
+# NW_SCS_Instance.scsInstallWebDispatcher                            = false
 
-# Dual stack only: Specify the ASCS instance number. Leave empty for default.
-# NW_SCS_Instance.ascsInstanceNumber                                  = {{ scs_instance_number }}
+# Dual stack only: Specify the scs instance number. Leave empty for default.
+# NW_SCS_Instance.scsInstanceNumber                                  = {{ scs_instance_number }}
 
 # Specify whether a 'prxyinfo(.DAT)' file is to be created in the 'global' directory if this file does not yet exist and that the 'gw/prxy_info' in the 'DEFAULT' profile is to be set accordingly. Default is false.
 # NW_SCS_Instance.createGlobalProxyInfoFile                           = false
@@ -49,13 +49,13 @@ NW_SAPCrypto.SAPCryptoFile                                            = {{ downl
 # Specify whether a 'reginfo(.DAT)' file is to be created in the 'global' directory. Default is 'false'.
 # NW_SCS_Instance.createGlobalRegInfoFile                             = false
 
-# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for ASCS and SCS instance.
+# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for scs and SCS instance.
 NW_SCS_Instance.instanceNumber                                        = {{ scs_instance_number }}
 
 # Dual stack only: The SCS instance number. Leave empty for default.
 # NW_SCS_Instance.scsInstanceNumber                                   = {{ scs_instance_number }}
 
-# You can specify a virtual host name for the ASCS instance. Leave empty for default.
+# You can specify a virtual host name for the scs instance. Leave empty for default.
 NW_SCS_Instance.scsVirtualHostname                                    = {{ scs_hostname }}
 
 # SAP INTERNAL USE ONLY

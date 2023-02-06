@@ -215,15 +215,15 @@ locals {
 
   firewall_exists          = length(var.firewall_id) > 0
   enable_deployment        = var.application_tier.enable_deployment && length(try(var.landscape_tfstate.vnet_sap_arm_id, "")) > 0
-  ASCS_instance_number      = var.application_tier.ASCS_instance_number
+  scs_instance_number      = var.application_tier.scs_instance_number
   ers_instance_number      = var.application_tier.ers_instance_number
-  ASCS_high_availability    = var.application_tier.ASCS_high_availability
+  scs_high_availability    = var.application_tier.scs_high_availability
   application_server_count = var.application_tier.application_server_count
-  ASCS_server_count         = var.application_tier.ASCS_server_count * (local.ASCS_high_availability ? 2 : 1)
-  enable_ASCS_lb_deployment = local.enable_deployment ? (
+  scs_server_count         = var.application_tier.scs_server_count * (local.scs_high_availability ? 2 : 1)
+  enable_scs_lb_deployment = local.enable_deployment ? (
     (
-      local.ASCS_server_count > 0 &&
-      (var.use_loadbalancers_for_standalone_deployments || local.ASCS_server_count > 1)
+      local.scs_server_count > 0 &&
+      (var.use_loadbalancers_for_standalone_deployments || local.scs_server_count > 1)
     )) : (
     false
   )
@@ -238,10 +238,10 @@ locals {
   app_nic_secondary_ips = try(var.application_tier.app_nic_secondary_ips, [])
   app_admin_nic_ips     = try(var.application_tier.app_admin_nic_ips, [])
 
-  ASCS_lb_ips            = try(var.application_tier.ASCS_lb_ips, [])
-  ASCS_nic_ips           = try(var.application_tier.ASCS_nic_ips, [])
-  ASCS_nic_secondary_ips = try(var.application_tier.ASCS_nic_secondary_ips, [])
-  ASCS_admin_nic_ips     = try(var.application_tier.ASCS_admin_nic_ips, [])
+  scs_lb_ips            = try(var.application_tier.scs_lb_ips, [])
+  scs_nic_ips           = try(var.application_tier.scs_nic_ips, [])
+  scs_nic_secondary_ips = try(var.application_tier.scs_nic_secondary_ips, [])
+  scs_admin_nic_ips     = try(var.application_tier.scs_admin_nic_ips, [])
 
   web_lb_ips            = try(var.application_tier.web_lb_ips, [])
   web_nic_ips           = try(var.application_tier.web_nic_ips, [])
@@ -249,7 +249,7 @@ locals {
   web_admin_nic_ips     = try(var.application_tier.web_admin_nic_ips, [])
 
   app_size = var.application_tier.app_sku
-  ASCS_size = length(var.application_tier.ASCS_sku) > 0 ? var.application_tier.ASCS_sku : local.app_size
+  scs_size = length(var.application_tier.scs_sku) > 0 ? var.application_tier.scs_sku : local.app_size
   web_size = length(var.application_tier.web_sku) > 0 ? var.application_tier.web_sku : local.app_size
 
   vm_sizing_dictionary_key = length(var.application_tier.vm_sizing_dictionary_key) > 0 ? (
@@ -264,28 +264,28 @@ locals {
   // Subnet IP Offsets
   // Note: First 4 IP addresses in a subnet are reserved by Azure
   linux_ip_offsets = {
-    ASCS_lb = 4
-    ASCS_vm = 6
+    scs_lb = 4
+    scs_vm = 6
     app_vm = 10
     web_lb = local.web_subnet_defined ? (4 + 1) : 6
     web_vm = local.web_subnet_defined ? (10) : 50
   }
 
   windows_ip_offsets = {
-    ASCS_lb = 4
-    ASCS_vm = 6 + 2 # Windows HA ASCS may require 4 IPs
+    scs_lb = 4
+    scs_vm = 6 + 2 # Windows HA scs may require 4 IPs
     app_vm = 10 + 2
     web_lb = local.web_subnet_defined ? (4 + 1) : 6 + 2
     web_vm = local.web_subnet_defined ? (10) : 50
   }
 
-  win_ha_ASCS = local.ASCS_server_count > 0 && (local.ASCS_high_availability && upper(var.application_tier.ASCS_os.os_type) == "WINDOWS")
+  win_ha_scs = local.scs_server_count > 0 && (local.scs_high_availability && upper(var.application_tier.scs_os.os_type) == "WINDOWS")
 
-  ip_offsets = var.application_tier.ASCS_os.type == "WINDOWS" ? local.windows_ip_offsets : local.linux_ip_offsets
+  ip_offsets = var.application_tier.scs_os.type == "WINDOWS" ? local.windows_ip_offsets : local.linux_ip_offsets
 
   admin_ip_offsets = {
     app_vm = 14
-    ASCS_vm = 10
+    scs_vm = 10
     web_vm = 50
   }
 
@@ -296,8 +296,8 @@ locals {
     null
   )
 
-  ASCS_sizing = local.enable_deployment ? (
-    local.ASCS_high_availability ? lookup(local.sizes.ASCSha, local.vm_sizing_dictionary_key) : lookup(local.sizes.ASCS, local.vm_sizing_dictionary_key)
+  scs_sizing = local.enable_deployment ? (
+    local.scs_high_availability ? lookup(local.sizes.scsha, local.vm_sizing_dictionary_key) : lookup(local.sizes.scs, local.vm_sizing_dictionary_key)
     ) : (
     null
   )
@@ -307,16 +307,16 @@ locals {
     null
   )
 
-  // Ports used for specific ASCS, ERS and Web dispatcher
+  // Ports used for specific scs, ERS and Web dispatcher
   lb_ports = {
-    "ASCS" = [
-      3200 + tonumber(var.application_tier.ASCS_instance_number),          // e.g. 3201
-      3600 + tonumber(var.application_tier.ASCS_instance_number),          // e.g. 3601
-      3900 + tonumber(var.application_tier.ASCS_instance_number),          // e.g. 3901
-      8100 + tonumber(var.application_tier.ASCS_instance_number),          // e.g. 8101
-      50013 + (tonumber(var.application_tier.ASCS_instance_number) * 100), // e.g. 50113
-      50014 + (tonumber(var.application_tier.ASCS_instance_number) * 100), // e.g. 50114
-      50016 + (tonumber(var.application_tier.ASCS_instance_number) * 100), // e.g. 50116
+    "scs" = [
+      3200 + tonumber(var.application_tier.scs_instance_number),          // e.g. 3201
+      3600 + tonumber(var.application_tier.scs_instance_number),          // e.g. 3601
+      3900 + tonumber(var.application_tier.scs_instance_number),          // e.g. 3901
+      8100 + tonumber(var.application_tier.scs_instance_number),          // e.g. 8101
+      50013 + (tonumber(var.application_tier.scs_instance_number) * 100), // e.g. 50113
+      50014 + (tonumber(var.application_tier.scs_instance_number) * 100), // e.g. 50114
+      50016 + (tonumber(var.application_tier.scs_instance_number) * 100), // e.g. 50116
     ]
 
     "ers" = [
@@ -333,7 +333,7 @@ locals {
     ]
   }
 
-  // Ports used for ASCS, ERS and Web dispatcher NSG rules
+  // Ports used for scs, ERS and Web dispatcher NSG rules
   nsg_ports = {
     "web" = [
       {
@@ -366,10 +366,10 @@ locals {
 
   // Ports used for the health probes.
   // Where Instance Number is nn:
-  // ASCS (index 0) - 620nn
+  // scs (index 0) - 620nn
   // ERS (index 1) - 621nn
   hp_ports = [
-    62000 + tonumber(var.application_tier.ASCS_instance_number),
+    62000 + tonumber(var.application_tier.scs_instance_number),
     62100 + tonumber(var.application_tier.ers_instance_number)
   ]
 
@@ -384,12 +384,12 @@ locals {
     false && local.enable_deployment
   )
 
-  ASCS_zones            = try(var.application_tier.ASCS_zones, [])
-  ASCS_zonal_deployment = length(local.ASCS_zones) > 0 ? true : false
-  ASCS_zone_count       = length(local.ASCS_zones)
+  scs_zones            = try(var.application_tier.scs_zones, [])
+  scs_zonal_deployment = length(local.scs_zones) > 0 ? true : false
+  scs_zone_count       = length(local.scs_zones)
   //If we deploy more than one server in zone put them in an availability set
-  use_ASCS_avset = local.ASCS_server_count > 0 && (!var.application_tier.ASCS_no_avset) ? (
-    !local.ASCS_zonal_deployment || local.ASCS_server_count != local.ASCS_zone_count) : (
+  use_scs_avset = local.scs_server_count > 0 && (!var.application_tier.scs_no_avset) ? (
+    !local.scs_zonal_deployment || local.scs_server_count != local.scs_zone_count) : (
     false
   )
 
@@ -402,13 +402,13 @@ locals {
     false
   )
 
-  winha_ips = upper(var.application_tier.ASCS_os.os_type) == "WINDOWS" ? [
+  winha_ips = upper(var.application_tier.scs_os.os_type) == "WINDOWS" ? [
     {
       name = format("%s%s%s%s",
-        var.naming.resource_prefixes.ASCS_clst_feip,
+        var.naming.resource_prefixes.scs_clst_feip,
         local.prefix,
         var.naming.separator,
-        local.resource_suffixes.ASCS_clst_feip
+        local.resource_suffixes.scs_clst_feip
       )
       subnet_id = local.enable_deployment ? (
         local.application_subnet_exists ? (
@@ -417,20 +417,20 @@ locals {
         )) : (
         ""
       )
-      private_ip_address = length(try(local.ASCS_lb_ips[2], "")) > 0 ? (
-        local.ASCS_lb_ips[2]) : (
+      private_ip_address = length(try(local.scs_lb_ips[2], "")) > 0 ? (
+        local.scs_lb_ips[2]) : (
         var.application_tier.use_DHCP ? (
-        null) : (cidrhost(data.azurerm_subnet.subnet_sap_app[0].address_prefixes[0], 2 + local.ip_offsets.ASCS_lb))
+        null) : (cidrhost(data.azurerm_subnet.subnet_sap_app[0].address_prefixes[0], 2 + local.ip_offsets.scs_lb))
       )
-      private_ip_address_allocation = length(try(local.ASCS_lb_ips[2], "")) > 0 ? "Static" : "Dynamic"
+      private_ip_address_allocation = length(try(local.scs_lb_ips[2], "")) > 0 ? "Static" : "Dynamic"
 
     },
     {
       name = format("%s%s%s%s",
-        var.naming.resource_prefixes.ASCS_fs_feip,
+        var.naming.resource_prefixes.scs_fs_feip,
         local.prefix,
         var.naming.separator,
-        local.resource_suffixes.ASCS_fs_feip
+        local.resource_suffixes.scs_fs_feip
       )
       subnet_id = local.enable_deployment ? (
         local.application_subnet_exists ? (
@@ -439,22 +439,22 @@ locals {
         )) : (
         ""
       )
-      private_ip_address = length(try(local.ASCS_lb_ips[3], "")) > 0 ? (
-        local.ASCS_lb_ips[3]) : (
+      private_ip_address = length(try(local.scs_lb_ips[3], "")) > 0 ? (
+        local.scs_lb_ips[3]) : (
         var.application_tier.use_DHCP ? (
-        null) : (cidrhost(data.azurerm_subnet.subnet_sap_app[0].address_prefixes[0], 3 + local.ip_offsets.ASCS_lb))
+        null) : (cidrhost(data.azurerm_subnet.subnet_sap_app[0].address_prefixes[0], 3 + local.ip_offsets.scs_lb))
       )
-      private_ip_address_allocation = length(try(local.ASCS_lb_ips[3], "")) > 0 ? "Static" : "Dynamic"
+      private_ip_address_allocation = length(try(local.scs_lb_ips[3], "")) > 0 ? "Static" : "Dynamic"
     }
   ] : []
 
   std_ips = [
     {
       name = format("%s%s%s%s",
-        var.naming.resource_prefixes.ASCS_alb_feip,
+        var.naming.resource_prefixes.scs_alb_feip,
         local.prefix,
         var.naming.separator,
-        local.resource_suffixes.ASCS_alb_feip
+        local.resource_suffixes.scs_alb_feip
       )
       subnet_id = local.enable_deployment ? (
         local.application_subnet_exists ? (
@@ -463,19 +463,19 @@ locals {
         )) : (
         ""
       )
-      private_ip_address = length(try(local.ASCS_lb_ips[0], "")) > 0 ? (
-        local.ASCS_lb_ips[0]) : (
+      private_ip_address = length(try(local.scs_lb_ips[0], "")) > 0 ? (
+        local.scs_lb_ips[0]) : (
         var.application_tier.use_DHCP ? (
-        null) : (cidrhost(data.azurerm_subnet.subnet_sap_app[0].address_prefixes[0], 0 + local.ip_offsets.ASCS_lb))
+        null) : (cidrhost(data.azurerm_subnet.subnet_sap_app[0].address_prefixes[0], 0 + local.ip_offsets.scs_lb))
       )
-      private_ip_address_allocation = length(try(local.ASCS_lb_ips[0], "")) > 0 ? "Static" : "Dynamic"
+      private_ip_address_allocation = length(try(local.scs_lb_ips[0], "")) > 0 ? "Static" : "Dynamic"
     },
     {
       name = format("%s%s%s%s",
-        var.naming.resource_prefixes.ASCS_ers_feip,
+        var.naming.resource_prefixes.scs_ers_feip,
         local.prefix,
         var.naming.separator,
-        local.resource_suffixes.ASCS_ers_feip
+        local.resource_suffixes.scs_ers_feip
       )
       subnet_id = local.enable_deployment ? (
         local.application_subnet_exists ? (
@@ -484,16 +484,16 @@ locals {
         )) : (
         ""
       )
-      private_ip_address = length(try(local.ASCS_lb_ips[1], "")) > 0 ? (
-        local.ASCS_lb_ips[1]) : (
+      private_ip_address = length(try(local.scs_lb_ips[1], "")) > 0 ? (
+        local.scs_lb_ips[1]) : (
         var.application_tier.use_DHCP ? (
-        null) : (cidrhost(data.azurerm_subnet.subnet_sap_app[0].address_prefixes[0], 1 + local.ip_offsets.ASCS_lb))
+        null) : (cidrhost(data.azurerm_subnet.subnet_sap_app[0].address_prefixes[0], 1 + local.ip_offsets.scs_lb))
       )
-      private_ip_address_allocation = length(try(local.ASCS_lb_ips[1], "")) > 0 ? "Static" : "Dynamic"
+      private_ip_address_allocation = length(try(local.scs_lb_ips[1], "")) > 0 ? "Static" : "Dynamic"
     },
   ]
 
-  fpips = (local.ASCS_high_availability && upper(var.application_tier.ASCS_os.os_type) == "WINDOWS") ? (
+  fpips = (local.scs_high_availability && upper(var.application_tier.scs_os.os_type) == "WINDOWS") ? (
     concat(local.std_ips, local.winha_ips)) : (
     local.std_ips
   )
@@ -501,7 +501,7 @@ locals {
 
   //PPG control flags
   app_no_ppg = var.application_tier.app_no_ppg
-  ASCS_no_ppg = var.application_tier.ASCS_no_ppg
+  scs_no_ppg = var.application_tier.scs_no_ppg
   web_no_ppg = var.application_tier.web_no_ppg
 
   dns_label = try(var.landscape_tfstate.dns_label, "")
@@ -547,7 +547,7 @@ locals {
     local.application_primary_ips
   )
 
-  ASCS_primary_ips = [
+  scs_primary_ips = [
     {
       name = "IPConfig1"
       subnet_id = local.enable_deployment ? (
@@ -557,14 +557,14 @@ locals {
         )) : (
         ""
       )
-      nic_ips                       = local.ASCS_nic_ips
+      nic_ips                       = local.scs_nic_ips
       private_ip_address_allocation = var.application_tier.use_DHCP ? "Dynamic" : "Static"
       offset                        = 0
       primary                       = true
     }
   ]
 
-  ASCS_secondary_ips = [
+  scs_secondary_ips = [
     {
       name = "IPConfig2"
       subnet_id = local.enable_deployment ? (
@@ -574,16 +574,16 @@ locals {
         )) : (
         ""
       )
-      nic_ips                       = local.ASCS_nic_secondary_ips
+      nic_ips                       = local.scs_nic_secondary_ips
       private_ip_address_allocation = var.application_tier.use_DHCP ? "Dynamic" : "Static"
-      offset                        = local.ASCS_server_count
+      offset                        = local.scs_server_count
       primary                       = false
     }
   ]
 
-  ASCS_ips = (var.use_secondary_ips) ? (
-    flatten(concat(local.ASCS_primary_ips, local.ASCS_secondary_ips))) : (
-    local.ASCS_primary_ips
+  scs_ips = (var.use_secondary_ips) ? (
+    flatten(concat(local.scs_primary_ips, local.scs_secondary_ips))) : (
+    local.scs_primary_ips
   )
 
   web_dispatcher_primary_ips = [

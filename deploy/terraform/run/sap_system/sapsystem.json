@@ -28,9 +28,9 @@
   "application": {
     "enable_deployment"                      : true,
     "sid"                                    : "PRD",
-    "ASCS_instance_number"                    : "01",
+    "scs_instance_number"                    : "01",
     "ers_instance_number"                    : "02",
-    "ASCS_high_availability"                  : false,
+    "scs_high_availability"                  : false,
     "application_server_count"               : 1,
     "webdispatcher_count"                    : 1,
     "authentication": {

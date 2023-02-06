@@ -48,19 +48,19 @@
 
 - name:                                "5.6 SCS HA Install: Default instance type"
   ansible.builtin.set_fact:
-    instance_type:                      "ASCS"
+    instance_type:                      "scs"
   when:                                bom.InstanceType is not defined
 
 - name:                                "5.6 SCS HA Install: register instance type"
   ansible.builtin.set_fact:
     instance_type:  >-
-                                        {%- set _instance_type = 'ASCS' -%}
+                                        {%- set _instance_type = 'scs' -%}
                                         {%- if bom.InstanceType == 'JAVA' -%}
                                         {%- set _instance_type = 'SCS' -%}
                                         {%- elif bom.InstanceType == 'ABAP' -%}
-                                        {%- set _instance_type = 'ASCS' -%}
+                                        {%- set _instance_type = 'scs' -%}
                                         {%- else -%}
-                                        {%- set _instance_type = 'ASCS' -%}
+                                        {%- set _instance_type = 'scs' -%}
                                         {%- endif -%}
                                         {{- _instance_type -}}
     public:                            true
@@ -73,7 +73,7 @@
     profile_directory:                 "/usr/sap/{{ sap_sid | upper }}/{{ instance_type }}{{ scs_instance_number }}"
 
 
-- name:                                "ASCS/ERS check if installed"
+- name:                                "scs/ERS check if installed"
   become:                              true
   block:
     - name:                            "SCS HA Install: check if installed"

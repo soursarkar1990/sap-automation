@@ -16,22 +16,22 @@ ${sid}_DB:
     node_tier             : ${platform}
     supported_tiers       : [${db_supported_tiers}]
 
-${sid}_ASCS:
+${sid}_scs:
   hosts:
-%{~ for idx,ip_ASCS in ips_ASCS }
-    ${ASCS_servers[idx]}:
-      ansible_host        : ${ip_ASCS}
+%{~ for idx,ip_scs in ips_scs }
+    ${scs_servers[idx]}:
+      ansible_host        : ${ip_scs}
       ansible_user        : ${ansible_user}
-      ansible_connection  : ${ASCS_connection}
-      connection_type     : ${ASCS_connectiontype}
-      virtual_host        : ${virt_ASCS_servers[idx]}
-      become_user         : ${ASCS_become_user}
+      ansible_connection  : ${scs_connection}
+      connection_type     : ${scs_connectiontype}
+      virtual_host        : ${virt_scs_servers[idx]}
+      become_user         : ${scs_become_user}
       ${ansible_winrm_server_cert_validation}
 
 %{~ endfor }
   vars:
-    node_tier             : ASCS
-    supported_tiers       : [${ASCS_supported_tiers}]
+    node_tier             : scs
+    supported_tiers       : [${scs_supported_tiers}]
 
 ${sid}_ERS:
   hosts:
@@ -42,7 +42,7 @@ ${sid}_ERS:
       ansible_connection  : ${ers_connection}
       connection_type     : ${ers_connectiontype}
       virtual_host        : ${virt_ers_servers[idx]}
-      become_user         : ${ASCS_become_user}
+      become_user         : ${scs_become_user}
       ${ansible_winrm_server_cert_validation}
 
 %{~ endfor }
@@ -57,8 +57,8 @@ ${sid}_PAS:
     ${pas_servers[idx]}:
       ansible_host        : ${ip_pas}
       ansible_user        : ${ansible_user}
-      ansible_connection  : ${ASCS_connection}
-      connection_type     : ${ASCS_connectiontype}
+      ansible_connection  : ${scs_connection}
+      connection_type     : ${scs_connectiontype}
       virtual_host        : ${virt_pas_servers[idx]}
       become_user         : ${app_become_user}
       ${ansible_winrm_server_cert_validation}

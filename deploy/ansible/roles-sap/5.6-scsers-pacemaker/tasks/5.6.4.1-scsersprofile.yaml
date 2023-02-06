@@ -14,7 +14,7 @@
     comment:                           "{{ sap_sid | lower }}adm User account"
     groups:                            haclient
 
-- name:                                "5.6 SCSERS - SUSE - Add the ASCS and ERS service definitions from sapservices file"
+- name:                                "5.6 SCSERS - SUSE - Add the scs and ERS service definitions from sapservices file"
   ansible.builtin.lineinfile:
     backup:                            true
     path:                              /usr/sap/sapservices
@@ -27,7 +27,7 @@
   when:
     - ansible_os_family | upper == "SUSE"
 
-- name:                                "5.6 SCSERS - REDHAT - Comment the ASCS and ERS service definitions from sapservices file"
+- name:                                "5.6 SCSERS - REDHAT - Comment the scs and ERS service definitions from sapservices file"
   ansible.builtin.replace:
     backup:                            true
     path:                              /usr/sap/sapservices
@@ -36,11 +36,11 @@
   when:
     - ansible_os_family | upper == "REDHAT"
 
-- name:                                "5.6 SCSERS - ASCS, ERS profile changes"
+- name:                                "5.6 SCSERS - scs, ERS profile changes"
   become:                              true
   block:
 
-    - name:                            "5.6 SCSERS - ASCS Profile - add service/halib"
+    - name:                            "5.6 SCSERS - scs Profile - add service/halib"
       ansible.builtin.blockinfile:
         path:                          /sapmnt/{{ sap_sid | upper }}/profile/{{ sap_sid | upper }}_{{ instance_type | upper }}{{ scs_instance_number }}_{{ scs_virtual_hostname }}
         block: |
@@ -61,10 +61,10 @@
     - ansible_os_family | upper  == "SUSE"
     - inventory_hostname == primary_instance_name
 
-- name:                                "5.6 SCSERS - ASCS, ERS profile changes"
+- name:                                "5.6 SCSERS - scs, ERS profile changes"
   become:                              true
   block:
-    - name:                            "5.6 SCSERS - ASCS Profile - add service/halib"
+    - name:                            "5.6 SCSERS - scs Profile - add service/halib"
       ansible.builtin.blockinfile:
         path:                          /sapmnt/{{ sap_sid | upper }}/profile/{{ sap_sid | upper }}_{{ instance_type | upper }}{{ scs_instance_number }}_{{ scs_virtual_hostname }}
         block: |
@@ -83,30 +83,30 @@
     - ansible_os_family | upper  == "REDHAT"
     - inventory_hostname == primary_instance_name
 
-# Following are the changes in ASCS/ERS profiles based if ENSA1 is applicable
-- name:                                "5.6 SCSERS - ASCS, ERS profile changes"
+# Following are the changes in scs/ERS profiles based if ENSA1 is applicable
+- name:                                "5.6 SCSERS - scs, ERS profile changes"
   become:                              true
   block:
 
      # execute the following tasks only when using ENSA1
      # SAP introduced support for enqueue server 2, including replication, as of SAP NW 7.52.
      # Starting with ABAP Platform 1809, enqueue server 2 is installed by default
-    - name:                            "5.6 SCSERS - ASCS Profile - Comment Restart_Program_01 If Using ENSA1"
+    - name:                            "5.6 SCSERS - scs Profile - Comment Restart_Program_01 If Using ENSA1"
       ansible.builtin.replace:
         path:                          /sapmnt/{{ sap_sid }}/profile/{{ sap_sid }}_{{ instance_type | upper }}{{ scs_instance_number }}_{{ scs_virtual_hostname }}
         backup:                        true
         regexp:                        '^Restart_Program_01'
         replace:                       '#Restart_Program_01'
       tags:
-        - ascscomment
+        - scscomment
 
-    - name:                            "5.6 SCSERS - ASCS Profile- Add the right Start command to ASCS profile If Using ENSA1"
+    - name:                            "5.6 SCSERS - scs Profile- Add the right Start command to scs profile If Using ENSA1"
       ansible.builtin.lineinfile:
         path:                          /sapmnt/{{ sap_sid }}/profile/{{ sap_sid }}_{{ instance_type | upper }}{{ scs_instance_number }}_{{ scs_virtual_hostname }}
         line:                          Start_Program_01 = local $(_EN) pf=$(_PF)
         insertafter:                   Restart_Program_01
       tags:
-        - ascspara
+        - scspara
 
     - name:                            "5.6 SCSERS - ERS Profile - Comment Restart_Program_00 in ERS Profile if using ENSA1"
       ansible.builtin.replace:
@@ -151,29 +151,29 @@
 # virtual IP address that you defined and configured for the Azure Load Balancer                                #
 #################################################################################################################
 
-- name:                                "5.6 - SCS / ASCS profile changes - DB2 Installations"
+- name:                                "5.6 - SCS / scs profile changes - DB2 Installations"
   become:                              true
   block:
 
      # execute the following tasks only when using ENSA1
      # SAP introduced support for enqueue server 2, including replication, as of SAP NW 7.52.
      # Starting with ABAP Platform 1809, enqueue server 2 is installed by default
-    - name:                            "5.6 SCSERS - ASCS Profile - Comment Restart_Program_01 If Using ENSA1"
+    - name:                            "5.6 SCSERS - scs Profile - Comment Restart_Program_01 If Using ENSA1"
       ansible.builtin.replace:
         path:                          /sapmnt/{{ sap_sid }}/profile/{{ sap_sid }}_{{ instance_type | upper }}{{ scs_instance_number }}_{{ scs_virtual_hostname }}
         backup:                        true
         regexp:                        '^Restart_Program_01'
         replace:                       '#Restart_Program_01'
       tags:
-        - ascscomment
+        - scscomment
 
-    - name:                            "5.6 SCSERS - ASCS Profile- Add the right Start command to ASCS profile If Using ENSA1"
+    - name:                            "5.6 SCSERS - scs Profile- Add the right Start command to scs profile If Using ENSA1"
       ansible.builtin.lineinfile:
         path:                          /sapmnt/{{ sap_sid }}/profile/{{ sap_sid }}_{{ instance_type | upper }}{{ scs_instance_number }}_{{ scs_virtual_hostname }}
         line:                          Start_Program_01 = local $(_EN) pf=$(_PF)
         insertafter:                   Restart_Program_01
       tags:
-        - ascspara
+        - scspara
 
     - name:                            "5.6 SCSERS - ERS Profile - Comment Restart_Program_00 in ERS Profile if using ENSA1"
       ansible.builtin.replace:

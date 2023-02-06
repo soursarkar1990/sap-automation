@@ -1,6 +1,6 @@
 ########################################################################################################################################################################################
 #                                                                                                                                                                                      #
-# Installation service 'SAP NetWeaver 7.5 > SAP HANA Database > Installation > Application Server ABAP > Distributed System > ASCS Instance', product id 'NW_ABAP_ASCS:NW750.HDB.ABAP' #
+# Installation service 'SAP NetWeaver 7.5 > SAP HANA Database > Installation > Application Server ABAP > Distributed System > scs Instance', product id 'NW_ABAP_scs:NW750.HDB.ABAP' #
 #                                                                                                                                                                                      #
 ########################################################################################################################################################################################
 # IMPORTANT DO NOT DELETE!!! SAPInstDes25Hash=$8x6Br0frFzgv$cm8Zhn6QOYVK0qqufT7feAfPsOMYEjFIxoSRpiipvMuPE63WKtKNgA00fLx4Q5wsXR3YehjFcqZdBLSFGoHgc1VaGkWfQhYz
@@ -42,13 +42,13 @@ NW_GetSidNoProfiles.sid = X00
 NW_SAPCrypto.SAPCryptoFile = /usr/sap/install/download_basket/SAPEXE_800-80002573.SAR
 
 # Add gateway process in the (A)SCS instance
-NW_SCS_Instance.ascsInstallGateway = true
+NW_SCS_Instance.scsInstallGateway = true
 
 # Add Web Dispatcher process in the (A)SCS instance
-# NW_SCS_Instance.ascsInstallWebDispatcher = false
+# NW_SCS_Instance.scsInstallWebDispatcher = false
 
-# Dual stack only: Specify the ASCS instance number. Leave empty for default.
-# NW_SCS_Instance.ascsInstanceNumber = 
+# Dual stack only: Specify the scs instance number. Leave empty for default.
+# NW_SCS_Instance.scsInstanceNumber = 
 
 # Specify whether a 'prxyinfo(.DAT)' file is to be created in the 'global' directory if this file does not yet exist and that the 'gw/prxy_info' in the 'DEFAULT' profile is to be set accordingly. Default is false.
 # NW_SCS_Instance.createGlobalProxyInfoFile = false
@@ -56,7 +56,7 @@ NW_SCS_Instance.ascsInstallGateway = true
 # Specify whether a 'reginfo(.DAT)' file is to be created in the 'global' directory. Default is 'false'.
 # NW_SCS_Instance.createGlobalRegInfoFile = false
 
-# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for ASCS and SCS instance.
+# The instance number of the (A)SCS instance.  Leave this value empty if you want to use the default instance number or if you want to specify two different numbers for scs and SCS instance.
 NW_SCS_Instance.instanceNumber = 00
 
 # Dual stack only: The SCS instance number. Leave empty for default.
@@ -65,7 +65,7 @@ NW_SCS_Instance.instanceNumber = 00
 # The (A)SCS message server port. Leave empty for default.
 # NW_SCS_Instance.scsMSPort = 
 
-# You can specify a virtual host name for the ASCS instance. Leave empty for default.
+# You can specify a virtual host name for the scs instance. Leave empty for default.
 NW_SCS_Instance.scsVirtualHostname = x00scs00l3c4
 
 # SAP INTERNAL USE ONLY

@@ -24,7 +24,7 @@ variables:
   sap_os_configuration:             "true"
   bom_processing:                   "true"
   database_install:                 "true"
-  ASCS_installation:                 "true"
+  scs_installation:                 "true"
   db_load:                          "true"
   high_availability_configuration:  "true"
   pas_installation:                 "true"
@@ -100,7 +100,7 @@ extends:
           sap_os_configuration: ${{ variables.sap_os_configuration }}
           bom_processing: ${{ variables.bom_processing }}
           database_install: ${{ variables.database_install }}
-          ASCS_installation: ${{ variables.ASCS_installation }}
+          scs_installation: ${{ variables.scs_installation }}
           db_load: ${{ variables.db_load }}
           high_availability_configuration: ${{ variables.high_availability_configuration }}
           pas_installation: ${{ variables.pas_installation }}

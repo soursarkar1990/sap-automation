@@ -3,7 +3,7 @@ output "naming" {
     availabilityset_names = {
       app = local.app_avset_names
       db  = local.db_avset_names
-      ASCS = local.ASCS_avset_names
+      scs = local.scs_avset_names
       web = local.web_avset_names
     }
 
@@ -67,12 +67,12 @@ output "naming" {
       HANA_COMPUTERNAME        = var.database_high_availability ? concat(local.hana_computer_names, local.hana_computer_names_ha) : local.hana_computer_names
       HANA_SECONDARY_DNSNAME   = var.database_high_availability ? concat(local.hana_secondary_dnsnames, local.hana_secondary_dnsnames_ha) : local.hana_secondary_dnsnames
       HANA_VMNAME              = var.database_high_availability ? concat(local.hana_server_vm_names, local.hana_server_vm_names_ha) : local.hana_server_vm_names
-      IASCSI_COMPUTERNAME       = local.iASCSi_server_names
+      IscsI_COMPUTERNAME       = local.iscsi_server_names
       OBSERVER_COMPUTERNAME    = local.observer_computer_names
       OBSERVER_VMNAME          = local.observer_vm_names
-      ASCS_COMPUTERNAME         = local.ASCS_computer_names
-      ASCS_SECONDARY_DNSNAME    = local.ASCS_secondary_dnsnames
-      ASCS_VMNAME               = local.ASCS_server_vm_names
+      scs_COMPUTERNAME         = local.scs_computer_names
+      scs_SECONDARY_DNSNAME    = local.scs_secondary_dnsnames
+      scs_VMNAME               = local.scs_server_vm_names
       WEB_COMPUTERNAME         = local.web_computer_names
       WEB_SECONDARY_DNSNAME    = local.web_secondary_dnsnames
       WEB_VMNAME               = local.web_server_vm_names

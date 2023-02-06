@@ -51,8 +51,8 @@ locals {
     )
   ]
 
-  iASCSi_server_names = [for idx in range(var.iASCSi_server_count) :
-    lower(format("%s%s%siASCSi%02d", lower(local.env_verified), local.sap_vnet_verified, local.location_short, idx))
+  iscsi_server_names = [for idx in range(var.iscsi_server_count) :
+    lower(format("%s%s%siscsi%02d", lower(local.env_verified), local.sap_vnet_verified, local.location_short, idx))
   ]
 
   hana_computer_names = [for idx in range(var.db_server_count) :
@@ -77,14 +77,14 @@ locals {
     )
   ]
 
-  ASCS_computer_names = [for idx in range(var.ASCS_server_count) :
-    format("%sASCS%02d%s%s", lower(var.sap_sid), idx + var.resource_offset, local.app_oscode, local.random_id_vm_verified)
+  scs_computer_names = [for idx in range(var.scs_server_count) :
+    format("%sscs%02d%s%s", lower(var.sap_sid), idx + var.resource_offset, local.app_oscode, local.random_id_vm_verified)
   ]
 
-  ASCS_server_vm_names = [for idx in range(var.ASCS_server_count) :
-    length(var.ASCS_zones) > 0 && var.use_zonal_markers ? (
-      format("%sASCS%sz%s%s%02d%s%s", lower(var.sap_sid), local.separator, var.ASCS_zones[idx % max(length(var.ASCS_zones), 1)], local.separator, idx + var.resource_offset, local.app_oscode, local.random_id_vm_verified)) : (
-      format("%sASCS%02d%s%s", lower(var.sap_sid), idx + var.resource_offset, local.app_oscode, local.random_id_vm_verified)
+  scs_server_vm_names = [for idx in range(var.scs_server_count) :
+    length(var.scs_zones) > 0 && var.use_zonal_markers ? (
+      format("%sscs%sz%s%s%02d%s%s", lower(var.sap_sid), local.separator, var.scs_zones[idx % max(length(var.scs_zones), 1)], local.separator, idx + var.resource_offset, local.app_oscode, local.random_id_vm_verified)) : (
+      format("%sscs%02d%s%s", lower(var.sap_sid), idx + var.resource_offset, local.app_oscode, local.random_id_vm_verified)
     )
   ]
 
@@ -135,8 +135,8 @@ locals {
     format("%sd%s%02dl%d%s", lower(var.sap_sid), lower(var.db_sid), idx + var.resource_offset, 1, substr(local.random_id_vm_verified, 0, 2))
   ]
 
-  ASCS_secondary_dnsnames = [for idx in range(var.ASCS_server_count) :
-    format("%sASCS%02d%s%s", lower(var.sap_sid), idx + var.resource_offset, local.app_oscode, local.random_id_vm_verified)
+  scs_secondary_dnsnames = [for idx in range(var.scs_server_count) :
+    format("%sscs%02d%s%s", lower(var.sap_sid), idx + var.resource_offset, local.app_oscode, local.random_id_vm_verified)
   ]
 
   web_secondary_dnsnames = [for idx in range(var.web_server_count) :

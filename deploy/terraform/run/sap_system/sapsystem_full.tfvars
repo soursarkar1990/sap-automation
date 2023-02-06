@@ -124,22 +124,22 @@ application_server_count = 3
 
 #application_server_tags={},
 
-# ASCS Server
+# scs Server
 
-ASCS_server_count      = 1
-ASCS_high_availability = false
-ASCS_instance_number   = "00"
+scs_server_count      = 1
+scs_high_availability = false
+scs_instance_number   = "00"
 ers_instance_number   = "02"
-#ASCS_server_app_nic_ips=[]
-#ASCS_server_app_admin_nic_ips=[]
-#ASCS_server_loadbalancer_ips=[]
+#scs_server_app_nic_ips=[]
+#scs_server_app_admin_nic_ips=[]
+#scs_server_loadbalancer_ips=[]
 
-#ASCS_server_sku="Standard_D4s_v3"
-#ASCS_server_no_avset=false
-#ASCS_server_no_ppg=false
-#ASCS_server_tags={},
-#ASCS_server_zones=["1","2","3"]
-#ASCS_server_image= {
+#scs_server_sku="Standard_D4s_v3"
+#scs_server_no_avset=false
+#scs_server_no_ppg=false
+#scs_server_tags={},
+#scs_server_zones=["1","2","3"]
+#scs_server_image= {
 #  os_type=""
 #  source_image_id=""
 #  publisher="SUSE"

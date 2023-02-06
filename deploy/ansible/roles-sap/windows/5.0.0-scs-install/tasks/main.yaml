@@ -133,7 +133,7 @@
     tier:                              "{{ tier }}"
     param_directory:                   "{{ dir_params }}"
     sap_sid:                           "{{ sid_to_be_deployed.sid }}"
-    scs_instance_number:               "{{ sid_to_be_deployed.ascs_inst_no }}"
+    scs_instance_number:               "{{ sid_to_be_deployed.scs_inst_no }}"
     sidadm_uid:                        "{{ sid_to_be_deployed.sidadm_uid }}"
   tags:
     - skip_ansible_lint
@@ -144,7 +144,7 @@
       - "INSTALLED:  {{ scs_installed.stat.exists }}"
       - "INIFILE:    {{ sap_inifile }}"
       - "PRODUCT ID: {{ bom.product_ids.scs }}"
-      - "INSTANCE:   {{ sid_to_be_deployed.ascs_inst_no }}"
+      - "INSTANCE:   {{ sid_to_be_deployed.scs_inst_no }}"
       - "MEDIA:      {{ sap_drive }}"
       - "HOST:       {{ virtual_host }}"
       - "SID:        {{ sid_to_be_deployed.sid | upper }}"

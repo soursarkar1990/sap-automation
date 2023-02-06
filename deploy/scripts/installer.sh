@@ -762,15 +762,15 @@ if [ -n "${test}" ] ; then
     fatal_errors=1
 fi
 
-# ASCS server
-test=$(grep virtual_machine.ASCS plan_output.log | grep -m1 replaced)
+# scs server
+test=$(grep virtual_machine.scs plan_output.log | grep -m1 replaced)
 if [ -n "${test}" ] ; then
     echo ""
     echo "#########################################################################################"
     echo "#                                                                                       #"
     echo -e "#                               $boldreduscore!!! Risk for Data loss !!!$resetformatting                              #"
     echo "#                                                                                       #"
-    echo "#                        ASCS server(s) disks will be replaced                           #"
+    echo "#                        scs server(s) disks will be replaced                           #"
     echo "#                                                                                       #"
     echo "#########################################################################################"
     echo ""
@@ -779,15 +779,15 @@ if [ -n "${test}" ] ; then
     fatal_errors=1
 fi
 
-# ASCS server disks
-test=$(grep azurerm_managed_disk.ASCS plan_output.log | grep -m1 replaced)
+# scs server disks
+test=$(grep azurerm_managed_disk.scs plan_output.log | grep -m1 replaced)
 if [ -n "${test}" ] ; then
     echo ""
     echo "#########################################################################################"
     echo "#                                                                                       #"
     echo -e "#                               $boldreduscore!!! Risk for Data loss !!!$resetformatting                              #"
     echo "#                                                                                       #"
-    echo "#                          ASCS server disks will be replaced                            #"
+    echo "#                          scs server disks will be replaced                            #"
     echo "#                                                                                       #"
     echo "#########################################################################################"
     echo ""
@@ -1082,19 +1082,19 @@ then
     #   fi
     # fi
 
-    # ASCS_loadbalancer_public_ip_address=$(terraform -chdir="${terraform_module_directory}" output -no-color ASCS_loadbalancer_ips | tr -d "\n"  | tr -d "("  | tr -d ")" | tr -d " ")
-    # ASCS_loadbalancer_public_ip_address=$(echo ${ASCS_loadbalancer_public_ip_address/tolist/})
-    # ASCS_loadbalancer_public_ip_address=$(echo ${ASCS_loadbalancer_public_ip_address/,]/]})
-    # echo "ASCS Load Balancer IP: $ASCS_loadbalancer_public_ip_address"
+    # scs_loadbalancer_public_ip_address=$(terraform -chdir="${terraform_module_directory}" output -no-color scs_loadbalancer_ips | tr -d "\n"  | tr -d "("  | tr -d ")" | tr -d " ")
+    # scs_loadbalancer_public_ip_address=$(echo ${scs_loadbalancer_public_ip_address/tolist/})
+    # scs_loadbalancer_public_ip_address=$(echo ${scs_loadbalancer_public_ip_address/,]/]})
+    # echo "scs Load Balancer IP: $scs_loadbalancer_public_ip_address"
 
-    # load_config_vars "${parameterfile_name}" "ASCS_server_loadbalancer_ips"
-    # ASCS_server_loadbalancer_ips=$(echo ${ASCS_server_loadbalancer_ips} | xargs)
+    # load_config_vars "${parameterfile_name}" "scs_server_loadbalancer_ips"
+    # scs_server_loadbalancer_ips=$(echo ${scs_server_loadbalancer_ips} | xargs)
 
-    # if [[ "${ASCS_loadbalancer_public_ip_address}" != "${ASCS_server_loadbalancer_ips}" ]];
+    # if [[ "${scs_loadbalancer_public_ip_address}" != "${scs_server_loadbalancer_ips}" ]];
     # then
-    #   ASCS_server_loadbalancer_ips=${ASCS_loadbalancer_public_ip_address}
-    #   if [ -n "${ASCS_server_loadbalancer_ips}" ]; then
-    #       save_config_var "ASCS_server_loadbalancer_ips" "${parameterfile_name}"
+    #   scs_server_loadbalancer_ips=${scs_loadbalancer_public_ip_address}
+    #   if [ -n "${scs_server_loadbalancer_ips}" ]; then
+    #       save_config_var "scs_server_loadbalancer_ips" "${parameterfile_name}"
     #       re_run=1
     #   fi
     # fi

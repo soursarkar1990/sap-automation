@@ -23,8 +23,8 @@ variable "db_sid" {
   description = "Database SID"
 }
 
-variable "nics_ASCS" {
-  description = "List of NICs for the ASCS Application VMs"
+variable "nics_scs" {
+  description = "List of NICs for the scs Application VMs"
 }
 
 variable "nics_app" {
@@ -40,8 +40,8 @@ variable "nics_anydb" {
   description = "List of NICs for the AnyDB VMs"
 }
 
-variable "nics_ASCS_admin" {
-  description = "List of NICs for the ASCS Application VMs"
+variable "nics_scs_admin" {
+  description = "List of NICs for the scs Application VMs"
 }
 
 variable "nics_app_admin" {
@@ -109,8 +109,8 @@ variable "db_ha" {
   default     = false
 }
 
-variable "ASCS_ha" {
-  description = "Is the ASCS deployment highly available"
+variable "scs_ha" {
+  description = "Is the scs deployment highly available"
   default     = false
 }
 
@@ -124,8 +124,8 @@ variable "db_lb_ip" {
   default     = ""
 }
 
-variable "ASCS_lb_ip" {
-  description = "ASCS Load Balancer IP"
+variable "scs_lb_ip" {
+  description = "scs Load Balancer IP"
   default     = ""
 }
 
@@ -152,7 +152,7 @@ variable "bom_name" {
   default = ""
 }
 
-variable "ASCS_instance_number" {
+variable "scs_instance_number" {
   default = "00"
 }
 

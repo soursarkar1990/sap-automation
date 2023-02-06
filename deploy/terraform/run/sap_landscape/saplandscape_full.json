@@ -58,8 +58,8 @@
                     }
                 },
                     
-                "subnet_iASCSi": {
-                    "name"                             : "global-WEEU-sap0_iASCSi-subnet",
+                "subnet_iscsi": {
+                    "name"                             : "global-WEEU-sap0_iscsi-subnet",
                     "prefix"                           : "10.1.0.0/24",
                     "nsg" :
                     {
@@ -69,8 +69,8 @@
                 }
             }
         },
-        "iASCSi": {
-            "iASCSi_count": 3,
+        "iscsi": {
+            "iscsi_count": 3,
             "use_DHCP": false,
             "os": {
                 "publisher": "SUSE",
@@ -85,8 +85,8 @@
         "kv_prvt_id": "",
         "kv_sid_sshkey_prvt": "",
         "kv_sid_sshkey_pub": "",
-        "kv_iASCSi_username": "",
-        "kv_iASCSi_pwd": "",
+        "kv_iscsi_username": "",
+        "kv_iscsi_pwd": "",
         "kv_spn_id": ""
     },
     "authentication": {
