@@ -16,7 +16,7 @@ ${sid}_DB:
     node_tier             : ${platform}
     supported_tiers       : [${db_supported_tiers}]
 
-${sid}_scs:
+${sid}_SCS:
   hosts:
 %{~ for idx,ip_scs in ips_scs }
     ${scs_servers[idx]}:
