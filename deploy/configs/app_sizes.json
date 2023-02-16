@@ -25,6 +25,40 @@
                 }
             ]
         },
+        "E4as": {
+            "compute": {
+                "vm_size"                        : "Standard_E4as_v4",
+                "accelerated_networking"         : true
+            },
+            "storage": [
+                {
+                    "count"                      : 1,
+                    "name"                       : "os",
+                    "disk_type"                  : "Premium_LRS",
+                    "size_gb"                    : 64,
+                    "caching"                    : "ReadWrite",
+                    "write_accelerator"          : false
+                },
+                {
+                    "count"                      : 1,
+                    "name"                       : "sap",
+                    "disk_type"                  : "Premium_LRS",
+                    "size_gb"                    : 64,
+                    "caching"                    : "None",
+                    "write_accelerator"          : false,
+                    "lun_start"                  : 0
+                },
+                {
+                    "count"                     : 1,
+                    "name"                      : "swap",
+                    "disk_type"                 : "Premium_LRS",
+                    "size_gb"                   : 32,
+                    "caching"                   : "None",
+                    "write_accelerator"         : false,
+                    "lun_start"                 : 3
+                  }
+            ]
+        },
         "Production": {
             "compute": {
                 "vm_size"                        : "Standard_D4s_v3",
@@ -100,6 +134,40 @@
                     "write_accelerator"          : false,
                     "lun_start"                  : 0
                 }
+            ]
+        },
+        "E4as": {
+            "compute": {
+                "vm_size"                        : "Standard_E4as_v4",
+                "accelerated_networking"         : true
+            },
+            "storage": [
+                {
+                    "count"                      : 1,
+                    "name"                       : "os",
+                    "disk_type"                  : "Premium_LRS",
+                    "size_gb"                    : 64,
+                    "caching"                    : "ReadWrite",
+                    "write_accelerator"          : false
+                },
+                {
+                    "count"                      : 1,
+                    "name"                       : "sap",
+                    "disk_type"                  : "Premium_LRS",
+                    "size_gb"                    : 64,
+                    "caching"                    : "None",
+                    "write_accelerator"          : false,
+                    "lun_start"                  : 0
+                },
+                {
+                    "count"                     : 1,
+                    "name"                      : "swap",
+                    "disk_type"                 : "Premium_LRS",
+                    "size_gb"                   : 32,
+                    "caching"                   : "None",
+                    "write_accelerator"         : false,
+                    "lun_start"                 : 3
+                  }
             ]
         },
         "Production": {
@@ -179,6 +247,40 @@
                 }
             ]
         },
+        "E4as": {
+            "compute": {
+                "vm_size"                        : "Standard_E4as_v4",
+                "accelerated_networking"         : true
+            },
+            "storage": [
+                {
+                    "count"                      : 1,
+                    "name"                       : "os",
+                    "disk_type"                  : "Premium_LRS",
+                    "size_gb"                    : 64,
+                    "caching"                    : "ReadWrite",
+                    "write_accelerator"          : false
+                },
+                {
+                    "count"                      : 1,
+                    "name"                       : "sap",
+                    "disk_type"                  : "Premium_LRS",
+                    "size_gb"                    : 64,
+                    "caching"                    : "None",
+                    "write_accelerator"          : false,
+                    "lun_start"                  : 0
+                },
+                {
+                    "count"                     : 1,
+                    "name"                      : "swap",
+                    "disk_type"                 : "Premium_LRS",
+                    "size_gb"                   : 32,
+                    "caching"                   : "None",
+                    "write_accelerator"         : false,
+                    "lun_start"                 : 3
+                  }
+            ]
+        },
         "Production": {
             "compute": {
                 "vm_size"                        : "Standard_D4s_v3",
@@ -254,6 +356,40 @@
                     "write_accelerator"          : false,
                     "lun_start"                  : 0
                 }
+            ]
+        },
+        "E4as": {
+            "compute": {
+                "vm_size"                        : "Standard_E4as_v4",
+                "accelerated_networking"         : true
+            },
+            "storage": [
+                {
+                    "count"                      : 1,
+                    "name"                       : "os",
+                    "disk_type"                  : "Premium_LRS",
+                    "size_gb"                    : 64,
+                    "caching"                    : "ReadWrite",
+                    "write_accelerator"          : false
+                },
+                {
+                    "count"                      : 1,
+                    "name"                       : "sap",
+                    "disk_type"                  : "Premium_LRS",
+                    "size_gb"                    : 64,
+                    "caching"                    : "None",
+                    "write_accelerator"          : false,
+                    "lun_start"                  : 0
+                },
+                {
+                    "count"                     : 1,
+                    "name"                      : "swap",
+                    "disk_type"                 : "Premium_LRS",
+                    "size_gb"                   : 32,
+                    "caching"                   : "None",
+                    "write_accelerator"         : false,
+                    "lun_start"                 : 3
+                  }
             ]
         },
         "Production": {
