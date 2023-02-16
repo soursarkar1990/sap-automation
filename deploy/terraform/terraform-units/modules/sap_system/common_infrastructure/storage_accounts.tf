@@ -47,7 +47,7 @@ resource "azurerm_storage_account_network_rules" "sapmnt" {
     0
   )
   storage_account_id = azurerm_storage_account.sapmnt[0].id
-  default_action     = "Allow"
+  default_action     = "Deny"
 
   bypass = ["AzureServices", "Logging", "Metrics"]
   virtual_network_subnet_ids = compact(
