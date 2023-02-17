@@ -158,16 +158,7 @@
                     "caching"                    : "None",
                     "write_accelerator"          : false,
                     "lun_start"                  : 0
-                },
-                {
-                    "count"                     : 1,
-                    "name"                      : "swap",
-                    "disk_type"                 : "Premium_LRS",
-                    "size_gb"                   : 32,
-                    "caching"                   : "None",
-                    "write_accelerator"         : false,
-                    "lun_start"                 : 3
-                  }
+                }
             ]
         },
         "Production": {
