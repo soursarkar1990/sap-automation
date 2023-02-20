@@ -11,7 +11,7 @@ timezone:                               "Etc/GMT"
 
 # --------------------- Begin - BOM Processing variables ---------------------8
 # Default BoM Processing variables
-bom_suffix:                             "customer"                              # MKD 20221201 Dynamic BOM
+bom_suffix:                             ""                              # MKD 20221201 Dynamic BOM
 sapbits_bom_files:                      "sapfiles"
 target_media_location:                  "/usr/sap/install"
 # download_directory:                     "/mnt/downloads"                      # MKD 20221212 Dynamic BOM - become root mitigation
@@ -20,7 +20,7 @@ target_media_location:                  "/usr/sap/install"
 download_directory:                     "{% if ansible_env.HOME is defined %}{{ ansible_env.HOME }}{% else %}/mnt/downloads{% endif %}/tmp/downloads"
 check_storage_account:                  true
 bom_processing_become:                  true                                    # BOM processing as root user
-deployer_free_temp_disk_space:          10                                     # Free disk space requirement on deployer
+deployer_free_temp_disk_space:          100                                     # Free disk space requirement on deployer
 # -------------------------------------+---------------------------------------8
 
 # Default BoM Processing variables for Windows
@@ -135,6 +135,7 @@ NFS_provider:                           "NONE"
 # Windows AD specific parameters
 domain_name:
 domain:
+domain_ou_path:                         ""
 domain_service_account:                 "{{ adsvc_account }}"
 domain_service_password:                "{{ adsvc_password }}"
 domain_user:                            '{{ domain }}\{{ sap_sid }}adm'
