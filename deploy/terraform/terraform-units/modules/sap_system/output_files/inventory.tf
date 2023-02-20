@@ -1,6 +1,6 @@
 resource "local_file" "ansible_inventory_new_yml" {
   content = templatefile(format("%s%s", path.module, "/ansible_inventory.tmpl"), {
-    ips_dbnodes = var.database_admin_ips,
+    ips_dbnodes = var.use_secondary_ips ? var.db_server_ips : var.database_admin_ips,
     dbnodes     = var.platform == "HANA" ? var.naming.virtualmachine_names.HANA_COMPUTERNAME : var.naming.virtualmachine_names.ANYDB_COMPUTERNAME
     virt_dbnodes = var.use_secondary_ips ? (
       var.platform == "HANA" ? var.naming.virtualmachine_names.HANA_SECONDARY_DNSNAME : var.naming.virtualmachine_names.ANYDB_SECONDARY_DNSNAME
@@ -142,11 +142,10 @@ resource "local_file" "sap-parameters_yml" {
       ""
     )
     NFS_provider        = var.NFS_provider
-    pas_instance_number = local.pas_instance_number
+    pas_instance_number = var.pas_instance_number
 
-    oracle = local.oracle
 
-    domain = local.domain_info
+    settings = local.settings
 
     hana_data = length(try(var.hana_data[0], "")) > 1 ? (
       format("hana_data_mountpoint:          %s", jsonencode(var.hana_data))) : (
@@ -192,30 +191,6 @@ resource "local_file" "sap_inventory_md" {
   filename             = format("%s/%s.md", path.cwd, var.sap_sid)
   file_permission      = "0660"
   directory_permission = "0770"
-}
-
-
-resource "azurerm_storage_blob" "hosts_yaml" {
-  count                  = 0
-  provider               = azurerm.deployer
-  name                   = format("%s_hosts.yaml", length(trimspace(var.naming.prefix.SDU)) > 0 ? trimspace(var.naming.prefix.SDU) : var.sap_sid)
-  storage_account_name   = local.tfstate_storage_account_name
-  storage_container_name = local.ansible_container_name
-  type                   = "Block"
-  source                 = local_file.ansible_inventory_new_yml.filename
-}
-
-resource "azurerm_storage_blob" "sap_parameters_yaml" {
-  depends_on = [
-    local_file.sap-parameters_yml
-  ]
-  count                  = 0
-  provider               = azurerm.deployer
-  name                   = format("%s_sap-parameters.yaml", length(trimspace(var.naming.prefix.SDU)) > 0 ? trimspace(var.naming.prefix.SDU) : var.sap_sid)
-  storage_account_name   = local.tfstate_storage_account_name
-  storage_container_name = local.ansible_container_name
-  type                   = "Block"
-  source                 = local_file.sap-parameters_yml.filename
 }
 
 locals {

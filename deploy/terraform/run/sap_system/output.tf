@@ -111,6 +111,12 @@ output "scs_loadbalancer_id" {
 ###############################################################################
 
 
+
+output "app_vm_ips" {
+  description = "Application Virtual Machine IPs"
+  value       = module.app_tier.application_server_ips
+}
+
 output "app_vm_ids" {
   description = "Virtual Machine IDs for the application servers"
   value       = module.app_tier.app_vm_ids
@@ -134,6 +140,16 @@ output "anydb_vm_ids" {
   value = module.anydb_node.anydb_vm_ids
 }
 
+output "db_vm_ips" {
+  description = "Database Virtual Machine IPs"
+  value       =   upper(try(local.database.platform, "HANA")) == "HANA" ? (
+    module.hdb_node.db_server_ips) : (
+    module.anydb_node.db_server_ips
+  ) #TODO Change to use Admin IP
+
+}
+
+
 output "sid" {
   value = local.application_tier.sid
 }
@@ -141,7 +157,7 @@ output "sid" {
 
 ###############################################################################
 #                                                                             #
-#                           Virtual Machine IDs                               #
+#                           Disks                                             #
 #                                                                             #
 ###############################################################################
 
@@ -156,4 +172,10 @@ output "sapmnt_path" {
   description = "Path to the sapmnt folder"
   value       = module.common_infrastructure.sapmnt_path
 }
+
+output "configuration_settings" {
+  description = "Additional configuration settings"
+  value       = var.configuration_settings
+}
+
 

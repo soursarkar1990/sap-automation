@@ -654,6 +654,24 @@
         "Display": 1
       },
       {
+        "Name": "scs_instance_number",
+        "Required": false,
+        "Description": "Defines the SCS instance number.",
+        "Type": "field",
+        "Options": [],
+        "Overrules": "",
+        "Display": 2
+      },
+      {
+        "Name": "ers_instance_number",
+        "Required": false,
+        "Description": "Defines the ERSS instance number.",
+        "Type": "field",
+        "Options": [],
+        "Overrules": "",
+        "Display": 2
+      },
+      {
         "Name": "scs_server_zones",
         "Required": false,
         "Description": "Defines the availability zones in which deploy the SAP Central Services servers.",
@@ -834,6 +852,15 @@
         ],
         "Overrules": "",
         "Display": 1
+      },
+      {
+        "Name": "pas_instance_number",
+        "Required": false,
+        "Description": "Defines the PAS instance number.",
+        "Type": "field",
+        "Options": [],
+        "Overrules": "",
+        "Display": 2
       },
       {
         "Name": "application_server_sku",
@@ -1896,6 +1923,15 @@
         "Options": [],
         "Overrules": "",
         "Display": 3
+      },
+      {
+        "Name": "configuration_settings",
+        "Required": false,
+        "Description": "This is dictionary of values that can be used to add values to the sap-parameters file",
+        "Type": "tag",
+        "Options": [],
+        "Overrules": "",
+        "Display": 2
       },
       {
         "Name": "nsg_asg_with_vnet",
