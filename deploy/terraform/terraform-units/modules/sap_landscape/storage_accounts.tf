@@ -24,7 +24,7 @@ resource "azurerm_storage_account" "storage_bootdiag" {
 
   account_replication_type        = "LRS"
   account_tier                    = "Standard"
-  enable_https_traffic_only       = false
+  enable_https_traffic_only       = true
   min_tls_version                 = "TLS1_2"
   allow_nested_items_to_be_public = false
 
@@ -34,10 +34,10 @@ resource "azurerm_storage_account" "storage_bootdiag" {
 }
 
 resource "azurerm_private_dns_a_record" "storage_bootdiag" {
-  count = var.use_private_endpoint && !var.use_custom_dns_a_registration ? 1 : 0
-  name  = lower(local.storageaccount_name)
-
-  zone_name           = "privatelink.blob.core.windows.net"
+  count               = var.use_private_endpoint && var.use_custom_dns_a_registration ? 1 : 0
+  name                = lower(local.storageaccount_name)
+  
+  zone_name           = "privatelink.file.core.windows.net"
   resource_group_name = var.management_dns_resourcegroup_name
   ttl                 = 3600
   records             = [data.azurerm_network_interface.storage_bootdiag[count.index].ip_configuration[0].private_ip_address]
@@ -98,7 +98,7 @@ resource "azurerm_private_endpoint" "storage_bootdiag" {
   }
 
   dynamic "private_dns_zone_group" {
-    for_each = range(var.use_private_endpoint && !var.use_custom_dns_a_registration ? 1 : 0)
+    for_each = range(var.use_private_endpoint && var.use_custom_dns_a_registration ? 1 : 0)
     content {
       name                 = "privatelink.blob.core.windows.net"
       private_dns_zone_ids = [data.azurerm_private_dns_zone.storage[0].id]
@@ -132,7 +132,7 @@ resource "azurerm_storage_account" "witness_storage" {
 
   account_replication_type        = "LRS"
   account_tier                    = "Standard"
-  enable_https_traffic_only       = false
+  enable_https_traffic_only       = true
   min_tls_version                 = "TLS1_2"
   allow_nested_items_to_be_public = false
 
@@ -164,9 +164,9 @@ resource "azurerm_storage_account_network_rules" "witness" {
 
 }
 resource "azurerm_private_dns_a_record" "witness_storage" {
-  count               = var.use_private_endpoint && !var.use_custom_dns_a_registration ? 1 : 0
+  count               = var.use_private_endpoint && var.use_custom_dns_a_registration ? 1 : 0
   name                = lower(local.witness_storageaccount_name)
-  zone_name           = "privatelink.blob.core.windows.net"
+  zone_name           = "privatelink.file.core.windows.net"
   resource_group_name = var.management_dns_resourcegroup_name
   ttl                 = 3600
   records             = [data.azurerm_network_interface.witness_storage[count.index].ip_configuration[0].private_ip_address]
@@ -219,7 +219,7 @@ resource "azurerm_private_endpoint" "witness_storage" {
   }
 
   dynamic "private_dns_zone_group" {
-    for_each = range(var.use_private_endpoint && !var.use_custom_dns_a_registration ? 1 : 0)
+    for_each = range(var.use_private_endpoint && var.use_custom_dns_a_registration ? 1 : 0)
     content {
       name                 = "privatelink.blob.core.windows.net"
       private_dns_zone_ids = [data.azurerm_private_dns_zone.storage[0].id]
@@ -304,8 +304,8 @@ resource "azurerm_storage_account_network_rules" "transport" {
 }
 
 resource "azurerm_private_dns_a_record" "transport" {
-  count = var.use_private_endpoint && !var.use_custom_dns_a_registration && var.NFS_provider == "AFS" ? 1 : 0
-  name = replace(
+  count               = var.use_private_endpoint && var.use_custom_dns_a_registration && var.NFS_provider == "AFS" ? 1 : 0
+  name                = replace(
     lower(
       format("%s", local.landscape_shared_transport_storage_account_name)
     ),
@@ -402,7 +402,7 @@ resource "azurerm_private_endpoint" "transport" {
     ]
   }
   dynamic "private_dns_zone_group" {
-    for_each = range(var.use_private_endpoint && !var.use_custom_dns_a_registration ? 1 : 0)
+    for_each = range(var.use_private_endpoint && var.use_custom_dns_a_registration ? 1 : 0)
     content {
       name                 = "privatelink.blob.core.windows.net"
       private_dns_zone_ids = [data.azurerm_private_dns_zone.storage[0].id]
@@ -499,8 +499,8 @@ resource "azurerm_storage_account_network_rules" "install" {
 }
 
 resource "azurerm_private_dns_a_record" "install" {
-  count = var.use_private_endpoint && !var.use_custom_dns_a_registration && var.NFS_provider == "AFS" ? 1 : 0
-  name = replace(
+  count               = var.use_private_endpoint && var.use_custom_dns_a_registration && var.NFS_provider == "AFS" ? 1 : 0
+  name                = replace(
     lower(
       format("%s", local.landscape_shared_install_storage_account_name)
     ),
@@ -590,9 +590,9 @@ resource "azurerm_private_endpoint" "install" {
   }
 
   dynamic "private_dns_zone_group" {
-    for_each = range(var.use_private_endpoint && !var.use_custom_dns_a_registration ? 1 : 0)
+    for_each = range(var.use_private_endpoint && var.use_custom_dns_a_registration ? 1 : 0)
     content {
-      name                 = "privatelink.file.core.windows.net"
+      name                 = "privatelink.blob.core.windows.net"
       private_dns_zone_ids = [data.azurerm_private_dns_zone.storage[0].id]
     }
   }
@@ -605,23 +605,16 @@ resource "azurerm_private_endpoint" "install" {
 
 resource "azurerm_storage_share" "install" {
   count = var.NFS_provider == "AFS" ? (
-    length(var.install_storage_account_id) > 0 || var.install_always_create_fileshares ? (
+    length(var.install_storage_account_id) > 0 ? (
       0) : (
       1
     )) : (
     0
   )
 
-  name = format("%s", local.resource_suffixes.install_volume)
-  storage_account_name = var.NFS_provider == "AFS" ? (
-    length(var.install_storage_account_id) > 0 ? (
-      split("/", var.install_storage_account_id)[8]
-      ) : (
-      azurerm_storage_account.install[0].name
-    )) : (
-    ""
-  )
-  enabled_protocol = "NFS"
+  name                 = format("%s", local.resource_suffixes.install_volume)
+  storage_account_name = var.NFS_provider == "AFS" ? azurerm_storage_account.install[0].name : ""
+  enabled_protocol     = "NFS"
 
   quota = var.install_volume_size
 }
@@ -656,21 +649,15 @@ resource "time_sleep" "wait_for_private_endpoints" {
 }
 
 data "azurerm_private_dns_zone" "storage" {
-  count               = var.use_private_endpoint && !var.use_custom_dns_a_registration ? 1 : 0
+  count               = var.use_private_endpoint && var.use_custom_dns_a_registration ? 1 : 0
   name                = "privatelink.blob.core.windows.net"
   resource_group_name = var.management_dns_resourcegroup_name
-  provider            = azurerm.dnsmanagement
-}
+  provider = azurerm.dnsmanagement
 
-data "azurerm_private_dns_zone" "file" {
-  count               = var.use_private_endpoint && !var.use_custom_dns_a_registration ? 1 : 0
-  name                = "privatelink.file.core.windows.net"
-  resource_group_name = var.management_dns_resourcegroup_name
-  provider            = azurerm.dnsmanagement
 }
 
 data "azurerm_network_interface" "storage_bootdiag" {
-  count               = var.use_private_endpoint && length(var.diagnostics_storage_account.arm_id) == 0 ? 1 : 0
+  count               = var.use_private_endpoint && length(var.diagnostics_storage_account.arm_id) == 0  ? 1 : 0
   name                = azurerm_private_endpoint.storage_bootdiag[count.index].network_interface[0].name
   resource_group_name = split("/", azurerm_private_endpoint.storage_bootdiag[count.index].network_interface[0].id)[4]
 }
@@ -682,14 +669,13 @@ data "azurerm_network_interface" "witness_storage" {
 }
 
 data "azurerm_network_interface" "install" {
-  count               = var.use_private_endpoint && length(var.install_storage_account_id) == 0 && var.NFS_provider == "AFS" ? 1 : 0
+  count               = var.use_private_endpoint && length(var.install_storage_account_id) == 0   && var.NFS_provider == "AFS" ? 1 : 0
   name                = azurerm_private_endpoint.install[count.index].network_interface[0].name
   resource_group_name = split("/", azurerm_private_endpoint.install[count.index].network_interface[0].id)[4]
 }
 
 data "azurerm_network_interface" "transport" {
-  count               = var.use_private_endpoint && length(var.transport_storage_account_id) == 0 && var.NFS_provider == "AFS" ? 1 : 0
+  count               = var.use_private_endpoint && length(var.transport_storage_account_id) == 0  && var.NFS_provider == "AFS" ? 1 : 0
   name                = azurerm_private_endpoint.transport[count.index].network_interface[0].name
   resource_group_name = split("/", azurerm_private_endpoint.transport[count.index].network_interface[0].id)[4]
 }
-
