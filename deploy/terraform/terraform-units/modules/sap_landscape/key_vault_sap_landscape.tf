@@ -22,7 +22,7 @@ resource "azurerm_key_vault" "kv_user" {
     content {
 
       bypass         = "AzureServices"
-      default_action = local.management_subnet_exists ? "Allow" : "Allow"
+      default_action = local.management_subnet_exists ? "Deny" : "Deny"
 
       ip_rules = compact(
         [
